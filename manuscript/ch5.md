@@ -1,3 +1,5 @@
+# Chapter 5: Blog app
+
 In this chapter we'll build a basic _blog_ application that allows users to create, edit, and delete posts. The homepage will list all blog posts and there will be a dedicated detail page for each individual post. We'll also introduce CSS for styling and learn how Django works with static files.
 
 Complete source code can be <a href="https://github.com/wsvincent/djangoforbeginners/tree/master/ch5-blog-app" target="\_blank">found on Github</a>.

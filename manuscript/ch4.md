@@ -1,3 +1,5 @@
+# Chapter 4: Message Board app
+
 In this chapter we will use a database for the first time to build a basic _message board_ application. We'll explore Django's powerful built-in admin interface which provides a visual way to make changes to our data. And after adding tests we will push our code to Bitbucket and deploy the app on Heroku.
 
 Django provides built-in support for several types of databases. But the simplest--**by far**--to use is [SQLite](https://www.sqlite.org/) because it runs off a single file and requires no complex installation. Django uses SQLite by default for this reason and it's a perfect choice for small projects.
@@ -424,7 +426,7 @@ It should look like this, replacing `wsvincent` (my username) with your Bitbucke
 
 ## Heroku configuration
 
-You should also already have a Heroku account setup and installed from [Chapter 3: A simple app]({{ site.baseurl }}{% post_url book/2010-01-01-simple %}). We need to make the following changes to our _Message Board_ project to deploy it online:
+You should also already have a Heroku account setup and installed from [Chapter 3: A simple app]({{ site.baseurl }}{% post*url book/2010-01-01-simple %}). We need to make the following changes to our \_Message Board* project to deploy it online:
 
 * update `Pipfile.lock`
 * new `Procfile`

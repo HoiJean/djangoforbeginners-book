@@ -1,3 +1,5 @@
+# Chapter 7: Blog app with user accounts
+
 So far we've built a working blog application that uses forms, but we're missing a major piece of most web applications: user authentication.
 
 Implementing proper user authentication is famously hard; there are many security gotchas along the way so you really don't want to implement this yourself. Fortunately Django comes with a powerful, built-in [user authentication system](https://docs.djangoproject.com/en/2.0/topics/auth/) that we can use.

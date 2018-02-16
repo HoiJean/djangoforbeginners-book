@@ -1,3 +1,5 @@
+# Chapter 9: Signup, Login, and Logout
+
 Now that we have a working custom user model we can add the functionality every website needs: the ability to signup, login, and logout users. Django provides everything we need for login and logout but we will need to create our own form to sign up new users. We'll also build a basic homepage with links to all three features so we don't have to type in the URLs by hand all the time.
 
 Complete source code can be <a href="https://github.com/wsvincent/djangoforbeginners/tree/master/ch9-signup-login-logout" target="\_blank">found on Github</a>.

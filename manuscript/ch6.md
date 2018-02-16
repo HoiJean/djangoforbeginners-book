@@ -1,3 +1,5 @@
+# Chapter 6: Blog app with forms
+
 In this chapter we'll continue working on our blog application from [Chapter 5]({{ site.baseurl }}{% post_url book/2010-01-01-blog %}) by adding forms so a user can create, edit, or delete any of their blog entries.
 
 Complete source code can be <a href="https://github.com/wsvincent/djangoforbeginners/tree/master/ch6-blog-app-with-forms" target="\_blank">found on Github</a>.

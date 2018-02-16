@@ -1,3 +1,5 @@
+# Chapter 8: Custom User Model
+
 For the rest of the book we will build out a _social messaging_ app very similar to Twitter. It will allow users to write their own microposts and make comments on other user's posts. We'll implement a complete user authentication flow with custom signup, login, logout, password change, and password reset features. And we'll learn how to restrict site access so that only logged-in users can view most areas of the site.
 
 To start we'll configure our `User` model but it's important to note that unlike our previous _blog_ app which used the default user model, we will instead use a **custom user model**. This is a Django best practice advocated <a href="https://docs.djangoproject.com/en/2.0/topics/auth/customizing/#using-a-custom-user-model-when-starting-a-project" target="\_blank">in the official documentation</a>, however many Django developers don't learn about it until it's too late. Don't make that mistake.
