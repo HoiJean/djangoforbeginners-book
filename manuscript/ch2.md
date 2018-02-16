@@ -2,38 +2,41 @@
 
 In this chapter we'll build a Django project that simply says "Hello, World" on the homepage. This is [the traditional way](https://en.wikipedia.org/wiki/%22Hello,_World!%22_program) to start a new programming language or framework. We'll also work with _git_ for the first time and deploy our code to Bitbucket.
 
-If you need help configuring your local development environment, please refer to [Chapter 1: Initial Setup]({{ site.baseurl }}{% post_url book/2010-01-01-initial-setup %}).
 
 ## Initial Setup
 
 To start navigate to a new directory on your computer. For example, we can create a `helloworld` folder on the Desktop with the following commands.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 $ cd ~/Desktop
 $ mkdir helloworld
 $ cd helloworld
-```
+~~~~~~~~
 
 Make sure you're not within an existing virtual environment at this point. If you see text in parentheses `()` before the dollar sign `$` then you are. To exit it, type `exit` and hit `Return`. The parentheses should disappear which means that virtual environment is no longer active.
 
 We'll use `pipenv` to create a new virtual environment, install Django and then activate it.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 $ pipenv install django
 $ pipenv shell
-```
+~~~~~~~~
 
 You should see parentheses now at the beginning of your command line prompt in the form `(helloworld-XXX)` where `XXX` represents random characters. On my computer I see `(helloworld-415ivvZC)`. I'll display `(helloworld)` here in the text but you will see something slightly different on your computer.
 
 Create a new Django project called `helloworld_project` making sure to include the period `.` at the end of the command so that it is installed in our current directory. Without the period Django creates a new directory _before_ our new Django directory.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (helloworld) $ django-admin startproject helloworld_project .
-```
+~~~~~~~~
 
 If you use the `tree` command you can see what our Django project structure now looks like. (**Note**: If `tree` doesn't work for you, install it with Homebrew: `brew install tree`.)
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (helloworld) $ tree
 .
 ├── helloworld_project
@@ -44,15 +47,16 @@ If you use the `tree` command you can see what our Django project structure now 
 └── manage.py
 
 1 directory, 5 files
-```
+~~~~~~~~
 
 The `settings.py` file controls our project's settings, `urls.py` tells Django which pages to build in response to a browser or url request, and `wsgi.py`, which stands for [web server gateway interface](https://en.wikipedia.org/wiki/Web_Server_Gateway_Interface), helps Django serve our eventual web pages. The last file `manage.py` is used to execute various Django commands such as running the local web server or creating a new app.
 
 Django comes with a built-in web server for local development purposes. We can start it with the `runserver` command.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (helloworld) $ python manage.py runserver
-```
+~~~~~~~~
 
 If you visit [http://127.0.0.1:8000/](http://127.0.0.1:8000/) you should see the following image:
 
@@ -64,14 +68,16 @@ Django uses the concept of projects and apps to keep code clean and readable. A 
 
 We need to create our first app which we'll call `pages`. From the command line, quit the server with `Control+c`. Then use the `startapp` command.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (helloworld) $ python manage.py startapp pages
-```
+~~~~~~~~
 
 If you look again inside the directory with the `tree` command you'll see Django has created a `pages` directory with the
 following files:
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 ├── pages
 │   ├── __init__.py
 │   ├── admin.py
@@ -81,7 +87,7 @@ following files:
 │   ├── models.py
 │   ├── tests.py
 │   └── views.py
-```
+~~~~~~~~
 
 Let's review what each new `pages` app file does:
 
@@ -94,7 +100,8 @@ Let's review what each new `pages` app file does:
 
 Even though our new app exists within the Django project, Django doesn't "know" about it until we explicitly add it to the app. In your text editor (VS Code, Atom, or other) open the `settings.py` file and scroll down to `INSTALLED_APPS` where you'll see six built-in Django apps already there. Add our new `pages` app at the bottom:
 
-```python
+{title="Code",lang="python"}
+~~~~~~~~
 # helloworld_project/settings.py
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -105,7 +112,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pages',
 ]
-```
+~~~~~~~~
 
 ## Views and URLConfs
 
@@ -120,14 +127,15 @@ In other words, our _view_ will output the text "Hello, World" while our _url_ w
 
 Let's start by updating the `views.py` file in our `pages` app to look as follows:
 
-```python
+{title="Code",lang="python"}
+~~~~~~~~
 # pages/views.py
 from django.http import HttpResponse
 
 
 def homePageView(request):
     return HttpResponse('Hello, World!')
-```
+~~~~~~~~
 
 Basically we're saying whenever the view function `homePageView` is called, return the text "Hello, World!" More specifically, we've imported the built-in
 [HttpResponse](https://docs.djangoproject.com/en/2.0/ref/request-response/#django.http.HttpResponse) method so we can
@@ -136,13 +144,15 @@ and returns a response with the string `Hello, World!`.
 
 Now we need to configure our urls. Within the `pages` app, create a new `urls.py` file.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (helloworld) $ touch pages/urls.py
-```
+~~~~~~~~
 
 Then update it with the following code:
 
-```python
+{title="Code",lang="python"}
+~~~~~~~~
 # pages/urls.py
 from django.urls import path
 
@@ -151,7 +161,7 @@ from . import views
 urlpatterns = [
     path('', views.homePageView, name='home')
 ]
-```
+~~~~~~~~
 
 On the top line we import `path` from Django to power our `urlpattern` and on the next line we import our views. Our urlpattern has three parts:
 
@@ -165,7 +175,8 @@ We're _almost_ done. The last step is to configure our project-level `urls.py` f
 
 Update the `helloworld_project/urls.py` file as follows:
 
-```python
+{title="Code",lang="python"}
+~~~~~~~~
 # helloworld_project/urls.py
 from django.contrib import admin
 from django.urls import path, include
@@ -174,7 +185,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('pages.urls')),
 ]
-```
+~~~~~~~~
 
 We've imported `include` on the second line next to `path` and then created a new urlpattern for our `pages` app. Now whenever a user visits the homepage at `/` they will first be routed to the `pages` app and then to the `homePageView` view.
 
@@ -182,9 +193,10 @@ We've imported `include` on the second line next to `path` and then created a ne
 
 We have all the code we need now! To confirm everything works as expected, restart our Django server:
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (helloworld) $ python manage.py runserver
-```
+~~~~~~~~
 
 If you refresh the browser for [http://127.0.0.1:8000/](http://127.0.0.1:8000/) it now displays the text "Hello, world!"
 
@@ -194,13 +206,15 @@ If you refresh the browser for [http://127.0.0.1:8000/](http://127.0.0.1:8000/) 
 
 In the previous chapter we also installed **git** which is a version control system. Let's use it here. The first step is to initialize (or add) _git_ to our repository.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (helloworld) $ git init
-```
+~~~~~~~~
 
 If you then type `git status` you'll see a list of changes since the last git commit. Since this is our first commit, this list is all of our changes so far.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (helloworld) $ git status
 On branch master
 
@@ -217,20 +231,16 @@ Untracked files:
         Pipfile.lock
 
 nothing added to commit but untracked files present (use "git add" to track)
-```
+~~~~~~~~
 
 We next want to add _all_ changes by using the command `add -A` and then `commit` the changes along with a message describing what has changed.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (helloworld) $ git add -A
 (helloworld) $ git commit -m 'initial commit'
-```
+~~~~~~~~
 
-<!-- That's it for now but in the coming chapters we'll use *git* to:
-
-* store our code in a remote repository on [Github](https://github.com/)
-* deploy our code using [Heroku](https://www.heroku.com/)
-* run continuous integration tests with [CircleCI](circleci.com) -->
 
 ## Bitbucket
 
@@ -252,15 +262,17 @@ On the next page, click on the link on the bottom for "I have an existing projec
 
 We're already in the directory for our repo so skip Step 1. In Step 2, we'll use two commands to add our project to Bitbucket. Note that your command will differ from mine since you have a different username. The general format is the below where `<USER>` is your Bitbucket username.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (helloworld) $ git remote add origin https://<USER>@bitbucket.org/<USER>/hello-world.git
-```
+~~~~~~~~
 
 After running this command to configure git with this Bitbucket repository, we must "push" our code into it.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (helloworld) $ git push -u origin master
-```
+~~~~~~~~
 
 Now if you go back to your Bitbucket page and refresh it, you'll see the code is now online!
 
@@ -268,9 +280,10 @@ Now if you go back to your Bitbucket page and refresh it, you'll see the code is
 
 Since we're done, go ahead and exit our virtual environment with the `exit` command.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (helloworld) $ exit
-```
+~~~~~~~~
 
 You should now see no parentheses on your command line, indicating the virtual environment is no longer active.
 
@@ -278,4 +291,4 @@ You should now see no parentheses on your command line, indicating the virtual e
 
 Congratulations! We've covered a lot of fundamental concepts in this chapter. We built our first Django application and learned about Django's project and app structure. We started to learn about views, urls, and the internal web server. And we worked with git to track our changes and pushed our code into a private repo on Bitbucket.
 
-Continue on to Chapter 3 where we'll build and deploy a more complex Django application using templates and class-based views.
+Continue on to **Chapter 3: Simple app** where we'll build and deploy a more complex Django application using templates and class-based views.

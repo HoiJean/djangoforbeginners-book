@@ -19,7 +19,8 @@ We will again create a new directory `simple` for our project on the Desktop but
 
 Within a new command line console start by typing the following:
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 $ cd ~/Desktop
 $ mkdir simple
 $ cd simple
@@ -27,7 +28,7 @@ $ pipenv install django
 $ pipenv shell
 (simple) $ django-admin startproject simple_project .
 (simple) $ python manage.py startapp pages
-```
+~~~~~~~~
 
 I'm using `(simple)` here to represent the virtual environment but in reality mine has the form of `(simple-unOYeQ9e)`. Your virtual environment name will be unique, too.
 
@@ -35,7 +36,8 @@ Note also that last command uses the shortcut `python manage.py` instead of `pyt
 
 Open your text editor and navigate to the file `settings.py`. Add the `pages` app to our project under `INSTALLED_APPS`:
 
-```python
+{title="Code",lang="python"}
+~~~~~~~~
 # simple_project/settings.py
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -46,13 +48,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pages',
 ]
-```
+~~~~~~~~
 
 Start the local web server with `runserver`.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (simple) $ python manage.py runserver
-```
+~~~~~~~~
 
 And then navigate to [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
 
@@ -68,14 +71,16 @@ Instead of having templates located all across your code base, many developers p
 
 First quit our server with `Control-c`. Then create a project-level folder called `templates` and an HTML file called `home.html`.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (simple) $ mkdir templates
 (simple) $ touch templates/home.html
-```
+~~~~~~~~
 
 Next we need to update `settings.py` to tell Django to look at the project-level for templates. This is a one-line change to the setting `'DIRS'` under `TEMPLATES`.
 
-```python
+{title="Code",lang="python"}
+~~~~~~~~
 # simple_project/settings.py
 TEMPLATES = [
     {
@@ -84,14 +89,15 @@ TEMPLATES = [
         ...
     },
 ]
-```
+~~~~~~~~
 
 Then we can add a simple headline to our `home.html` file.
 
-```html
+{title="Code",lang="html"}
+~~~~~~~~
 <!-- templates/home.html -->
 <h1>Homepage.</h1>
-```
+~~~~~~~~
 
 Ok, our template is complete! The next step is to configure our url and view.
 
@@ -103,14 +109,15 @@ Function-based generic views were introduced to abstract these patterns and stre
 
 We'll use the [built-in TemplateView](https://docs.djangoproject.com/en/2.0/ref/class-based-views/base/#django.views.generic.base.TemplateView) to display our template in the `pages/views.py` file.
 
-```python
+{title="Code",lang="python"}
+~~~~~~~~
 # pages/views.py
 from django.views.generic import TemplateView
 
 
 class HomePageView(TemplateView):
     template_name = 'home.html'
-```
+~~~~~~~~
 
 Note that we've capitalized our view now since it's a Python class. The `TemplateView` already contains all the logic needed to display our template, we just need to specify its name.
 
@@ -120,7 +127,8 @@ The last step is to update our URLConfs. Recall from Chapter 2 that we need to m
 
 Let's start with the project-level `urls.py` file.
 
-```python
+{title="Code",lang="python"}
+~~~~~~~~
 # simple_project/urls.py
 from django.contrib import admin
 from django.urls import path, include
@@ -129,17 +137,19 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('pages.urls')),
 ]
-```
+~~~~~~~~
 
 Next create an app-level `urls.py` file.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (simple) $ touch pages/urls.py
-```
+~~~~~~~~
 
 And add the following code.
 
-```python
+{title="Code",lang="python"}
+~~~~~~~~
 # pages/urls.py
 from django.urls import path
 
@@ -148,7 +158,7 @@ from . import views
 urlpatterns = [
     path('', views.HomePageView.as_view(), name='home'),
 ]
-```
+~~~~~~~~
 
 This pattern is almost identical to what we did in Chapter 2 with one major difference. When using Class-Based Views, you always add `as_view()` at the end.
 
@@ -162,20 +172,23 @@ The process for adding an about page is **very** similar to what we just did. We
 
 Quit the server `Control-c` and create a new template called `about.html`.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (simple) $ touch templates/about.html
-```
+~~~~~~~~
 
 Then populate it with simple HTML.
 
-```html
+{title="Code",lang="html"}
+~~~~~~~~
 <!-- templates/about.html -->
 <h1>About page.</h1>
-```
+~~~~~~~~
 
 Create a new view for the page.
 
-```python
+{title="Code",lang="python"}
+~~~~~~~~
 # pages/views.py
 from django.views.generic import TemplateView
 
@@ -186,11 +199,12 @@ class HomePageView(TemplateView):
 
 class AboutPageView(TemplateView):
     template_name = 'about.html'
-```
+~~~~~~~~
 
 And then connect it to a url at `about/`.
 
-```python
+{title="Code",lang="python"}
+~~~~~~~~
 # pages/urls.py
 from django.urls import path
 
@@ -200,7 +214,7 @@ urlpatterns = [
     path('', views.HomePageView.as_view(), name='home'),
     path('about/', views.AboutPageView.as_view(), name='about'),
 ]
-```
+~~~~~~~~
 
 Start up the web server with `python manage.py runserver`, navigate to [http://127.0.0.1:8000/about](http://127.0.0.1:8000/about), and you can see our new "About page".
 
@@ -212,13 +226,14 @@ The real power in templates is their ability to be extended. If you think about 
 
 Well we can! Let's create a `base.html` file containing a header with links to our two pages. First `Control-c` and then type the following.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (simple) $ touch templates/base.html
-```
+~~~~~~~~
 
 Django has a minimal templating language for adding links and basic logic in our templates. To add links we can use the [built-in url tag](https://docs.djangoproject.com/en/2.0/ref/templates/builtins/#url). Remember how we added optional URL names to our url routers? This is why. The `url` tag uses these names to automatically create links for us.
 
-```html
+{title="Code",lang="html"}
 <!-- pages/base.html -->
 <header>
   <a href="{% raw %}{% url 'home' %}{% endraw %}">Home</a> | <a href="{% raw %}{% url 'about' %}{% endraw %}">About</a>
@@ -226,29 +241,29 @@ Django has a minimal templating language for adding links and basic logic in our
 
 {% raw %}{% block content %}
 {% endblock %}{% endraw %}
-```
+~~~~~~~~
 
 At the bottom we've added a `block` tag called `content`. Blocks can be overwritten by child templates via inheritance.
 
 Let's update our `home.html` and `about.html` to extend the `base.html` template.
 
-```html
+{title="Code",lang="html"}
 <!-- templates/home.html -->
 {% raw %}{% extends 'base.html' %}{% endraw %}
 
 {% raw %}{% block content %}
 <h1>Homepage.</h1>
 {% endblock %}{% endraw %}
-```
+~~~~~~~~
 
-```html
+{title="Code",lang="html"}
 <!-- templates/about.html -->
 {% raw %}{% extends 'base.html' %}{% endraw %}
 
 {% raw %}{% block content %}
 <h1>About page.</h1>
 {% endblock %}{% endraw %}
-```
+~~~~~~~~
 
 Now if you start up the server with `python manage.py runserver` and open up our webpages again at
 [http://127.0.0.1:8000/](http://127.0.0.1:8000/) and [http://127.0.0.1:8000/about](http://127.0.0.1:8000/about) you'll
@@ -276,7 +291,7 @@ easier.
 If you look within our `pages` app, Django already provided a `tests.py` file we can use. Open it and add the
 following code:
 
-```python
+{title="Code",lang="python"}
 # pages/tests.py
 from django.test import SimpleTestCase
 
@@ -289,7 +304,7 @@ class SimpleTests(SimpleTestCase):
     def test_about_page_status_code(self):
         response = self.client.get('/about/')
         self.assertEqual(response.status_code, 200)
-```
+~~~~~~~~
 
 We're using [SimpleTestCase](https://docs.djangoproject.com/en/2.0/topics/testing/tools/#django.test.SimpleTestCase)
 here since we aren't using a database. If we were using a database, we'd instead use
@@ -299,7 +314,8 @@ check if the status code for each page is 200, which is the
 
 To run the tests quit the server `Control-c` and type `python manage.py test` on the command line:
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (simple) $ python manage.py test
 Creating test database for alias 'default'...
 ..
@@ -308,7 +324,7 @@ Ran 2 tests in 0.028s
 
 OK
 Destroying test database for alias 'default'...
-```
+~~~~~~~~
 
 Success! We'll do much more with testing in the future, especially once we start working with databases. For now, it's
 important to see how easy it is to add tests each and every time we add new functionality to our Django project.
@@ -317,17 +333,19 @@ important to see how easy it is to add tests each and every time we add new func
 
 It's time to track our changes with _git_ and push them up to Bitbucket. We'll start by initializing our directory.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (simple) $ git init
-```
+~~~~~~~~
 
 Use `git status` to see all our code changes then `git add -A` to add them all. Finally we'll add our first commit message.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (simple) $ git status
 (simple) $ git add -A
 (simple) $ git commit -m 'initial commit'
-```
+~~~~~~~~
 
 Over on Bitbucket [create a new repo](https://bitbucket.org/repo/create) which we'll call `simple-app`.
 
@@ -337,10 +355,11 @@ On the next page click on the bottom link for "I have an existing project". Copy
 
 It should look like this, replacing `wsvincent` with your Bitbucket username:
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (simple) $ git remote add origin git@bitbucket.org:wsvincent/simple-app.git
 (simple) $ git push -u origin master
-```
+~~~~~~~~
 
 ## Local vs Production
 
@@ -358,9 +377,10 @@ Now we need to install Heroku's _Command Line Interface (CLI)_ so we can deploy 
 
 Within this new tab, on a Mac use Homebrew to install Heroku:
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 $ brew install heroku
-```
+~~~~~~~~
 
 On Windows, see the [Heroku CLI page](https://devcenter.heroku.com/articles/heroku-cli#download-and-install) to correctly install either the 32-bit or 64-bit version.
 
@@ -368,13 +388,14 @@ Once installation is complete you can close our new command line tab and return 
 
 Type the command `heroku login` and use the email and password for Heroku you just set.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (simple) $ heroku login
 Enter your Heroku credentials:
 Email: will@wsvincent.com
 Password: *********************************
 Logged in as will@wsvincent.com
-```
+~~~~~~~~
 
 ## Additional Files
 
@@ -387,60 +408,66 @@ We need to make the following changes to our _Simple_ project so it's ready to d
 
 Within your `Pipfile` specify the version of Python we're using, which is `3.6`. Add these two lines at the bottom of the file.
 
-```python
+{title="Code",lang="python"}
 # Pipfile
 [requires]
 python_version = "3.6"
-```
+~~~~~~~~
 
 Then run `pipenv lock` to generate the appropriate `Pipfile.lock`.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (simple) $ pipenv lock
-```
+~~~~~~~~
 
 Heroku actually looks in our `Pipfile.lock` for information on our virtual environment, which is why we add the language setting here.
 
 Then create a `Procfile` which is specific to Heroku.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (simple) $ touch Procfile
-```
+~~~~~~~~
 
 Open `Procfile` with your text editor and add the following:
 
-```
+{title="Code",lang="text"}
+~~~~~~~~
 web: gunicorn simple_project.wsgi --log-file -
-```
+~~~~~~~~
 
 Now we need to install [gunicorn](http://gunicorn.org/) which is a web server suitable for production. We'll continue to use Django's local server on our computer but will use gunicorn on Heroku.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (simple) $ pipenv install gunicorn
-```
+~~~~~~~~
 
 The final step is a one-line change to `settings.py`. Scroll down to the section called `ALLOWED_HOSTS` and add a `'*'` so it looks as follows:
 
-```python
+{title="Code",lang="python"}
 # simple_project/settings.py
 ALLOWED_HOSTS = ['*']
-```
+~~~~~~~~
 
 And we're done!
 
 Use `git status` to check our changes, add the new files, and then commit them:
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (simple) $ git status
 (simple) $ git add -A
 (simple) $ git commit -m "New updates for Heroku deployment"
-```
+~~~~~~~~
 
 And push to Bitbucket so we have an online backup:
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (simple) $ git push -u origin master
-```
+~~~~~~~~
 
 ## Deploy
 
@@ -456,31 +483,35 @@ Our process will be as follows:
 
 We can do the first step, creating a new Heroku app, from the command line with `heroku create`. Heroku will create a random name for our app, in my case `cryptic-oasis-40349`. Your name will be different.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (simple) $ heroku create
 Creating app... done, ⬢ cryptic-oasis-40349
 https://cryptic-oasis-40349.herokuapp.com/ | https://git.heroku.com/cryptic-oasis-40349.git
-```
+~~~~~~~~
 
 Now we need to add a "hook" for Heroku within git. This means that git will store both our settings for pushing code to Bitbucket and to Heroku. My Heroku app is called `cryptic-oasis-40349` so my command is as follows.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (simple) $ heroku git:remote -a cryptic-oasis-40349
-```
+~~~~~~~~
 
 You should replace `cryptic-oasis-40349` with the app-name Heroku provides.
 
 We only need to do one set of Heroku configurations at this point, which is to tell Heroku to ignore static files like CSS and JavaScript which Django by default tries to optimize for us. We'll cover this in later chapters so for now just run the following command.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (simple) $ heroku config:set DISABLE_COLLECTSTATIC=1
-```
+~~~~~~~~
 
 Now we can push our code to Heroku. Because we set our "hook" previously, it will go to Heroku.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (simple) $ git push heroku master
-```
+~~~~~~~~
 
 If we just typed `git push origin master` then the code is pushed to Bitbucket, not Heroku. Adding `heroku` to the command sends the code to Heroku. This is a little confusing the first few times.
 
@@ -488,15 +519,17 @@ Finally we need to make our Heroku app live. As websites grow in traffic they ne
 
 Type the following command.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (simple) $ heroku ps:scale web=1
-```
+~~~~~~~~
 
 We're done! The last step is to confirm our app is live and online. If you use the command `heroku open` your web browser will open a new tab with the URL of your app:
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (simple) $ heroku open
-```
+~~~~~~~~
 
 Mine is at [https://cryptic-oasis-40349.herokuapp.com/about/](https://cryptic-oasis-40349.herokuapp.com/about/). You can see both the homepage and about page are up now.
 
@@ -509,5 +542,5 @@ Mine is at [https://cryptic-oasis-40349.herokuapp.com/about/](https://cryptic-oa
 Congratulations on building and deploying your second Django project! This time we used templates, class-based views, explored
 URLConfs more fully, added basic tests, and used Heroku!
 
-Next up we'll move on to our first database-backed project and see where Django really shines. Continue on to [Chapter
-4: Message Board app]({{ site.baseurl }}{% post_url book/2010-01-01-message-board %}).
+Next up we'll move on to our first database-backed project and see where Django really shines. Continue on to **Chapter
+4: Message Board app**.

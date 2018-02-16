@@ -97,7 +97,7 @@ $ echo "hello, world"
 hello, world
 ~~~~~~~~
 
-Complete source code for all examples can be found on Github in the [Django for Beginners repository](https://github.com/wsvincent/djangoforbeginners).
+Complete source code for all examples can be found in the [official Github repository](https://github.com/wsvincent/djangoforbeginners).
 
 ## Conclusion
 
