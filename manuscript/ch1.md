@@ -33,11 +33,15 @@ Open your command line and try them out. The `$` dollar sign is our command line
 
 For example, let's change into our Desktop directory.
 
+{title="Command Line",lang="text"}
+
 ```
 $ cd ~/Desktop
 ```
 
 Note that our current location `~/Desktop` is automatically added before our command line prompt. To confirm we're in the proper location we can use `pwd` which will print out the path of our current directory.
+
+{title="Command Line",lang="text"}
 
 ```
 ~/Desktop $ pwd
@@ -48,6 +52,8 @@ On my Mac computer this shows that I'm using the user `wsv` and on the `desktop`
 
 Let's create a new directory folder with `mk_dir`, `cd` into it, and add a new file `index.html`.
 
+{title="Command Line",lang="text"}
+
 ```
 ~/Desktop $ mkdir new_folder
 ~/Desktop $ cd new_folder
@@ -56,12 +62,16 @@ Let's create a new directory folder with `mk_dir`, `cd` into it, and add a new f
 
 Now use `ls` to list all current files in our directory. You'll see there's just the newly created `index.html`.
 
+{title="Command Line",lang="text"}
+
 ```
 ~/Desktop/new_folder $ ls
 index.html
 ```
 
 As a final step return to the Desktop directory with `cd ..` and use `pwd` to confirm the location.
+
+{title="Command Line",lang="text"}
 
 ```
 ~/Desktop/new_folder $ cd ..
@@ -73,9 +83,13 @@ Advanced developers can use their keyboard and command line to navigate through 
 
 In this book I'll give you the exact instructions to run--you don't need to be an expert on the command line--but over time it's a good skill to have for any professional software developer. Two good free resources for further study are the [Command Line Crash Course](https://learnpythonthehardway.org/book/appendixa.html) and [CodeCademy’s Course on the Command Line](https://www.codecademy.com/learn/learn-the-command-line).
 
-## Install Python 3 on Mac OS X ([click here for Windows](#install-python-3-on-windows) or [Linux](#install-python-3-on-linux))
+A> Instructions are included below for Mac, Windows, and Linux computers.
+
+## Install Python 3 on Mac OS X
 
 Although Python 2 is installed by default on Mac computers, Python 3 is not. You can confirm this by typing `python --version` in the command line console and hitting Enter:
+
+{title="Command Line",lang="text"}
 
 ```
 $ python --version
@@ -83,6 +97,8 @@ Python 2.7.13
 ```
 
 To check if Python 3 is already installed try running the same command using `python3` instead of `python`.
+
+{title="Command Line",lang="text"}
 
 ```
 $ python3 --version
@@ -93,6 +109,8 @@ However most likely you'll see an error message since we need to install Python 
 
 Our first step is to install Apple's [Xcode](https://developer.apple.com/xcode/) package, so run the following command to install it:
 
+{title="Command Line",lang="text"}
+
 ```
 $ xcode-select --install
 ```
@@ -101,11 +119,15 @@ Click through all the confirmation commands (Xcode is a large program so this mi
 
 Next, install the package manager [Homebrew](https://brew.sh/) via the longish command below:
 
+{title="Command Line",lang="text"}
+
 ```
 $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
 To confirm Homebrew installed correctly, run this command:
+
+{title="Command Line",lang="text"}
 
 ```
 $ brew doctor
@@ -114,11 +136,15 @@ Your system is ready to brew.
 
 And now to install the latest version of Python, run the following command:
 
+{title="Command Line",lang="text"}
+
 ```
 $ brew install python3
 ```
 
 Now let's confirm which version was installed:
+
+{title="Command Line",lang="text"}
 
 ```
 $ python3 --version
@@ -126,6 +152,8 @@ Python 3.6.4
 ```
 
 To open a Python 3 interactive shell--this lets us run Python commands directly on our computer--simply type `python3` from the command line:
+
+{title="Command Line",lang="text"}
 
 ```
 $ python3
@@ -138,6 +166,8 @@ Type "help", "copyright", "credits" or "license" for more information.
 To exit the Python 3 interactive shell at any time type `Control-d` (the "Control" and "d" key at the same time).
 
 You can still run Python shells with Python 2 by simply typing `python`:
+
+{title="Command Line",lang="text"}
 
 ```
 $ python
@@ -152,16 +182,20 @@ Python is not included by default on Windows, however we can check if any versio
 
 Type the following command and hit RETURN:
 
+{title="Command Line",lang="text"}
+
 ```
 python --version
 Python 3.6.4
 ```
 
-If you see output like this, Python is already installed. _Most likely it will not be!_
+If you see output like this, Python is already installed. \_Most likely it will not be!
 
 To download Python 3, go to the [downloads section](https://www.python.org/downloads/) of the official Python website. Download the installer and make sure to click the _Add Python to PATH_ option, which will let use use `python` directly from the command-line. Otherwise we'd have to enter our system's full path and modify our environment variables manually.
 
 After Python has installed, run the following command in a new command-line console:
+
+{title="Command Line",lang="text"}
 
 ```
 python --version
@@ -189,6 +223,8 @@ The end result is that we will create a new virtual environment with `Pipenv` fo
 
 To install `Pipenv` we can use `pip3` which Homebrew automatically installed for us alongside Python 3.
 
+{title="Command Line",lang="text"}
+
 ```
 $ pip3 install pipenv
 ```
@@ -196,6 +232,8 @@ $ pip3 install pipenv
 ## Install Django
 
 To see `Pipenv` in action, let's create a new directory and install Django. First navigate to the Desktop, create a new directory `django`, and enter it with `cd`.
+
+{title="Command Line",lang="text"}
 
 ```
 $ cd ~/Desktop
@@ -205,11 +243,15 @@ $ cd django
 
 Now use Pipenv to install Django.
 
+{title="Command Line",lang="text"}
+
 ```
 $ pipenv install django
 ```
 
 If you look within our directory there are now two new files: `Pipfile` and `Pipfile.lock`. We have the information we need for a new virtual environment but we have not activated it yet. Let's do that with `pipenv shell`.
+
+{title="Command Line",lang="text"}
 
 ```
 $ pipenv shell
@@ -217,17 +259,23 @@ $ pipenv shell
 
 If successful you'll see parentheses on your command line with the environment activated. It will take the format of the directory name and random characters. On my computer, I see the below but you will see something slightly different.
 
+{title="Command Line",lang="text"}
+
 ```
 (django-JmZ1NTQw) $
 ```
 
 This means it's working! Create a new Django project called `test` with the following command. Don't forget that period `.` at the end which will create the project in the **current directory**. If you don't explicitly specify the location Django will create a directory **before** your Django directory.
 
+{title="Command Line",lang="text"}
+
 ```
 (django-JmZ1NTQw) $ django-admin startproject test_project .
 ```
 
 Now let's confirm everything is working by running Django's local web server.
+
+{title="Command Line",lang="text"}
 
 ```
 (django-JmZ1NTQw) $ python manage.py runserver
@@ -238,6 +286,8 @@ If you visit [http://127.0.0.1:8000/](http://127.0.0.1:8000/) you should see the
 ![Django welcome page](images/00_django_welcome.png)
 
 To stop our local server type `Control-c`. Then exit our virtual environment using the command `exit`.
+
+{title="Command Line",lang="text"}
 
 ```
 (django-JmZ1NTQw) $ exit
@@ -255,6 +305,8 @@ It's worth noting that only one virtual environment can be active in a command l
 
 On a Mac, because Homebrew is already installed we can simply type `brew install git` on the command line:
 
+{title="Command Line",lang="text"}
+
 ```
 $ brew install git
 ```
@@ -264,6 +316,8 @@ On Windows you should download Git from [Git for Windows](https://Git-for-window
 Once installed, we need to do a one-time _system_ setup to configure it by declaring the name and email address you want associated with all your Git commits (more on this shortly).
 
 Within the command line console type the following two lines. Make sure to update them so that `Your Name` is...your name, and replace `your.email.address@example.com` with your real email address.
+
+{title="Command Line",lang="text"}
 
 ```
 $ git config --global user.name "Your Name"
