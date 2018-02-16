@@ -43,19 +43,19 @@ Now type the following template code for our newly-created file.
 
 ```html
 <!-- templates/registration/login.html -->
-{% raw %}{% extends 'base.html' %}
+{% extends 'base.html' %}
 
-{% block content %}{% endraw %}
+{% block content %}
 <h2>Login</h2>
 <form method="post">
-  {% raw %}{% csrf_token %}
-  {{ form.as_p }}{% endraw %}
+  {% csrf_token %}
+  {{ form.as_p }}
   <button type="submit">Login</button>
 </form>
-{% raw %}{% endblock content %}{% endraw %}
+{% endblock content %}
 ```
 
-We're using HTML `<form></form>` tags and specifying the POST method since we're sending data to the server (we'd use GET if we were requesting data, such as in a search engine form). We add `{% raw %}{% csrf_token %}{% endraw %}` for security concerns, namely to prevent a XSS Attack. The form's contents are outputted between paragraph tags thanks to `{% raw %}{{ form.as_p }}{% endraw %}` and then we add a "submit" button.
+We're using HTML `<form></form>` tags and specifying the POST method since we're sending data to the server (we'd use GET if we were requesting data, such as in a search engine form). We add `{% csrf_token %}` for security concerns, namely to prevent a XSS Attack. The form's contents are outputted between paragraph tags thanks to `{{ form.as_p }}` and then we add a "submit" button.
 
 The final step is we need to specify _where_ to redirect the user upon a successful login. We can set this with the `LOGIN_REDIRECT_URL` setting. At the bottom of the `settings.py` file add the following:
 
@@ -82,14 +82,14 @@ For now, we can simply place this code in a prominent position. Later on we can 
 <!-- templates/base.html -->
 ...
 </header>
-{% raw %}{% if user.is_authenticated %}{% endraw %}
-  <p>Hi {% raw %}{{ user.username }}{% endraw %}!</p>
-{% raw %}{% else %}{% endraw %}
+{% if user.is_authenticated %}
+  <p>Hi {{ user.username }}!</p>
+{% else %}
   <p>You are not logged in.</p>
-  <a href="{% raw %}{% url 'login' %}{% endraw %}">login</a>
-{% raw %}{% endif %}
+  <a href="{% url 'login' %}">login</a>
+{% endif %}
 {% block content %}
-{% endblock content %}{% endraw %}
+{% endblock content %}
 ```
 
 If the user is logged in we say hello to them by name, if not we provide a link to our newly created login page.
@@ -107,10 +107,10 @@ In our `base.html` file add a one-line link for logging out.
 ```html
 <!-- templates/base.html-->
 ...
-{% raw %}{% if user.is_authenticated %}{% endraw %}
-  <p>Hi {% raw %}{{ user.username }}{% endraw %}!</p>
-  <p><a href="{% raw %}{% url 'logout' %}{% endraw %}">logout</a></p>
-{% raw %}{% else %}{% endraw %}
+{% if user.is_authenticated %}
+  <p>Hi {{ user.username }}!</p>
+  <p><a href="{% url 'logout' %}">logout</a></p>
+{% else %}
 ...
 ```
 
@@ -227,16 +227,16 @@ Add then populate it with the code below.
 
 ```html
 <!-- templates/signup.html -->
-{% raw %}{% extends 'base.html' %}
+{% extends 'base.html' %}
 
-{% block content %}{% endraw %}
+{% block content %}
 <h2>Sign up</h2>
 <form method="post">
-  {% raw %}{% csrf_token %}
-  {{ form.as_p }}{% endraw %}
+  {% csrf_token %}
+  {{ form.as_p }}
   <button type="submit">Sign up</button>
 </form>
-{% raw %}{% endblock %}{% endraw %}
+{% endblock %}
 ```
 
 This format is very similar to what we've done before. We extend our base template at the top, place our logic between `<form></form>` tags, use the `csrf_token` for security, display the form's content in paragraph tags with `form.as_p`, and include a submit button.

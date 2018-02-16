@@ -240,20 +240,20 @@ Update the `base.html` template as follows.
       <h1><a href="/">Django blog</a></h1>
     </header>
     <div class="container">
-      {% raw %}{% block content %}
-      {% endblock content %}{% endraw %}
+      {% block content %}
+      {% endblock content %}
     </div>
   </body>
 </html>
 ~~~~~~~~
 
-Note that code between `{% raw %}{% block content %}` and
-`{% endblock content %}{% endraw %}` can be filled by other templates. Speaking of which, here is the code for `home.html`.
+Note that code between `{% block content %}` and
+`{% endblock content %}` can be filled by other templates. Speaking of which, here is the code for `home.html`.
 
 {title="Code",lang="html"}
 ~~~~~~~~
 <!-- templates/home.html -->
-{% raw %}{% extends 'base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
   {% for post in object_list %}
@@ -262,7 +262,7 @@ Note that code between `{% raw %}{% block content %}` and
       <p>{{ post.body }}</p>
     </div>
   {% endfor %}
-{% endblock content %}{% endraw %}
+{% endblock content %}
 ~~~~~~~~
 
 At the top we note that this template extends `base.html` and then wrap our desired code with `content` blocks. Then we use the Django Templating Language to set up a simple _for loop_ for each blog post. Note that `object_list` comes from `ListView` and contains all the objects in our view.
@@ -312,16 +312,16 @@ header h1 a {
 }
 ~~~~~~~~
 
-Last step now. We need to add the static files to our templates by adding `{% raw %}{% load staticfiles %}{% endraw %}` to the top of `base.html`. Because our other templates inherit from `base.html` we only have to add this once. And include a new line at the bottom of the `<head></head>` code that explicitly references our new `base.css` file.
+Last step now. We need to add the static files to our templates by adding `{% load staticfiles %}` to the top of `base.html`. Because our other templates inherit from `base.html` we only have to add this once. And include a new line at the bottom of the `<head></head>` code that explicitly references our new `base.css` file.
 
 {title="Code",lang="html"}
 ~~~~~~~~
 <!-- templates/base.html -->
-{% raw %}{% load static %}{% endraw %}
+{% load static %}
 <html>
   <head>
     <title>Django blog</title>
-    <link rel="stylesheet" href="{% raw %}{% static 'css/base.css' %}{% endraw %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
   </head>
   ...
 ~~~~~~~~
@@ -337,12 +337,12 @@ We can do a little better though. How about if we add a custom font and some mor
 {title="Code",lang="html"}
 ~~~~~~~~
 <!-- templates/base.html -->
-{% raw %}{% load static %}{% endraw %}
+{% load static %}
 <html>
 <head>
   <title>Django blog</title>
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400" rel="stylesheet">
-  <link rel="stylesheet" href="{% raw %}{% static 'css/base.css' %}{% endraw %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
 </head>
   ...
 ~~~~~~~~
@@ -443,15 +443,15 @@ And then type in the following code:
 {title="Code",lang="html"}
 ~~~~~~~~
 <!-- templates/post_detail.html -->
-{% raw %}{% extends 'base.html' %}
+{% extends 'base.html' %}
 
-{% block content %}{% endraw %}
+{% block content %}
   <div class="post-entry">
-    <h2>{% raw %}{{ post.title }}{% endraw %}</h2>
-    <p>{% raw %}{{ post.body }}{% endraw %}</p>
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.body }}</p>
   </div>
 
-{% raw %}{% endblock content %}{% endraw %}
+{% endblock content %}
 ~~~~~~~~
 
 At the top we specify that this template inherits from `base.html`. And then display the `title` and `body` from our context object, which `DetailView` makes accessible as `post`.
@@ -461,15 +461,15 @@ Personally I found the naming of context objects in generic views extremely conf
 {title="Code",lang="html"}
 ~~~~~~~~
 <!-- templates/post_detail.html -->
-{% raw %}{% extends 'base.html' %}
+{% extends 'base.html' %}
 
-{% block content %}{% endraw %}
+{% block content %}
   <div class="post-entry">
-    <h2>{% raw %}{{ object.title }}{% endraw %}</h2>
-    <p>{% raw %}{{ object.body }}{% endraw %}</p>
+    <h2>{{ object.title }}</h2>
+    <p>{{ object.body }}</p>
   </div>
 
-{% raw %}{% endblock content %}{% endraw %}
+{% endblock content %}
 ~~~~~~~~
 
 And if you find using `post` or `object` confusing, we can also explicitly set the name of the context object in our view. So if we wanted to call it `anything_you_want` and then use that in the template, the code would look as follows and it would work the same.
@@ -487,15 +487,15 @@ class BlogDetailView(DetailView):
 {title="Code",lang="html"}
 ~~~~~~~~
 <!-- templates/post_detail.html -->
-{% raw %}{% extends 'base.html' %}
+{% extends 'base.html' %}
 
-{% block content %}{% endraw %}
+{% block content %}
   <div class="post-entry">
-    <h2>{% raw %}{{ anything_you_want.title }}{% endraw %}</h2>
-    <p>{% raw %}{{ anything_you_want.body }}{% endraw %}</p>
+    <h2>{{ anything_you_want.title }}</h2>
+    <p>{{ anything_you_want.body }}</p>
   </div>
 
-{% raw %}{% endblock content %}{% endraw %}
+{% endblock content %}
 ~~~~~~~~
 
 The "magic" naming of the context object is a price you pay for the ease and simplicity of using generic views. They're great if you know what they're doing but can be hard to customize if you want different behavior.
@@ -527,24 +527,24 @@ If you now start up the server with `python manage.py runserver` and go directly
 
 Woohoo! You can also go to [http://127.0.0.1:8000/post/2/](http://127.0.0.1:8000/post/2/) to see the second entry.
 
-To make our life easier, we should update the link on the homepage so we can directly access individual blog posts from there. Currently in `home.html` our link is empty: `<a href="">`. Update it to `<a href="{% raw %}{% url 'post_detail' post.pk %}{% endraw %}">`.
+To make our life easier, we should update the link on the homepage so we can directly access individual blog posts from there. Currently in `home.html` our link is empty: `<a href="">`. Update it to `<a href="{% url 'post_detail' post.pk %}">`.
 
 {title="Code",lang="html"}
 ~~~~~~~~
 <!-- templates/home.html -->
-{% raw %}{% extends 'base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
-  {% for post in object_list %}{% endraw %}
+  {% for post in object_list %}
   <div class="post-entry">
-    <h2><a href="{% raw %}{% url 'post_detail' post.pk %}{% endraw %}">{% raw %}{{ post.title }}{% endraw %}</a></h2>
-    <p>{% raw %}{{ post.body }}{% endraw %}</p>
+    <h2><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h2>
+    <p>{{ post.body }}</p>
   </div>
-  {% raw %}{% endfor %}
-{% endblock content %}{% endraw %}
+  {% endfor %}
+{% endblock content %}
 ~~~~~~~~
 
-We start off by telling our Django template we want to reference a URLConf by using the code `{% raw %}{% url ... %}{% endraw %}`. Which URL? The one named `post_detail`, which is the name we gave `BlogDetailView` in our URLConf just a moment ago. If we look at `post_detail` in our URLConf, we see that it expects to be passed an argument `pk` representing the primary key for the blog post. Fortunately, Django has already created and included this `pk` field on our `post` object. We pass it into the URLConf by adding it in the template as `post.pk`.
+We start off by telling our Django template we want to reference a URLConf by using the code `{% url ... %}`. Which URL? The one named `post_detail`, which is the name we gave `BlogDetailView` in our URLConf just a moment ago. If we look at `post_detail` in our URLConf, we see that it expects to be passed an argument `pk` representing the primary key for the blog post. Fortunately, Django has already created and included this `pk` field on our `post` object. We pass it into the URLConf by adding it in the template as `post.pk`.
 
 To confirm everything works, refresh the main page at [http://127.0.0.1:8000/](http://127.0.0.1:8000/) and click on the title of each blog post to confirm the new links work.
 

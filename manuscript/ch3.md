@@ -236,11 +236,11 @@ Django has a minimal templating language for adding links and basic logic in our
 {title="Code",lang="html"}
 <!-- pages/base.html -->
 <header>
-  <a href="{% raw %}{% url 'home' %}{% endraw %}">Home</a> | <a href="{% raw %}{% url 'about' %}{% endraw %}">About</a>
+  <a href="{% url 'home' %}">Home</a> | <a href="{% url 'about' %}">About</a>
 </header>
 
-{% raw %}{% block content %}
-{% endblock %}{% endraw %}
+{% block content %}
+{% endblock %}
 ~~~~~~~~
 
 At the bottom we've added a `block` tag called `content`. Blocks can be overwritten by child templates via inheritance.
@@ -249,20 +249,20 @@ Let's update our `home.html` and `about.html` to extend the `base.html` template
 
 {title="Code",lang="html"}
 <!-- templates/home.html -->
-{% raw %}{% extends 'base.html' %}{% endraw %}
+{% extends 'base.html' %}
 
-{% raw %}{% block content %}
+{% block content %}
 <h1>Homepage.</h1>
-{% endblock %}{% endraw %}
+{% endblock %}
 ~~~~~~~~
 
 {title="Code",lang="html"}
 <!-- templates/about.html -->
-{% raw %}{% extends 'base.html' %}{% endraw %}
+{% extends 'base.html' %}
 
-{% raw %}{% block content %}
+{% block content %}
 <h1>About page.</h1>
-{% endblock %}{% endraw %}
+{% endblock %}
 ~~~~~~~~
 
 Now if you start up the server with `python manage.py runserver` and open up our webpages again at

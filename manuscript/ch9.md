@@ -43,7 +43,7 @@ Now we can create four new templates:
 (msg) $ touch templates/signup.html
 ```
 
-Here's the HTML code for each file to use. The `base.html` will be inherited by every other template in our project. By using a block like {% raw %}`{% block content %}`{% endraw %} we can later override the content _just in this place_ in other templates.
+Here's the HTML code for each file to use. The `base.html` will be inherited by every other template in our project. By using a block like `{% block content %}` we can later override the content _just in this place_ in other templates.
 
 ```html
 <!-- templates/base.html -->
@@ -55,8 +55,8 @@ Here's the HTML code for each file to use. The `base.html` will be inherited by 
 </head>
 <body>
   <main>
-    {% raw %}{% block content %}
-    {% endblock %}{% endraw %}
+    {% block content %}
+    {% endblock %}
   </main>
 </body>
 </html>
@@ -64,7 +64,7 @@ Here's the HTML code for each file to use. The `base.html` will be inherited by 
 
 ```html
 <!-- templates/home.html -->
-{% raw %}{% extends 'base.html' %}
+{% extends 'base.html' %}
 
 {% block title %}Home{% endblock %}
 
@@ -77,12 +77,12 @@ Here's the HTML code for each file to use. The `base.html` will be inherited by 
   <a href="{% url 'login' %}">login</a> |
   <a href="{% url 'signup' %}">signup</a>
 {% endif %}
-{% endblock %}{% endraw %}
+{% endblock %}
 ```
 
 ```html
 <!-- templates/registration/login.html -->
-{% raw %}{% extends 'base.html' %}
+{% extends 'base.html' %}
 
 {% block title %}Login{% endblock %}
 
@@ -93,12 +93,12 @@ Here's the HTML code for each file to use. The `base.html` will be inherited by 
   {{ form.as_p }}
   <button type="submit">Login</button>
 </form>
-{% endblock %}{% endraw %}
+{% endblock %}
 ```
 
 ```html
 <!-- templates/signup.html -->
-{% raw %}{% extends 'base.html' %}
+{% extends 'base.html' %}
 
 {% block title %}Sign Up{% endblock %}
 
@@ -109,7 +109,7 @@ Here's the HTML code for each file to use. The `base.html` will be inherited by 
     {{ form.as_p }}
     <button type="submit">Sign up</button>
   </form>
-{% endblock %}{% endraw %}
+{% endblock %}
 ```
 
 Our templates are now all set. Still to go are our urls and views.

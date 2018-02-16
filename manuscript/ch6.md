@@ -10,18 +10,18 @@ Forms are very complicated. Any time you are accepting user input there are secu
 
 Fortunately for us [Django Forms](https://docs.djangoproject.com/en/2.0/topics/forms/) abstract away much of the difficulty and provide a rich set of tools to handle common use cases working with forms.
 
-To start, update our base template to display a link to a page for entering new blog posts. It will take the form `<a href="{% raw %}{% url 'post_new' %}{% endraw %}"></a>` where `post_new` is the name for our URL.
+To start, update our base template to display a link to a page for entering new blog posts. It will take the form `<a href="{% url 'post_new' %}"></a>` where `post_new` is the name for our URL.
 
 Your updated file will look as follows:
 
 ```html
 <!-- templates/base.html -->
-{% raw %}{% load staticfiles %}{% endraw %}
+{% load staticfiles %}
 <html>
   <head>
     <title>Django blog</title>
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400" rel="stylesheet">
-    <link rel="stylesheet" href="{% raw %}{% static 'css/base.css' %}{% endraw %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
   </head>
   <body>
     <div class="container">
@@ -30,11 +30,11 @@ Your updated file will look as follows:
           <h1><a href="/">Django blog</a></h1>
         </div>
         <div class="nav-right">
-          <a href="{% raw %}{% url 'post_new' %}{% endraw %}">+ New Blog Post</a>
+          <a href="{% url 'post_new' %}">+ New Blog Post</a>
         </div>
       </header>
-      {% raw %}{% block content %}
-      {% endblock content %}{% endraw %}
+      {% block content %}
+      {% endblock content %}
     </div>
   </body>
 </html>
@@ -94,23 +94,23 @@ And then add the following code:
 
 ```html
 <!-- templates/post_new.html -->
-{% raw %}{% extends 'base.html' %}
+{% extends 'base.html' %}
 
-{% block content %}{% endraw %}
+{% block content %}
     <h1>New post</h1>
-    <form action="" method="post">{% raw %}{% csrf_token %}
-      {{ form.as_p }}{% endraw %}
+    <form action="" method="post">{% csrf_token %}
+      {{ form.as_p }}
       <input type="submit" value="Save" />
     </form>
-{% raw %}{% endblock %}{% endraw %}
+{% endblock %}
 ```
 
 Let's breakdown what we've done:
 
 * On the top line we inherit from our base template.
 * Use HTML `<form>` tags with the method POST since we're _sending_ data. If we were receiving data from a form, for example in a search box, we would use GET.
-* Add a {% raw %}[{% csrf_token %}{% endraw %}](https://docs.djangoproject.com/en/2.0/ref/csrf/) which Django provides to protect our form from cross-site scripting attacks. **You should use it for all your Django forms.**
-* Then to output our form data we use {% raw %}`{{ form.as_p }}`{% endraw %} which renders it within paragraph `<p>` tags.
+* Add a [{% csrf_token %}](https://docs.djangoproject.com/en/2.0/ref/csrf/) which Django provides to protect our form from cross-site scripting attacks. **You should use it for all your Django forms.**
+* Then to output our form data we use `{{ form.as_p }}` which renders it within paragraph `<p>` tags.
 * Finally specify an input type of submit and assign it the value "Save"
 
 To view our work, start the server with `python manage.py runserver` and go to the homepage at [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
@@ -182,19 +182,19 @@ To start, let's add a new link to `post_detail.html` so that the option to edit 
 
 ```html
 <!-- templates/post_detail.html -->
-{% raw %}{% extends 'base.html' %}
+{% extends 'base.html' %}
 
-{% block content %}{% endraw %}
+{% block content %}
   <div class="post-entry">
-    <h2>{% raw %}{{ object.title }}{% endraw %}</h2>
-    <p>{% raw %}{{ object.body }}{% endraw %}</p>
+    <h2>{{ object.title }}</h2>
+    <p>{{ object.body }}</p>
   </div>
 
-  <a href="{% raw %}{% url 'post_edit' post.pk %}{% endraw %}">+ Edit Blog Post</a>
-{% raw %}{% endblock content %}{% endraw %}
+  <a href="{% url 'post_edit' post.pk %}">+ Edit Blog Post</a>
+{% endblock content %}
 ```
 
-We've added a link using `<a href>...</a>` and the Django template engine's `{% raw %}{% url ... %}{% endraw %}` tag. Within it we've specified the target name of our url, which will be called `post_edit` and also passed the parameter needed, which is the primary key of the post `post.pk`.
+We've added a link using `<a href>...</a>` and the Django template engine's `{% url ... %}` tag. Within it we've specified the target name of our url, which will be called `post_edit` and also passed the parameter needed, which is the primary key of the post `post.pk`.
 
 Next we create the template for our edit page called `post_edit.html`.
 
@@ -206,15 +206,15 @@ And add the following code:
 
 ```html
 <!-- templates/post_edit.html -->
-{% raw %}{% extends 'base.html' %}
+{% extends 'base.html' %}
 
-{% block content %}{% endraw %}
+{% block content %}
     <h1>Edit post</h1>
-    <form action="" method="post">{% raw %}{% csrf_token %}
-      {{ form.as_p }}{% endraw %}
+    <form action="" method="post">{% csrf_token %}
+      {{ form.as_p }}
     <input type="submit" value="Update" />
 </form>
-{% raw %}{% endblock %}{% endraw %}
+{% endblock %}
 ```
 
 We again use HTML `<form></form>` tags, Django's `csrf_token` for security, `form.as_p` to display our form fields with paragraph tags, and finally give it the value "Update" on the submit button.
@@ -295,17 +295,17 @@ Let's start by adding a link to delete blog posts on our individual blog page, `
 
 ```html
 <!-- templates/post_detail.html -->
-{% raw %}{% extends 'base.html' %}
+{% extends 'base.html' %}
 
-{% block content %}{% endraw %}
+{% block content %}
   <div class="post-entry">
-    <h2>{% raw %}{{ object.title }}{% endraw %}</h2>
-    <p>{% raw %}{{ object.body }}{% endraw %}</p>
+    <h2>{{ object.title }}</h2>
+    <p>{{ object.body }}</p>
   </div>
 
-  <p><a href="{% raw %}{% url 'post_edit' post.pk %}{% endraw %}">+ Edit Blog Post</a></p>
-  <p><a href="{% raw %}{% url 'post_delete' post.pk %}{% endraw %}">+ Delete Blog Post</a></p>
-{% raw %}{% endblock content %}{% endraw %}
+  <p><a href="{% url 'post_edit' post.pk %}">+ Edit Blog Post</a></p>
+  <p><a href="{% url 'post_delete' post.pk %}">+ Delete Blog Post</a></p>
+{% endblock content %}
 ```
 
 Then create a new file for our delete page template. First quit the local server `Control-c` and then type the following command:
@@ -318,15 +318,15 @@ And fill it with this code:
 
 ```html
 <!-- templates/post_delete.html -->
-{% raw %}{% extends 'base.html' %}
+{% extends 'base.html' %}
 
-{% block content %}{% endraw %}
+{% block content %}
     <h1>Delete post</h1>
-    <form action="" method="post">{% raw %}{% csrf_token %}{% endraw %}
-      <p>Are you sure you want to delete "{% raw %}{{ post.title }}{% endraw %}"?</p>
+    <form action="" method="post">{% csrf_token %}
+      <p>Are you sure you want to delete "{{ post.title }}"?</p>
       <input type="submit" value="Confirm" />
     </form>
-{% raw %}{% endblock %}{% endraw %}
+{% endblock %}
 ```
 
 Note we are using `post.title` here to display the title of our blog post. We could also just use `object` as it too is provided by `DetailView`.

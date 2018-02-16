@@ -243,9 +243,9 @@ In our templates file `home.html` we can use the [Django Templating Language's](
 <!-- templates/home.html -->
 <h1>Message board homepage</h1>
 <ul>
-  {% raw %}{% for post in object_list %}
+  {% for post in object_list %}
     <li>{{ post }}</li>
-  {% endfor %}{% endraw %}
+  {% endfor %}
 </ul>
 ~~~~~~~~
 
