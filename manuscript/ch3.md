@@ -234,6 +234,7 @@ Well we can! Let's create a `base.html` file containing a header with links to o
 Django has a minimal templating language for adding links and basic logic in our templates. To add links we can use the [built-in url tag](https://docs.djangoproject.com/en/2.0/ref/templates/builtins/#url). Remember how we added optional URL names to our url routers? This is why. The `url` tag uses these names to automatically create links for us.
 
 {title="Code",lang="html"}
+~~~~~~~~
 <!-- pages/base.html -->
 <header>
   <a href="{% url 'home' %}">Home</a> | <a href="{% url 'about' %}">About</a>
@@ -248,6 +249,7 @@ At the bottom we've added a `block` tag called `content`. Blocks can be overwrit
 Let's update our `home.html` and `about.html` to extend the `base.html` template.
 
 {title="Code",lang="html"}
+~~~~~~~~
 <!-- templates/home.html -->
 {% extends 'base.html' %}
 
@@ -257,6 +259,7 @@ Let's update our `home.html` and `about.html` to extend the `base.html` template
 ~~~~~~~~
 
 {title="Code",lang="html"}
+~~~~~~~~
 <!-- templates/about.html -->
 {% extends 'base.html' %}
 
@@ -292,6 +295,7 @@ If you look within our `pages` app, Django already provided a `tests.py` file we
 following code:
 
 {title="Code",lang="python"}
+~~~~~~~~
 # pages/tests.py
 from django.test import SimpleTestCase
 
@@ -409,6 +413,7 @@ We need to make the following changes to our _Simple_ project so it's ready to d
 Within your `Pipfile` specify the version of Python we're using, which is `3.6`. Add these two lines at the bottom of the file.
 
 {title="Code",lang="python"}
+~~~~~~~~
 # Pipfile
 [requires]
 python_version = "3.6"
@@ -447,6 +452,7 @@ Now we need to install [gunicorn](http://gunicorn.org/) which is a web server su
 The final step is a one-line change to `settings.py`. Scroll down to the section called `ALLOWED_HOSTS` and add a `'*'` so it looks as follows:
 
 {title="Code",lang="python"}
+~~~~~~~~
 # simple_project/settings.py
 ALLOWED_HOSTS = ['*']
 ~~~~~~~~

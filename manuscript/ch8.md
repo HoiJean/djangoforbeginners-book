@@ -8,15 +8,6 @@ Our custom user model in this app will simply extend the existing `User` model. 
 
 If we use a custom user model from the beginning, we can future-proof our Django applications. **Always use a custom user model for new projects.**
 
-<!-- For further context, Django core developer Russell Keith-Magee has an <a href="https://www.youtube.com/watch?v=458KmAKq0bQ" target="\_blank">excellent video talk</a> that dives into the details of `User` and some of the shortcomings of its legacy history. -->
-
-<!-- And given Django's legacy history there are a few things about the built-in `User` model that are often changed in production websites. For example, Django uses the username/email/password pattern for both signup and login, however these days it is more common to simply use email/password. The username field is not case sensitive so "Will" and "will" are treated as distinct usernames. The email field is also not unique by default, so two different usernames can in theory have the same email address. Finally the `User` model has "first name" and "last name" fields on it but these are not friendly to international naming standards: in many cultures either one name or a string of names is used. -->
-
-<!-- Django core developer Russell Keith-Magee has an <a href="https://www.youtube.com/watch?v=458KmAKq0bQ" target="\_blank">excellent video talk</a> that explores some of the legacy shortcomings of Django's default `User` model.
-
-All that said, the Django `User` model still gets most things right and it manages all the passwords, security, and authorizations for us. For our *social messaging* app we will use a custom user model that extends the default `User` model but not make any changes to it. Let's get started. -->
-
-Complete source code for this chapter can be found <a href="https://github.com/wsvincent/djangoforbeginners/tree/master/ch8-custom-user-model" target="\_blank">on Github</a>.
 
 ## Setup
 
@@ -32,7 +23,8 @@ We're calling our app for managing users `users` here but you'll also see it fre
 
 Here are the commands to run:
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 $ cd ~/Desktop
 $ mkdir msg && cd msg
 $ pipenv install django
@@ -40,7 +32,7 @@ $ pipenv shell
 (msg) $ django-admin startproject msg_project .
 (msg) $ python manage.py startapp users
 (msg) $ python manage.py runserver
-```
+~~~~~~~~
 
 Note that we **did not** run `migrate` to configure our database. It's important to wait until **after** we've created our new custom user model before doing so given how tightly connected the user model is to the rest of Django.
 
@@ -61,7 +53,8 @@ We'll go through each in detail.
 
 We've created a new app `users` so we need to add it to our `INSTALLED_APPS` setting. Within `settings.py` add it at the bottom of the list.
 
-```python
+{title="Code",lang="python"}
+~~~~~~~~
 # msg_project/settings.py
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -72,16 +65,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users', # new
 ]
-```
+~~~~~~~~
 
 Then in the same `settings.py` file we need to swap the default user model for our custom user model. We can do this with the setting [AUTH_USER_MODEL](https://docs.djangoproject.com/en/2.0/ref/settings/#std:setting-AUTH_USER_MODEL).
 
 At the bottom of the `settings.py` file add the following line:
 
-```python
+{title="Code",lang="python"}
+~~~~~~~~
 # msg_project/settings.py
 AUTH_USER_MODEL = 'users.CustomUser'
-```
+~~~~~~~~
 
 This line says tells Django that the user auth model to use is in our `users` app and called `CustomUser`. Now we need to create it.
 
@@ -97,7 +91,8 @@ We can create our own `CustomUserManager` and `CustomUser` by extending the mode
 
 Update `users/models.py` as follows.
 
-```python
+{title="Code",lang="python"}
+~~~~~~~~
 # users/models.py
 from django.contrib.auth.models import AbstractUser, UserManager
 
@@ -107,7 +102,7 @@ class CustomUserManager(UserManager):
 
 class CustomUser(AbstractUser):
     objects = CustomUserManager()
-```
+~~~~~~~~
 
 Our `CustomUserManager` literally does nothing at this point except extend `UserManager`, which means it contains all of `UserManager`'s code which we can modify later, if needed.
 
@@ -123,13 +118,15 @@ Whenever we sign up for a new account or login we're dealing with forms. Django 
 
 Stop the local server with `Control+c` and create a new file in the `users` app called `forms.py`.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (msg) $ touch users/forms.py
-```
+~~~~~~~~
 
 We'll update it with the following code to largely subclass the existing forms.
 
-```python
+{title="Code",lang="python"}
+~~~~~~~~
 # users/forms.py
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
@@ -148,7 +145,7 @@ class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = CustomUser
         fields = UserChangeForm.Meta.fields
-```
+~~~~~~~~
 
 At the top we're importing the existing forms which we'll extend as well as our own newly-created `CustomUser` model. We create a new class called `CustomUserCreationForm` that extends the existing `UserCreationForm`. Notably we specify that the model to use is `CustomUser` not the default user model.
 
@@ -164,7 +161,8 @@ To do that we will update the existing [UserAdmin](https://docs.djangoproject.co
 
 There's a bit of code in this one although ultimately all we're doing is extending `UserAdmin` to use our new `CustomUser` model and our two new forms.
 
-```python
+{title="Code",lang="python"}
+~~~~~~~~
 # users/admin.py
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
@@ -179,7 +177,7 @@ class CustomUserAdmin(UserAdmin):
     form = CustomUserChangeForm
 
 admin.site.register(CustomUser, CustomUserAdmin)
-```
+~~~~~~~~
 
 At the top we import the existing `UserAdmin` as well as our new forms and user model. Then we create a new class `CustomUserAdmin` and specify it should use the new model and forms. Finally we "register" our changes with the admin, just as we do with our apps.
 
@@ -187,10 +185,11 @@ And we're done!
 
 Go ahead and run `makemigrations` and `migrate` for the first time to create a new database that uses the custom user model.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (msg) $ python manage.py makemigrations
 (msg) $ python manage.py migrate
-```
+~~~~~~~~
 
 ## Superuser
 
@@ -198,17 +197,19 @@ Let's create a superuser account to confirm that everything is working as expect
 
 On the command line type the following command and go through the prompts.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (msg) $ python manage.py createsuperuser
-```
+~~~~~~~~
 
 The fact that this works is the first proof our custom user model works as expected. Let's view things in the admin too to be extra sure.
 
 Start up the web server.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (msg) $ python manage.py runserver
-```
+~~~~~~~~
 
 Then navigate to the admin at [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin).
 
@@ -222,4 +223,4 @@ If you click on the link for "Users" you should see your superuser account.
 
 With our custom user model complete, we can now focus on building out the rest of our _social messaging_ app. In next chapter we'll configure and customize signup, login, and logout pages.
 
-Continue on to [Chapter 9: Signup, Login, and Logout]({{ site.baseurl }}{% post_url book/2010-01-01-signup-login-logout %}).
+Continue on to **Chapter 9: Signup, Login, and Logout**.

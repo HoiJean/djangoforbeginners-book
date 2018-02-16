@@ -2,7 +2,6 @@
 
 Now that we have a working custom user model we can add the functionality every website needs: the ability to signup, login, and logout users. Django provides everything we need for login and logout but we will need to create our own form to sign up new users. We'll also build a basic homepage with links to all three features so we don't have to type in the URLs by hand all the time.
 
-Complete source code can be <a href="https://github.com/wsvincent/djangoforbeginners/tree/master/ch9-signup-login-logout" target="\_blank">found on Github</a>.
 
 ## Templates
 
@@ -10,17 +9,19 @@ By default the Django template loader looks for templates in a nested structure 
 
 Let's create a new `templates` directory and within it a `registration` folder as that's where Django will look for the login template.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (msg) $ mkdir templates
 (msg) $ mkdir templates/registration
-```
+~~~~~~~~
 
 Now we need to tell Django about this new directory by updating the configuration for `'DIRS'` in `settings.py`. This is a one-line change.
 
-```python
+{title="Code",lang="python"}
+~~~~~~~~
 # msg_project/settings.py
 'DIRS': [os.path.join(BASE_DIR, 'templates')],
-```
+~~~~~~~~
 
 If you think about what happens when you login or logout of a site, you are immediately redirected to a subsequent page. We need to tell Django where to send users in each case. The `LOGIN_REDIRECT_URL` and `LOGOUT_REDIRECT_URL` settings do that. We'll configure both to redirect to our homepage which will have the named URL of `'home'`.
 
@@ -28,24 +29,27 @@ Remember that when we create our URL routes we have the option to add a `name` t
 
 Add these two lines at the bottom of the `settings.py` file.
 
-```python
+{title="Code",lang="python"}
+~~~~~~~~
 # msg_project/settings.py
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
-```
+~~~~~~~~
 
 Now we can create four new templates:
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (msg) $ touch templates/registration/login.html
 (msg) $ touch templates/base.html
 (msg) $ touch templates/home.html
 (msg) $ touch templates/signup.html
-```
+~~~~~~~~
 
 Here's the HTML code for each file to use. The `base.html` will be inherited by every other template in our project. By using a block like `{% block content %}` we can later override the content _just in this place_ in other templates.
 
-```html
+{title="Code",lang="html"}
+~~~~~~~~
 <!-- templates/base.html -->
 <!DOCTYPE html>
 <html>
@@ -60,9 +64,10 @@ Here's the HTML code for each file to use. The `base.html` will be inherited by 
   </main>
 </body>
 </html>
-```
+~~~~~~~~
 
-```html
+{title="Code",lang="html"}
+~~~~~~~~
 <!-- templates/home.html -->
 {% extends 'base.html' %}
 
@@ -78,9 +83,10 @@ Here's the HTML code for each file to use. The `base.html` will be inherited by 
   <a href="{% url 'signup' %}">signup</a>
 {% endif %}
 {% endblock %}
-```
+~~~~~~~~
 
-```html
+{title="Code",lang="html"}
+~~~~~~~~
 <!-- templates/registration/login.html -->
 {% extends 'base.html' %}
 
@@ -94,9 +100,10 @@ Here's the HTML code for each file to use. The `base.html` will be inherited by 
   <button type="submit">Login</button>
 </form>
 {% endblock %}
-```
+~~~~~~~~
 
-```html
+{title="Code",lang="html"}
+~~~~~~~~
 <!-- templates/signup.html -->
 {% extends 'base.html' %}
 
@@ -110,7 +117,7 @@ Here's the HTML code for each file to use. The `base.html` will be inherited by 
     <button type="submit">Sign up</button>
   </form>
 {% endblock %}
-```
+~~~~~~~~
 
 Our templates are now all set. Still to go are our urls and views.
 
@@ -120,7 +127,8 @@ Let's start with the url routes. In our project-level `urls.py` file we want to 
 
 Next we want to "include" both the `users` app and the built-in `auth` app. So make sure to add `include` to our imports on the second line. We'll add url patterns for both apps at `/users/`.
 
-```python
+{title="Code",lang="python"}
+~~~~~~~~
 # msg_project/urls.py
 from django.contrib import admin
 from django.urls import path, include
@@ -132,19 +140,21 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('users/', include('django.contrib.auth.urls')),
 ]
-```
+~~~~~~~~
 
 Now create a `urls.py` file in the `users` app.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (msg) $ touch users/urls.py
-```
+~~~~~~~~
 
 We don't need to include urls or views for login and logout since they're already provided by Django for us in the built-in `auth` app. We just need to configure a route for our signup page.
 
 Update `users/urls.py` with the following code:
 
-```python
+{title="Code",lang="python"}
+~~~~~~~~
 # users/urls.py
 from django.urls import path
 from . import views
@@ -152,11 +162,12 @@ from . import views
 urlpatterns = [
     path('signup/', views.SignUp.as_view(), name='signup'),
 ]
-```
+~~~~~~~~
 
 The last step is our `views.py` file which will contain the logic for our signup form. We're using Django's generic `CreateView` here and telling it to use our custom `form_class`, to redirect to `login` once a user signs up successfully, and that our template is named `signup.html`.
 
-```python
+{title="Code",lang="python"}
+~~~~~~~~
 # users/views.py
 from django.urls import reverse_lazy
 from django.views import generic
@@ -167,7 +178,7 @@ class SignUp(generic.CreateView):
     form_class = CustomUserCreationForm
     success_url = reverse_lazy('login')
     template_name = 'signup.html'
-```
+~~~~~~~~
 
 Ok, phew! We're done. Let's test things out.
 
@@ -226,4 +237,4 @@ XXXXXXXXXXXXXXXXXXXXXXX -->
 
 Our signup, login, and logout functionality is now wired up. But you may have noticed our site doesn't look very good. In the next chapter we'll add [Bootstrap](https://getbootstrap.com/) for styling and create a dedicated `pages` app.
 
-Continue on to [Chapter 10: Bootstrap]({{ site.baseurl }}{% post_url book/2010-01-01-bootstrap %}).
+Continue on to **Chapter 10: Bootstrap**.

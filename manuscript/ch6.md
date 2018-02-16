@@ -1,6 +1,6 @@
 # Chapter 6: Blog app with forms
 
-In this chapter we'll continue working on our blog application from [Chapter 5]({{ site.baseurl }}{% post_url book/2010-01-01-blog %}) by adding forms so a user can create, edit, or delete any of their blog entries.
+In this chapter we'll continue working on our blog application from **Chapter 5** by adding forms so a user can create, edit, or delete any of their blog entries.
 
 Complete source code can be <a href="https://github.com/wsvincent/djangoforbeginners/tree/master/ch6-blog-app-with-forms" target="\_blank">found on Github</a>.
 
@@ -14,7 +14,8 @@ To start, update our base template to display a link to a page for entering new 
 
 Your updated file will look as follows:
 
-```html
+{title="Code",lang="html"}
+~~~~~~~~
 <!-- templates/base.html -->
 {% load staticfiles %}
 <html>
@@ -38,11 +39,12 @@ Your updated file will look as follows:
     </div>
   </body>
 </html>
-```
+~~~~~~~~
 
 Let's add a new URLConf for `post_new` now:
 
-```python
+{title="Code",lang="python"}
+~~~~~~~~
 # blog/urls.py
 from django.urls import path
 
@@ -53,13 +55,14 @@ urlpatterns = [
     path('post/<int:pk>/', views.BlogDetailView.as_view(), name='post_detail'),
     path('post/new/', views.BlogCreateView.as_view(), name='post_new'),
 ]
-```
+~~~~~~~~
 
 Our url will start with `post/new/`, the view is called `BlogCreateView`, and the url will be named `post_new`. Simple, right?
 
 Now let's create our view by importing a new generic class called `CreateView` and then subclass it to create a new view called `BlogCreateView`.
 
-```python
+{title="Code",lang="python"}
+~~~~~~~~
 # blog/views.py
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView
@@ -80,19 +83,21 @@ class BlogCreateView(CreateView):
     model = Post
     template_name = 'post_new.html'
     fields = '__all__'
-```
+~~~~~~~~
 
 Within `BlogCreateView` we specify our database model `Post`, the name of our template `post_new.html`, and all fields with `'__all__'` since we only have two: `title` and `author`.
 
 The last step is to create our template, which we will call `post_new.html`.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (blog) $ touch templates/post_new.html
-```
+~~~~~~~~
 
 And then add the following code:
 
-```html
+{title="Code",lang="html"}
+~~~~~~~~
 <!-- templates/post_new.html -->
 {% extends 'base.html' %}
 
@@ -103,7 +108,7 @@ And then add the following code:
       <input type="submit" value="Save" />
     </form>
 {% endblock %}
-```
+~~~~~~~~
 
 Let's breakdown what we've done:
 
@@ -135,7 +140,8 @@ We can follow Django's suggestion and add a [get_absolute_url](https://docs.djan
 
 Open the `models.py` file. Add a new import on the second line for [reverse](https://docs.djangoproject.com/en/2.0/ref/urlresolvers/#reverse) and a new method `get_absolute_url`.
 
-```python
+{title="Command Line",lang="python"}
+~~~~~~~~
 # blog/models.py
 from django.db import models
 from django.urls import reverse
@@ -154,13 +160,14 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
-```
+~~~~~~~~
 
 [Reverse](https://docs.djangoproject.com/en/2.0/ref/urlresolvers/#reverse) is a very handy utility function Django provides us to reference an object by its URL template name, in this case `post_detail`. If you recall our URL pattern it is the following:
 
-```python
+{title="Code",lang="python"}
+~~~~~~~~
 path('post/<int:pk>/', views.BlogDetailView.as_view(), name='post_detail'),
-```
+~~~~~~~~
 
 That means in order for this route to work we must _also_ pass in an argument with the `pk` or primary key of the object. Confusingly `pk` and `id` are interchangeable in Django though the Django docs recommend using `self.id` with `get_absolute_url`. In other words, we're telling Django that the ultimate location of a Post entry is its `post_detail` view which is `posts/<int:pk>/` so the route for the first entry we've made will be at `posts/1`.
 
@@ -180,7 +187,8 @@ The process for creating an update form so users can edit blog posts should feel
 
 To start, let's add a new link to `post_detail.html` so that the option to edit a blog post appears on an individual blog page.
 
-```html
+{title="Code",lang="html"}
+~~~~~~~~
 <!-- templates/post_detail.html -->
 {% extends 'base.html' %}
 
@@ -192,19 +200,21 @@ To start, let's add a new link to `post_detail.html` so that the option to edit 
 
   <a href="{% url 'post_edit' post.pk %}">+ Edit Blog Post</a>
 {% endblock content %}
-```
+~~~~~~~~
 
 We've added a link using `<a href>...</a>` and the Django template engine's `{% url ... %}` tag. Within it we've specified the target name of our url, which will be called `post_edit` and also passed the parameter needed, which is the primary key of the post `post.pk`.
 
 Next we create the template for our edit page called `post_edit.html`.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (blog) $ touch templates/post_edit.html
-```
+~~~~~~~~
 
 And add the following code:
 
-```html
+{title="Code",lang="html"}
+~~~~~~~~
 <!-- templates/post_edit.html -->
 {% extends 'base.html' %}
 
@@ -215,13 +225,14 @@ And add the following code:
     <input type="submit" value="Update" />
 </form>
 {% endblock %}
-```
+~~~~~~~~
 
 We again use HTML `<form></form>` tags, Django's `csrf_token` for security, `form.as_p` to display our form fields with paragraph tags, and finally give it the value "Update" on the submit button.
 
 Now to our view. We need to import `UpdateView` on the second-from-the-top line and then subclass it in our new view `BlogUpdateView`.
 
-```python
+{title="Code",lang="python"}
+~~~~~~~~
 # blog/views.py
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView
@@ -248,13 +259,14 @@ class BlogUpdateView(UpdateView):
     model = Post
     fields = ['title', 'body']
     template_name = 'post_edit.html'
-```
+~~~~~~~~
 
 Notice that in `BlogUpdateView` we are explicitly listing the fields we want to use `['title', 'body']` rather than using `'__all__'`. This is because we assume that the author of the post is not changing; we only want the title and text to be editable.
 
 The final step is to update our `urls.py` file as follows:
 
-```python
+{title="Code",lang="python"}
+~~~~~~~~
 # blog/urls.py
 from django.urls import path
 
@@ -267,7 +279,7 @@ urlpatterns = [
     path('post/<int:pk>/edit/',
         views.BlogUpdateView.as_view(), name='post_edit'),
 ]
-```
+~~~~~~~~
 
 At the top we add our view `BlogUpdateView` to the list of imported views, then created a new url pattern for `/post/pk/edit` and given it the name `post_edit`.
 
@@ -293,7 +305,8 @@ The process for creating a form to delete blog posts is very similar to that for
 
 Let's start by adding a link to delete blog posts on our individual blog page, `post_detail.html`.
 
-```html
+{title="Code",lang="html"}
+~~~~~~~~
 <!-- templates/post_detail.html -->
 {% extends 'base.html' %}
 
@@ -306,17 +319,19 @@ Let's start by adding a link to delete blog posts on our individual blog page, `
   <p><a href="{% url 'post_edit' post.pk %}">+ Edit Blog Post</a></p>
   <p><a href="{% url 'post_delete' post.pk %}">+ Delete Blog Post</a></p>
 {% endblock content %}
-```
+~~~~~~~~
 
 Then create a new file for our delete page template. First quit the local server `Control-c` and then type the following command:
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 (blog) $ touch templates/post_delete.html
-```
+~~~~~~~~
 
 And fill it with this code:
 
-```html
+{title="Code",lang="html"}
+~~~~~~~~
 <!-- templates/post_delete.html -->
 {% extends 'base.html' %}
 
@@ -327,13 +342,14 @@ And fill it with this code:
       <input type="submit" value="Confirm" />
     </form>
 {% endblock %}
-```
+~~~~~~~~
 
 Note we are using `post.title` here to display the title of our blog post. We could also just use `object` as it too is provided by `DetailView`.
 
 Now update our `views.py` file, by importing `DeleteView` and `reverse_lazy` at the top, then create a new view that subclasses `DeleteView`.
 
-```python
+{title="Code",lang="python"}
+~~~~~~~~
 # blog/views.py
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -368,13 +384,14 @@ class BlogDeleteView(DeleteView):
     model = Post
     template_name = 'post_delete.html'
     success_url = reverse_lazy('home')
-```
+~~~~~~~~
 
 We use [reverse_lazy](https://docs.djangoproject.com/en/2.0/ref/urlresolvers/#reverse-lazy) as opposed to just [reverse](https://docs.djangoproject.com/en/2.0/ref/urlresolvers/#reverse) so that it won't execute the URL redirect until our view has finished deleting the blog post.
 
 Finally add a url by importing our view `BlogDeleteView` and adding a new pattern:
 
-```python
+{title="Code",lang="python"}
+~~~~~~~~
 # blog/urls.py
 from django.urls import path
 
@@ -389,7 +406,7 @@ urlpatterns = [
     path('post/<int:pk>/delete/',
         views.BlogDeleteView.as_view(), name='post_delete'),
 ]
-```
+~~~~~~~~
 
 If you start the server again `python manage.py runserver` and refresh the individual post page you'll see our "Delete Blog Post" link.
 
@@ -416,7 +433,8 @@ Time for tests to make sure everything works now--and in the future--as expected
 
 Update your existing `tests.py` as follows.
 
-```python
+{title="Code",lang="python"}
+~~~~~~~~
 # blog/tests.py
 from django.contrib.auth import get_user_model
 from django.test import Client, TestCase
@@ -487,7 +505,7 @@ class BlogTests(TestCase):
         response = self.client.get(
             reverse('post_delete', args='1'))
         self.assertEqual(response.status_code, 200)
-```
+~~~~~~~~
 
 We expect the url of our test to be at `post/1/` since there's only one post and the `1` is its primary key Django adds automatically for us. To test create view we make a new response and then ensure that the response goes through (status code 200) and contains our new title and body text. For update view we access the first post--which has a `pk` of `1` which is passed in as the only argument--and we confirm that it results in a 302 redirect. Finally we test our delete view by confirming that if we delete a post the status code is 200 for success.
 
@@ -499,5 +517,4 @@ In a small amount of code we've built a blog application that allows for creatin
 
 In the next chapter we'll add user accounts and login, logout, and signup functionality.
 
-Continue on to
-[Chapter 7: Blog app with user accounts]({{ site.baseurl }}{% post_url book/2010-01-01-blog-user-accounts %}).
+Continue on to **Chapter 7: Blog app with user accounts**.
