@@ -1,3 +1,5 @@
+# Chapter 1: Initial Setup
+
 This chapter covers how to properly configure your computer to work on Django projects. We start with an overview of the command line and use it to install the latest versions of both Django (2.0) and Python (3.6x). Then we discuss virtual environments, git, and working with a text editor.
 
 By the end of this chapter you'll be ready to create and modify new Django projects in just a few keystrokes.
@@ -8,11 +10,11 @@ The command line is a powerful, text-only view of your computer. As developers w
 
 On a Mac, the command line is found in a program called Terminal located at `/Applications/Utilities`. To find it, open a new Finder window, open the Applications folder, scroll down to open the Utilities folder, and double-click the application called Terminal.
 
-![Finder Terminal app](/assets/images/book/initial-setup/terminal.png)
+![Finder Terminal app](images/01_terminal.png)
 
 On Windows, there is a built-in command line program but it is difficult to use. I recommend instead using [Babun](https://babun.github.io/), a free and open-source command line program.
 
-![Babun homepage](/assets/images/book/initial-setup/babun.png)
+![Babun homepage](images/01_babun.png)
 
 Click on the “Download now” button on its website, double-click it to install Babun, and upon completion drag the installer to the Recycle Bin. To use Babun go to the Start menu, select Programs, and click on Babun.
 
@@ -233,7 +235,7 @@ Now let's confirm everything is working by running Django's local web server.
 
 If you visit [http://127.0.0.1:8000/](http://127.0.0.1:8000/) you should see the following image:
 
-![Django welcome page](/assets/images/book/02_django_welcome.png)
+![Django welcome page](images/00_django_welcome.png)
 
 To stop our local server type `Control-c`. Then exit our virtual environment using the command `exit`.
 
@@ -281,5 +283,3 @@ Modern text editors combine the same powerful features with an appealing visual 
 ## Conclusion
 
 Phew! Nobody really likes configuring a local development environment but fortunately it's a one-time pain. We have now learned how to work with virtual environments and installed the latest version of Python and git. Everything is ready for our first Django app.
-
-Continue on to [Chapter 2: Hello World app]({{ site.baseurl }}{% post_url book/2010-01-01-hello-world %}).
