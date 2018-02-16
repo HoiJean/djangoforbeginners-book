@@ -1,8 +1,8 @@
+# Chapter 2: Hello World app
+
 In this chapter we'll build a Django project that simply says "Hello, World" on the homepage. This is [the traditional way](https://en.wikipedia.org/wiki/%22Hello,_World!%22_program) to start a new programming language or framework. We'll also work with _git_ for the first time and deploy our code to Bitbucket.
 
 If you need help configuring your local development environment, please refer to [Chapter 1: Initial Setup]({{ site.baseurl }}{% post_url book/2010-01-01-initial-setup %}).
-
-Complete source code can be <a href="https://github.com/wsvincent/djangoforbeginners/tree/master/ch2-hello-world-app/" target="\_blank">found on Github</a>.
 
 ## Initial Setup
 
@@ -56,7 +56,7 @@ Django comes with a built-in web server for local development purposes. We can s
 
 If you visit [http://127.0.0.1:8000/](http://127.0.0.1:8000/) you should see the following image:
 
-![Django welcome page](/assets/images/book/02_django_welcome.png)
+![Django welcome page](images/00_django_welcome.png)
 
 ## Create an app
 
@@ -188,7 +188,7 @@ We have all the code we need now! To confirm everything works as expected, resta
 
 If you refresh the browser for [http://127.0.0.1:8000/](http://127.0.0.1:8000/) it now displays the text "Hello, world!"
 
-![Hello world homepage](/assets/images/book/02_helloworld.png)
+![Hello world homepage](images/02_helloworld.png)
 
 ## Git
 
@@ -240,15 +240,15 @@ In this book we will use Bitbucket because it allows private repositories **for 
 
 To get started on Bitbucket, [sign up for a free account](https://bitbucket.org/account/signup/). After confirming your account via email you'll be redirected to the Bitbucket welcome page. Click on the link for "Create a repository".
 
-![Bitbucket welcome page](/assets/images/book/02_bitbucket_welcome.png)
+![Bitbucket welcome page](images/02_bitbucket_welcome.png)
 
 Then on the "Create Repo" page enter in the name of your repository: "hello-world". Then click the blue "Create repository button":
 
-![Bitbucket create repo](/assets/images/book/02_bitbucket_create_repo.png)
+![Bitbucket create repo](images/02_bitbucket_create_repo.png)
 
 On the next page, click on the link on the bottom for "I have an existing project" which will open a dropdown:
 
-![Bitbucket existing project](/assets/images/book/02_bitbucket_existing_project.png)
+![Bitbucket existing project](images/02_bitbucket_existing_project.png)
 
 We're already in the directory for our repo so skip Step 1. In Step 2, we'll use two commands to add our project to Bitbucket. Note that your command will differ from mine since you have a different username. The general format is the below where `<USER>` is your Bitbucket username.
 
@@ -264,7 +264,7 @@ After running this command to configure git with this Bitbucket repository, we m
 
 Now if you go back to your Bitbucket page and refresh it, you'll see the code is now online!
 
-![Bitbucket overview](/assets/images/book/02_bitbucket_overview.png)
+![Bitbucket overview](images/02_bitbucket_overview.png)
 
 Since we're done, go ahead and exit our virtual environment with the `exit` command.
 
@@ -278,4 +278,4 @@ You should now see no parentheses on your command line, indicating the virtual e
 
 Congratulations! We've covered a lot of fundamental concepts in this chapter. We built our first Django application and learned about Django's project and app structure. We started to learn about views, urls, and the internal web server. And we worked with git to track our changes and pushed our code into a private repo on Bitbucket.
 
-Continue on to [Chapter 3: A simple app]({{ site.baseurl }}{% post_url book/2010-01-01-simple %}) where we'll build a more complex Django application using templates and class-based views. <!--and deploy it live on the internet.-->
+Continue on to Chapter 3 where we'll build and deploy a more complex Django application using templates and class-based views.

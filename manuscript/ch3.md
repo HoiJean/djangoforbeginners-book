@@ -1,10 +1,10 @@
-In this chapter we'll build **and deploy** a _simple_ app that has a homepage and an about page. We'll also learn about Django's class-based views and templates which are the building blocks for the more complex web applications built later on in the book.
+# Chapter 3: Simple app
 
-Complete source code can be <a href="https://github.com/wsvincent/djangoforbeginners/tree/master/ch3-simple-app" target="\_blank">found on Github</a>.
+In this chapter we'll build **and deploy** a _simple_ app that has a homepage and an about page. We'll also learn about Django's class-based views and templates which are the building blocks for the more complex web applications built later on in the book.
 
 ## Setup
 
-As in [Chapter 2: Hello World app]({{ site.baseurl }}{% post_url book/2010-01-01-hello-world %}), our initial setup
+As in **Chapter 2: Hello World app**, our initial setup
 involves the following steps:
 
 * create a new directory for our code
@@ -56,7 +56,7 @@ Start the local web server with `runserver`.
 
 And then navigate to [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
 
-![Django welcome page](/assets/images/book/02_django_welcome.png)
+![Django welcome page](/images/00_django_welcome.png)
 
 ## Templates
 
@@ -154,7 +154,7 @@ This pattern is almost identical to what we did in Chapter 2 with one major diff
 
 And we're done! If you start up the web server with `python manage.py runserver` and navigate to [http://127.0.0.1:8000/](http://127.0.0.1:8000/) you can see our new homepage.
 
-![Homepage](/assets/images/book/03_homepage.png)
+![Homepage](images/03_homepage.png)
 
 ## Add an About Page
 
@@ -204,7 +204,7 @@ urlpatterns = [
 
 Start up the web server with `python manage.py runserver`, navigate to [http://127.0.0.1:8000/about](http://127.0.0.1:8000/about), and you can see our new "About page".
 
-![About page](/assets/images/book/03_about.png)
+![About page](images/03_about.png)
 
 ## Extending Templates
 
@@ -256,9 +256,9 @@ see the header is magically included in _both_ locations.
 
 Nice, right?
 
-![Homepage with header](/assets/images/book/03_home_header.png)
+![Homepage with header](images/03_home_header.png)
 
-![About page with header](/assets/images/book/03_about_header.png)
+![About page with header](images/03_about_header.png)
 
 There's _a lot_ more we can do with templates and in practice you'll typically create a `base.html` file and then add
 additional templates on top of it in a robust Django project. We'll do this later on in the book.
@@ -352,7 +352,7 @@ There are many server providers available but we will use [Heroku](https://www.h
 
 You can sign up for a free [Heroku](https://www.heroku.com/) on their website. After you confirm your email Heroku will redirect you to the dashboard section of the site.
 
-![Heroku dashboard](/assets/images/book/03_heroku_dashboard.png)
+![Heroku dashboard](images/03_heroku_dashboard.png)
 
 Now we need to install Heroku's _Command Line Interface (CLI)_ so we can deploy from the command line. We want to install Heroku globally so it is available across our entire computer, so open up a new command line tab (Control + t). If we installed Heroku within our virtual environment, it would only be available there.
 
@@ -500,9 +500,9 @@ We're done! The last step is to confirm our app is live and online. If you use t
 
 Mine is at [https://cryptic-oasis-40349.herokuapp.com/about/](https://cryptic-oasis-40349.herokuapp.com/about/). You can see both the homepage and about page are up now.
 
-![Homepage on Heroku](/assets/images/book/03_home.png)
+![Homepage on Heroku](images/03_home.png)
 
-![About page on Heroku](/assets/images/book/03_heroku_about.png)
+![About page on Heroku](images/03_heroku_about.png)
 
 ## Conclusion
 

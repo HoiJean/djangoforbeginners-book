@@ -282,4 +282,4 @@ Modern text editors combine the same powerful features with an appealing visual 
 
 ## Conclusion
 
-Phew! Nobody really likes configuring a local development environment but fortunately it's a one-time pain. We have now learned how to work with virtual environments and installed the latest version of Python and git. Everything is ready for our first Django app.
+Phew! Nobody really likes configuring a local development environment but fortunately it's a one-time pain. We have now learned how to work with virtual environments and installed the latest version of Python and git. Everything is ready for our first Django app in Chapter 2.
