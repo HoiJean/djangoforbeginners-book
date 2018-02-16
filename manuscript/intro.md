@@ -2,7 +2,7 @@
 
 Welcome to _Django for Beginners_, a step-by-step approach to learning web development with [Python](https://www.python.org/) and [Django](https://djangoproject.com). In this book you will build and deploy five progressively more complex web applications, starting with a simple "Hello, World" app and progressing to both a blog app and a Twitter-clone. Throughout we'll be using best practices from the Django, Python, and web development communities, especially the thorough use of testing.
 
-This book is regularly updated and features the latest versions of both Django (2.0) and Python (3.6x). It also uses [pipenv](https://docs.pipenv.org/) which is now the officially recommended by [Python.org](https://packaging.python.org/tutorials/managing-dependencies/#managing-dependencies) for managing Python packages and virtual environments.
+This book is regularly updated and features the latest versions of both Django (2.0) and Python (3.6x). It also uses [Pipenv](https://docs.pipenv.org/) which is now the officially recommended by [Python.org](https://packaging.python.org/tutorials/managing-dependencies/#managing-dependencies) for managing Python packages and virtual environments.
 
 ## Why Django
 
@@ -59,37 +59,43 @@ By the end of this book you'll have an understanding of how Django works in prac
 
 There are many code examples in this book, which are denoted as follows:
 
-```python
+{title="Command Line",lang="text"}
+~~~~~~~~
 # This is Python code
 print(Hello, World)
-```
+~~~~~~~~
 
 For brevity we will use dots `...` to denote existing code that remains unchanged, for example in a function we are updating.
 
+{title="Code",lang="python"}
+~~~~~~~~
 ```python
 def make_my_website:
     ...
     print("All done!")
-```
+~~~~~~~~
 
 We will also use the command line console frequently (starting in [Chapter 1: Initial Setup]({{ site.baseurl }}{% post_url book/2010-01-01-initial-setup %})) to execute commands, which take the form of a `$` prefix in traditional Unix style.
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 $ echo "hello, world"
-```
+~~~~~~~~
 
 The result of this particular command is the next line will state:
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 "hello, world"
-```
+~~~~~~~~
 
 We will typically combine a command and its output. The command will always be prefaced by a `$` and the output will not. For example, the command and result above will be represented as follows:
 
-```
+{title="Command Line",lang="text"}
+~~~~~~~~
 $ echo "hello, world"
 hello, world
-```
+~~~~~~~~
 
 Complete source code for all examples can be found on Github in the [Django for Beginners repository](https://github.com/wsvincent/djangoforbeginners).
 
