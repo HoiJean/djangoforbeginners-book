@@ -212,7 +212,7 @@ Everything works as expected.
 
 Let's also log in to the admin to view our two user accounts. Navigate to [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin) and ...
 
-![Admin login wrong]({{site.url}}/assets/images/book/signup-login-logout/admin_login_wrong.png)
+![Admin login wrong](images/09_admin_login_wrong.png)
 
 What's this! Why can't we log in?
 
@@ -224,7 +224,7 @@ After you've done that you should see the normal admin homepage.
 
 Click on `Users` and you can see our two users: the one we just created and your previous superuser name (mine is `wsv`).
 
-![Users in the Admin](images/09_/admin.png)
+![Users in the Admin](images/09_admin.png)
 
 So everything works as expected.
 

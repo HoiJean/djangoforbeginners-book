@@ -123,6 +123,7 @@ admin.site.register(Post)
 ~~~~~~~~
 
 If you refresh the page you'll see the update.
+
 ![Admin homepage](images/05_admin_posts.png)
 
 Let's add two blog posts so we have some sample data to work with. Click on the `+ Add` button next to `Posts` to create a new entry. Make sure to add an "author" to each post too since by default all model fields are required. If you try to enter a post without an author you will see an error. If we wanted to change this, we could add [field options](https://docs.djangoproject.com/en/2.0/ref/models/fields/#field-options) to our model to make a given field optional or fill it with a default value.
