@@ -2,7 +2,7 @@
 
 Congratulations on finishing _Django for Beginners_! We've now covered all the major features of Django: templates, views, urls, users, models, foreign keys, security, testing, and deployment.
 
-There is still however much more to learn about Django and web development in general. I'm at work on a second, follow-up book <a href="http://intermediatedjango.com/" target="\_blank">Intermediate Django</a> that moves on from the basics. It will cover a host of additional topics in detail that are commonly used in real-world Django projects. It also will walk through building two new web applications--an e-commerce store with payments and a social photo app similar to Instagram that supports image uploads.
+There is still however much more to learn about Django and web development in general. I'm at work on a second, follow-up book [Intermediate Django](https://intermediatedjango.com/) that moves on from the basics. It will cover a host of additional topics in detail that are commonly used in real-world Django projects. It also will walk through building two new web applications--an e-commerce store with payments and a social photo app similar to Instagram that supports image uploads.
 
 If you'd like to be updated when this current book is complete and for updates on the new book, please [sign up for the Django for Beginners newsletter](http://eepurl.com/cRL-aP).
 

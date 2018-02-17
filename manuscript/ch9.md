@@ -184,27 +184,27 @@ Ok, phew! We're done. Let's test things out.
 
 Start up the server with `python manage.py runserver` and go to the homepage at [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
 
-![Home page logged in]({{site.url}}/assets/images/book/signup-login-logout/home_loggedin.png)
+![Home page logged in](images/09_home_loggedin.png)
 
 We logged in to the admin in the previous chapter so you should see a personalized greeting here. Click on the _logout_ link.
 
-![Home page logged out]({{site.url}}/assets/images/book/signup-login-logout/home_loggedout.png)
+![Home page logged out](images/09_home_loggedout.png)
 
 Now we're on the logged out homepage. Go ahead and click on _login_ link and use your **superuser** credentials.
 
-![Login]({{site.url}}/assets/images/book/signup-login-logout/login.png)
+![Login](images/login.png)
 
 Upon successfully logging in you'll be redirected back to the homepage and see a personalized greeting. It works!
 
-![Home page logged in]({{site.url}}/assets/images/book/signup-login-logout/home_loggedin.png)
+![Home page logged in](images/09_home_loggedin.png)
 
 Now use the _logout_ link and then click on _signup_.
 
-![Signup page]({{site.url}}/assets/images/book/signup-login-logout/signup.png)
+![Signup page](images/09_signup.png)
 
 Create a new user. Mine is called `testuser`. After successfully submitting the form you'll be redirected to the login page. Login with your new user and you'll again be redirected to the homepage with a personalized greeting for the new user.
 
-![Home page for testuser]({{site.url}}/assets/images/book/signup-login-logout/testuser.png)
+![Home page for testuser](images/09_testuser.png)
 
 Everything works as expected.
 
@@ -220,11 +220,11 @@ Well we're logged in with our new `testuser` account not our superuser account. 
 
 After you've done that you should see the normal admin homepage.
 
-![Admin homepage]({{site.url}}/assets/images/book/signup-login-logout/admin_homepage.png)
+![Admin homepage](images/09_admin_homepage.png)
 
 Click on `Users` and you can see our two users: the one we just created and your previous superuser name (mine is `wsv`).
 
-![Users in the Admin]({{site.url}}/assets/images/book/signup-login-logout/admin.png)
+![Users in the Admin](images/09_/admin.png)
 
 So everything works as expected.
 

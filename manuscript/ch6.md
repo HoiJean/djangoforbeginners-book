@@ -2,7 +2,6 @@
 
 In this chapter we'll continue working on our blog application from **Chapter 5** by adding forms so a user can create, edit, or delete any of their blog entries.
 
-Complete source code can be <a href="https://github.com/wsvincent/djangoforbeginners/tree/master/ch6-blog-app-with-forms" target="\_blank">found on Github</a>.
 
 ## Forms
 
@@ -120,19 +119,19 @@ Let's breakdown what we've done:
 
 To view our work, start the server with `python manage.py runserver` and go to the homepage at [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
 
-![Homepage with New button](/assets/images/book/06_new_button.png)
+![Homepage with New button](images/06_new_button.png)
 
 Click on our link for "+ New Blog Post" which will redirect you to [http://127.0.0.1:8000/post/new/](http://127.0.0.1:8000/post/new/).
 
-![Blog new page](/assets/images/book/06_new_page.png)
+![Blog new page](images/06_new_page.png)
 
 Go ahead and try to create a new blog post and submit it.
 
-![Blog new page](/assets/images/book/06_new_third_post.png)
+![Blog new page](images/06_new_third_post.png)
 
 Oops! What happened?
 
-![Blog new page](/assets/images/book/06_new_error.png)
+![Blog new page](images/06_new_error.png)
 
 Django's error message is quite helpful. It's complaining that we did not specify where to send the user after successfully submitting the form. Let's just send a user back to the homepage after success since that will show the list of all their blogs.
 
@@ -173,11 +172,11 @@ That means in order for this route to work we must _also_ pass in an argument wi
 
 Try to create a new blog post again at [http://127.0.0.1:8000/post/new/](http://127.0.0.1:8000/post/new/) and you'll find you are redirected to the homepage where the post appears.
 
-![Blog new page with input](/assets/images/book/06_working_post.png)
+![Blog new page with input](images/06_working_post.png)
 
 You'll also notice that our earlier blog post is also there. It _was_ successfully sent to the database, but Django didn't know how to redirect us after that.
 
-![Blog homepage with four posts](/assets/images/book/06_homepage_four_posts.png)
+![Blog homepage with four posts](images/06_homepage_four_posts.png)
 
 While we could go into the Django admin to delete unwanted posts, it's better if we add forms so a user can update and delete existing forms directly from the site.
 
@@ -285,19 +284,19 @@ At the top we add our view `BlogUpdateView` to the list of imported views, then 
 
 Now if you click on a blog entry you'll see our new Edit button.
 
-![Blog page with edit button](/assets/images/book/06_post_with_edit.png)
+![Blog page with edit button](images/06_post_with_edit.png)
 
 If you click on "+ Edit Blog Post" you'll be redirected to [http://127.0.0.1:8000/post/1/edit/](http://127.0.0.1:8000/post/13/edit/) if it's your first blog post.
 
-![Blog edit page](/assets/images/book/06_edit_original.png)
+![Blog edit page](images/06_edit_original.png)
 
 Note that the form is pre-filled with our database's existing data for the post. Let's make a change...
 
-![Blog edit page](/assets/images/book/06_edited.png)
+![Blog edit page](images/06_edited.png)
 
 And after clicking the "Update" button we are redirected to the detailview of the post where you can see the change. This is because of our `get_absolute_url` setting. Navigate to the homepage and you can see the change next to all the other entries.
 
-![Blog homepage with edited post](/assets/images/book/06_homepage_edited_post.png)
+![Blog homepage with edited post](images/06_homepage_edited_post.png)
 
 ## Delete View
 
@@ -410,15 +409,15 @@ urlpatterns = [
 
 If you start the server again `python manage.py runserver` and refresh the individual post page you'll see our "Delete Blog Post" link.
 
-![Blog delete post](/assets/images/book/06_delete_view.png)
+![Blog delete post](images/06_delete_view.png)
 
 Clicking on the link takes us to the delete page for the blog post, which displays the name of the blog post.
 
-![Blog delete post page](/assets/images/book/06_delete_page.png)
+![Blog delete post page](images/06_delete_page.png)
 
 If you click on the "Confirm" button, it redirects you to the homepage where the blog post has been deleted!
 
-![Homepage with post deleted](/assets/images/book/06_homepage_deleted_post.png)
+![Homepage with post deleted](images/06_homepage_deleted_post.png)
 
 So it works!
 

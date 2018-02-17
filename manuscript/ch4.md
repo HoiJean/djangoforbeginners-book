@@ -76,7 +76,7 @@ And navigate to [http://127.0.0.1:8000/](http://127.0.0.1:8000/) to see the fami
 
 Our first task is to create a database model where we can store and display posts from our users. Django will turn this model into a database table for us. In real-world Django projects, it's often the case that there will be many complex, interconnected database models but in our simple message board app we only need one.
 
-I won't cover database design in this book but I have written a short guide which <a href="https://wsvincent.com/database-design-tutorial-for-beginners/" target="\_blank">you can find here</a> if this is all new to you.
+I won't cover database design in this book but I have written a short guide which [you can find here](https://wsvincent.com/database-design-tutorial-for-beginners/) if this is all new to you.
 
 Open the `posts/models.py` file and look at default code which Django provides:
 

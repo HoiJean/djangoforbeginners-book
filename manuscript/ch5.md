@@ -49,7 +49,7 @@ INSTALLED_APPS = [
 
 If you navigate to [http://127.0.0.1:8000/](http://127.0.0.1:8000/) in your browser you should see the following page.
 
-![Django welcome page](/assets/images/book/02_django_welcome.png)
+![Django welcome page](images/00_django_welcome.png)
 
 Ok, initial installation complete! Next we'll create our database model for blog posts.
 
@@ -79,7 +79,7 @@ At the top we're importing the class `models` and then creating a subclass of `m
 
 For `title` we're limiting the length to 200 characters and for `body` we're using a TextField which will automatically expand as needed to fit the user's text. There are many field types available in Django; you can see the [full list here](https://docs.djangoproject.com/en/2.0/topics/db/models/#fields).
 
-For the `author` field we're using a [ForeignKey](https://docs.djangoproject.com/en/2.0/ref/models/fields/#django.db.models.ForeignKey) which allows for a _many-to-one_ relationship. This means that a given user can be the author of many different blog posts but not the other way around. The reference is to the built-in `User` model that Django provides for authentication. For all many-to-one relationships such as a ForeignKey we must also specify an [on_delete](https://docs.djangoproject.com/en/2.0/ref/models/fields/#django.db.models.ForeignKey.on_delete) option. Don't worry if this is confusing right now. Database design is a very deep field and we'll do much more with ForeignKey's in future chapters. I have a separate post on my personal site, <a href="https://wsvincent.com/database-design-tutorial-for-beginners/" target="\_blank">database design tutorial for beginners</a>, that covers the topic in more depth.
+For the `author` field we're using a [ForeignKey](https://docs.djangoproject.com/en/2.0/ref/models/fields/#django.db.models.ForeignKey) which allows for a _many-to-one_ relationship. This means that a given user can be the author of many different blog posts but not the other way around. The reference is to the built-in `User` model that Django provides for authentication. For all many-to-one relationships such as a ForeignKey we must also specify an [on_delete](https://docs.djangoproject.com/en/2.0/ref/models/fields/#django.db.models.ForeignKey.on_delete) option. Don't worry if this is confusing right now. Database design is a very deep field and we'll do much more with ForeignKey's in future chapters. I have a separate post on my personal site, [database design tutorial for beginners](https://wsvincent.com/database-design-tutorial-for-beginners/), that covers the topic in more depth.
 
 Now that our new database model is created we need to create a new migration record for it and migrate the change into our database. This two-step process can be completed with the commands below:
 
@@ -109,7 +109,7 @@ Now start running the Django server again with the command `python manage.py run
 
 Oops! Where's our new `Post` model?
 
-![Admin homepage](/assets/images/book/05_admin_blank.png)
+![Admin homepage](images/05_admin_blank.png)
 
 We forgot to update `blog/admin.py` so let's do that now.
 
@@ -123,15 +123,15 @@ admin.site.register(Post)
 ~~~~~~~~
 
 If you refresh the page you'll see the update.
-![Admin homepage](/assets/images/book/05_admin_posts.png)
+![Admin homepage](images/05_admin_posts.png)
 
 Let's add two blog posts so we have some sample data to work with. Click on the `+ Add` button next to `Posts` to create a new entry. Make sure to add an "author" to each post too since by default all model fields are required. If you try to enter a post without an author you will see an error. If we wanted to change this, we could add [field options](https://docs.djangoproject.com/en/2.0/ref/models/fields/#field-options) to our model to make a given field optional or fill it with a default value.
 
-![Admin first post](/assets/images/book/05_admin_first_post.png)
+![Admin first post](images/05_admin_first_post.png)
 
-![Admin second post](/assets/images/book/05_admin_second_post.png)
+![Admin second post](images/05_admin_second_post.png)
 
-![Admin homepage with two posts](/assets/images/book/05_admin_home_two_posts.png)
+![Admin homepage with two posts](images/05_admin_home_two_posts.png)
 
 Now that our database model is complete we need to create the necessary views, URLs, and templates so we can display the information on our web application.
 
@@ -269,7 +269,7 @@ At the top we note that this template extends `base.html` and then wrap our desi
 
 If you start the Django server again `python manage.py runserver` and refresh [http://127.0.0.1:8000/](http://127.0.0.1:8000/) we can see it's working.
 
-![Blog homepage with two posts](/assets/images/book/05_homepage_no_styling.png)
+![Blog homepage with two posts](images/05_homepage_no_styling.png)
 
 But it looks terrible. Let's fix that!
 
@@ -330,7 +330,7 @@ Phew! That was a bit of a pain but it's a one-time pain. Now we can add static f
 
 Start up the server again with `.manage.py runserver` and look at our updated homepage at [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
 
-![Blog homepage with red title](/assets/images/book/05_homepage_red_h1.png)
+![Blog homepage with red title](images/05_homepage_red_h1.png)
 
 We can do a little better though. How about if we add a custom font and some more CSS? Since this is not a tutorial on CSS simply add the following between `<head></head>` tags to add [Source Sans Pro](https://fonts.google.com/specimen/Source+Sans+Pro), a free font from Google.
 
@@ -403,7 +403,7 @@ header h1 a {
 
 Refresh the homepage at [http://127.0.0.1:8000/](http://127.0.0.1:8000/) and you should see the following.
 
-![Blog homepage with CSS](/assets/images/book/05_homepage_css.png)
+![Blog homepage with CSS](images/05_homepage_css.png)
 
 ## Individual blog pages
 
@@ -523,7 +523,7 @@ The `pk` for our first "Hello, World" post is 1. For the second post, it is 2. A
 
 If you now start up the server with `python manage.py runserver` and go directly to [http://127.0.0.1:8000/post/1/](http://127.0.0.1:8000/post/1/) you'll see a dedicated page for our first blog post.
 
-![Blog post one detail](/assets/images/book/05_blog_detail_one.png)
+![Blog post one detail](images/05_blog_detail_one.png)
 
 Woohoo! You can also go to [http://127.0.0.1:8000/post/2/](http://127.0.0.1:8000/post/2/) to see the second entry.
 

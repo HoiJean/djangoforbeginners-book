@@ -2,7 +2,7 @@
 
 For the rest of the book we will build out a _social messaging_ app very similar to Twitter. It will allow users to write their own microposts and make comments on other user's posts. We'll implement a complete user authentication flow with custom signup, login, logout, password change, and password reset features. And we'll learn how to restrict site access so that only logged-in users can view most areas of the site.
 
-To start we'll configure our `User` model but it's important to note that unlike our previous _blog_ app which used the default user model, we will instead use a **custom user model**. This is a Django best practice advocated <a href="https://docs.djangoproject.com/en/2.0/topics/auth/customizing/#using-a-custom-user-model-when-starting-a-project" target="\_blank">in the official documentation</a>, however many Django developers don't learn about it until it's too late. Don't make that mistake.
+To start we'll configure our `User` model but it's important to note that unlike our previous _blog_ app which used the default user model, we will instead use a **custom user model**. This is a Django best practice advocated [in the official documentation](https://docs.djangoproject.com/en/2.0/topics/auth/customizing/#using-a-custom-user-model-when-starting-a-project), however many Django developers don't learn about it until it's too late. Don't make that mistake.
 
 Our custom user model in this app will simply extend the existing `User` model. In other words, it will have identical functionality but because it is custom, and not the default, we have the flexibility to make changes later on as needed. For example maybe later on we want to add a "date of birth" field to `User`. Or maybe we want to have the option of using just a `name` field rather than the built-in `FirstName` and `LastName` fields.
 
@@ -38,7 +38,7 @@ Note that we **did not** run `migrate` to configure our database. It's important
 
 If you navigate to [http://127.0.0.1:8000](http://127.0.0.1:8000) you’ll see the familiar Django welcome screen.
 
-![Welcome  page]({{site.url}}/assets/images/book/django-custom-user-model/welcome.png)
+![Welcome page](images/08_welcome.png)
 
 Creating our custom user model requires four steps:
 
@@ -213,11 +213,11 @@ Start up the web server.
 
 Then navigate to the admin at [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin).
 
-![Admin  page]({{site.url}}/assets/images/book/django-custom-user-model/admin.png)
+![Admin page](images/08_admin.png)
 
 If you click on the link for "Users" you should see your superuser account.
 
-![Admin  one user]({{site.url}}/assets/images/book/django-custom-user-model/admin_one_user.png)
+![Admin one user](images/08_admin_one_user.png)
 
 ## Conclusion
 

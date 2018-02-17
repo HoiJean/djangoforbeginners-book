@@ -72,7 +72,7 @@ Now the user will be redirected to the `'home'` template which is our homepage.
 
 **We're actually done at this point!** If you now start up the Django server again with `python manage.py runserver` and navigate to our login page at [http://127.0.0.1:8000/accounts/login/](http://127.0.0.1:8000/accounts/login/) you'll see the following.
 
-![Login page](/assets/images/book/07_login_firststep.png)
+![Login page](images/07_login_firststep.png)
 
 Upon entering the login info for our superuser account, we are redirected to the homepage. Notice that we didn't add any _view_ logic or create a database model because the Django auth system provided both for us automatically. Thanks Django!
 
@@ -99,7 +99,7 @@ For now, we can simply place this code in a prominent position. Later on we can 
 
 If the user is logged in we say hello to them by name, if not we provide a link to our newly created login page.
 
-![Homepage logged in](/assets/images/book/07_homepage_login.png)
+![Homepage logged in](images/07_homepage_login.png)
 
 It worked! My superuser name is `wsv` so that's what I see on the page.
 
@@ -133,11 +133,11 @@ LOGOUT_REDIRECT_URL = 'home'
 
 If you refresh the homepage you'll see it now has a "logout" link for logged in users.
 
-![Homepage logout link ](/assets/images/book/07_homepage_logout_link.png)
+![Homepage logout link ](images/07_homepage_logout_link.png)
 
 And clicking it takes you back to the homepage with a "login" link.
 
-![Homepage logged out](/assets/images/book/07_homepage_logged_out.png)
+![Homepage logged out](images/07_homepage_logged_out.png)
 
 Go ahead and try logging in and out several times with your user account.
 
@@ -258,13 +258,13 @@ This format is very similar to what we've done before. We extend our base templa
 
 We're now done! To test it out, navigate to our newly created page [http://127.0.0.1:8000/accounts/signup/](http://127.0.0.1:8000/accounts/signup/).
 
-![Django signup page](/assets/images/book/07_signup.png)
+![Django signup page](images/07_signup.png)
 
 Notice there is a lot of extra text that Django includes by default. We can customize this using something like the built-in [messages framework](https://docs.djangoproject.com/en/2.0/ref/contrib/messages/) but for now try out the form.
 
 I've created a new user called "william" and upon submission was redirected to the login page. Then after logging in successfully with my new user and password, I was redirected to the homepage with our personalized "Hi username" greeting.
 
-![Homepage for user wsvincent](/assets/images/book/07_homepage_new_user.png)
+![Homepage for user wsvincent](images/07_homepage_new_user.png)
 
 Our ultimate flow is therefore: `Signup -> Login -> Homepage`. And of course we can tweak this however we want. The `SignupView` redirects to `login` because we set `success_url = reverse_lazy('login')`. The `Login` page redirects to the homepage because in our `settings.py` file we set `LOGIN_REDIRECT_URL = 'home'`.
 
@@ -451,7 +451,7 @@ Finally we can push our code to Heroku.
 
 The URL of your new app will be in the command line output or you can run `heroku open` to find it. Mine is located at [https://dfb-blog.herokuapp.com/](https://dfb-blog.herokuapp.com/).
 
-![Heroku site](/assets/images/book/blog-app/dfb-blog.png)
+![Heroku site](images/07_dfb_blog.png)
 
 ## Conclusion
 
