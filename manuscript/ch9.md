@@ -192,7 +192,7 @@ We logged in to the admin in the previous chapter so you should see a personaliz
 
 Now we're on the logged out homepage. Go ahead and click on _login_ link and use your **superuser** credentials.
 
-![Login](images/login.png)
+![Login](images/09_login.png)
 
 Upon successfully logging in you'll be redirected back to the homepage and see a personalized greeting. It works!
 
