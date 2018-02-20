@@ -97,8 +97,7 @@ To check if Python 3 is already installed try running the same command using `py
 $ python3 --version
 ~~~~~~~~
 
-If your computer outputs `3.6.x` (any version of 3.6 or higher) then skip ahead to [creating a virtual environment](#create-a-virtual-environment).
-However most likely you'll see an error message since we need to install Python 3 directly.
+If your computer outputs `3.6.x` (any version of 3.6 or higher) then you're in good shape, however most likely you'll see an error message since we need to install Python 3 directly.
 
 Our first step is to install Apple's [Xcode](https://developer.apple.com/xcode/) package, so run the following command to install it:
 

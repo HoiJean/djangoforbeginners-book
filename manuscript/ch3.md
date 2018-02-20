@@ -59,7 +59,7 @@ Start the local web server with `runserver`.
 
 And then navigate to [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
 
-![Django welcome page](/images/00_django_welcome.png)
+![Django welcome page](images/00_django_welcome.png)
 
 ## Templates
 
@@ -353,7 +353,7 @@ Use `git status` to see all our code changes then `git add -A` to add them all. 
 
 Over on Bitbucket [create a new repo](https://bitbucket.org/repo/create) which we'll call `simple-app`.
 
-![Bitbucket Create Page](mages/03_bitbucket_create.png)
+![Bitbucket Create Page](images/03_bitbucket_create.png)
 
 On the next page click on the bottom link for "I have an existing project". Copy the two commands to connect and then push the repository to Bitbucket.
 
