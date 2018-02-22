@@ -1,4 +1,4 @@
-# Chapter 6: Blog app with forms
+# Chapter 6: Forms
 
 In this chapter we'll continue working on our blog application from **Chapter 5** by adding forms so a user can create, edit, or delete any of their blog entries.
 

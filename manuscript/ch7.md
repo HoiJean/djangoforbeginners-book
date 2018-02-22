@@ -1,4 +1,4 @@
-# Chapter 7: Blog app with user accounts
+# Chapter 7: User Accounts
 
 So far we've built a working blog application that uses forms, but we're missing a major piece of most web applications: user authentication.
 
@@ -455,8 +455,4 @@ The URL of your new app will be in the command line output or you can run `herok
 
 ## Conclusion
 
-With very little code, the Django framework has allowed us to create a login, logout, and signup user authentication flow. And under-the-hood it has taken care of the many security gotchas that can crop up if you try to create your own user authentication flow from scratch.
-
-We could improve this blog by adding the "signup" link in the top nav. Perhaps even having some template logic so logged out users see "signup" but logged in users only see "logout". We'll implement this and more in the next few chapters as we start our final project of the book: a _social messaging_ app.
-
-Continue on to **Chapter 8: Custom User Accounts**.
+With a minimal amount of code, the Django framework has allowed us to create a login, logout, and signup user authentication flow. Under-the-hood it has taken care of the many security gotchas that can crop up if you try to create your own user authentication flow from scratch.

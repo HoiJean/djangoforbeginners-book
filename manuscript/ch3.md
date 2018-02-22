@@ -1,8 +1,9 @@
-# Chapter 3: Simple app
+# Chapter 3: Pages app
 
-In this chapter we'll build **and deploy** a _simple_ app that has a homepage and an about page. We'll also learn about Django's class-based views and templates which are the building blocks for the more complex web applications built later on in the book.
+In this chapter we'll build **and deploy** a *Pages* app that has a homepage and an about page. We'll also learn about Django's class-based views and templates which are the building blocks for the more complex web applications built later on in the book.
 
-## Setup
+
+## Initial Setup
 
 As in **Chapter 2: Hello World app**, our initial setup
 involves the following steps:
@@ -15,30 +16,28 @@ involves the following steps:
 
 Make sure you're not working in an existing virtual environment. You can tell if there's anything in parentheses before your command line prompt. If you are simply type `exit` to leave it.
 
-We will again create a new directory `simple` for our project on the Desktop but you can put your code anywhere you like on your computer. It just needs to be in its own directory.
+We will again create a new directory `pages` for our project on the Desktop but you can put your code anywhere you like on your computer. It just needs to be in its own directory.
 
 Within a new command line console start by typing the following:
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
 $ cd ~/Desktop
-$ mkdir simple
-$ cd simple
+$ mkdir pages
+$ cd pages
 $ pipenv install django
 $ pipenv shell
-(simple) $ django-admin startproject simple_project .
-(simple) $ python manage.py startapp pages
+(pages) $ django-admin startproject pages_project .
+(pages) $ python manage.py startapp pages
 ~~~~~~~~
 
-I'm using `(simple)` here to represent the virtual environment but in reality mine has the form of `(simple-unOYeQ9e)`. Your virtual environment name will be unique, too.
-
-Note also that last command uses the shortcut `python manage.py` instead of `python manage.py`. Writing `python manage.py` and then a command is so common in Django that this shortcut has developed over the years. The best developers are deliberately lazy, so let's be lazy and use this shorter syntax going forward!
+I'm using `(pages)` here to represent the virtual environment but in reality mine has the form of `(pages-unOYeQ9e)`. Your virtual environment name will be unique, too.
 
 Open your text editor and navigate to the file `settings.py`. Add the `pages` app to our project under `INSTALLED_APPS`:
 
 {title="Code",lang="python"}
 ~~~~~~~~
-# simple_project/settings.py
+# pages_project/settings.py
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -54,7 +53,7 @@ Start the local web server with `runserver`.
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
-(simple) $ python manage.py runserver
+(pages) $ python manage.py runserver
 ~~~~~~~~
 
 And then navigate to [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
@@ -65,23 +64,25 @@ And then navigate to [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
 
 Every web framework needs a convenient way to generate HTML files. In Django, the approach is to use templates so that individual HTML files can be served by a view to a webpage specified by the URL.
 
-The question of where to place the templates directory can be confusing for beginners. Basically there's two approaches. By default, Django looks within each app for templates. So if we had a template called `home.html` in our `pages` app, Django expects it to be located at `pages/templates/pages/home.html`.
+The question of where to place the templates directory can be confusing for beginners. By default, Django looks within each app for templates. So if we had a template called `home.html` in our `pages` app, Django expects it to be located at `pages/templates/pages/home.html`.
 
-Instead of having templates located all across your code base, many developers prefer to create a single project-level `templates` folder. This is the approach we'll use.
+If we later created a second app called `blog` and wanted to add a `blog_list.html` file, Django would expect it to be located at `blog/templates/blog/blog_list.html`. In other words, within the existing app, in a folder called `templates`, then in *another* directory with the app name. This is confusing the first few times you hear it!
+
+Another approach often used is to instead place all templates in a single, project-level directory called `templates`. This is the approach we'll use since I prefer to have all my templates in one place. By updating our `settings.py` file we can tell Django to **also** look for a `templates` folder, not just within each app for templates.
 
 First quit our server with `Control-c`. Then create a project-level folder called `templates` and an HTML file called `home.html`.
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
-(simple) $ mkdir templates
-(simple) $ touch templates/home.html
+(pages) $ mkdir templates
+(pages) $ touch templates/home.html
 ~~~~~~~~
 
 Next we need to update `settings.py` to tell Django to look at the project-level for templates. This is a one-line change to the setting `'DIRS'` under `TEMPLATES`.
 
 {title="Code",lang="python"}
 ~~~~~~~~
-# simple_project/settings.py
+# pages_project/settings.py
 TEMPLATES = [
     {
         ...
@@ -107,6 +108,8 @@ Early versions of Django only shipped with function-based views, but developers 
 
 Function-based generic views were introduced to abstract these patterns and streamline development of common patterns. However there was [no easy way to extend or customize these views](https://docs.djangoproject.com/en/2.0/topics/class-based-views/intro/). As a result, Django introduced class-based generic views that make it easy to use and also extend views covering common use cases.
 
+Classes are a fundamental part of Python but a thorough discussion of them is beyond the scope of this book. If you need an introduction or refresher, I suggest reviewing the [official Python docs](https://docs.python.org/3.6/tutorial/classes.html) which has an excellent tutorial on classes.
+
 We'll use the [built-in TemplateView](https://docs.djangoproject.com/en/2.0/ref/class-based-views/base/#django.views.generic.base.TemplateView) to display our template in the `pages/views.py` file.
 
 {title="Code",lang="python"}
@@ -129,7 +132,7 @@ Let's start with the project-level `urls.py` file.
 
 {title="Code",lang="python"}
 ~~~~~~~~
-# simple_project/urls.py
+# pages_project/urls.py
 from django.contrib import admin
 from django.urls import path, include
 
@@ -143,7 +146,7 @@ Next create an app-level `urls.py` file.
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
-(simple) $ touch pages/urls.py
+(pages) $ touch pages/urls.py
 ~~~~~~~~
 
 And add the following code.
@@ -174,10 +177,10 @@ Quit the server `Control-c` and create a new template called `about.html`.
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
-(simple) $ touch templates/about.html
+(pages) $ touch templates/about.html
 ~~~~~~~~
 
-Then populate it with simple HTML.
+Then populate it with a short HTML headline.
 
 {title="Code",lang="html"}
 ~~~~~~~~
@@ -228,7 +231,7 @@ Well we can! Let's create a `base.html` file containing a header with links to o
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
-(simple) $ touch templates/base.html
+(pages) $ touch templates/base.html
 ~~~~~~~~
 
 Django has a minimal templating language for adding links and basic logic in our templates. To add links we can use the [built-in url tag](https://docs.djangoproject.com/en/2.0/ref/templates/builtins/#url). Remember how we added optional URL names to our url routers? This is why. The `url` tag uses these names to automatically create links for us.
@@ -283,7 +286,7 @@ additional templates on top of it in a robust Django project. We'll do this late
 
 ## Tests
 
-Finally we come to tests. Even in an application this simple, it's important to add tests and get in the habit of always
+Finally we come to tests. Even in an application this basic, it's important to add tests and get in the habit of always
 adding them to our Django projects. In the words of [Jacob Kaplan-Moss](https://jacobian.org/), one of Django's original
 creators, "Code without tests is broken as designed."
 
@@ -312,7 +315,7 @@ class SimpleTests(SimpleTestCase):
 
 We're using [SimpleTestCase](https://docs.djangoproject.com/en/2.0/topics/testing/tools/#django.test.SimpleTestCase)
 here since we aren't using a database. If we were using a database, we'd instead use
-[TestCase](https://docs.djangoproject.com/en/2.0/topics/testing/tools/#django.test.TestCase). Then we perform a simple
+[TestCase](https://docs.djangoproject.com/en/2.0/topics/testing/tools/#django.test.TestCase). Then we perform a
 check if the status code for each page is 200, which is the
 [standard response for a successful HTTP request](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes).
 
@@ -320,7 +323,7 @@ To run the tests quit the server `Control-c` and type `python manage.py test` on
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
-(simple) $ python manage.py test
+(pages) $ python manage.py test
 Creating test database for alias 'default'...
 ..
 ----------------------------------------------------------------------
@@ -339,19 +342,19 @@ It's time to track our changes with _git_ and push them up to Bitbucket. We'll s
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
-(simple) $ git init
+(pages) $ git init
 ~~~~~~~~
 
 Use `git status` to see all our code changes then `git add -A` to add them all. Finally we'll add our first commit message.
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
-(simple) $ git status
-(simple) $ git add -A
-(simple) $ git commit -m 'initial commit'
+(pages) $ git status
+(pages) $ git add -A
+(pages) $ git commit -m 'initial commit'
 ~~~~~~~~
 
-Over on Bitbucket [create a new repo](https://bitbucket.org/repo/create) which we'll call `simple-app`.
+Over on Bitbucket [create a new repo](https://bitbucket.org/repo/create) which we'll call `pages-app`.
 
 ![Bitbucket Create Page](images/03_bitbucket_create.png)
 
@@ -361,15 +364,15 @@ It should look like this, replacing `wsvincent` with your Bitbucket username:
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
-(simple) $ git remote add origin git@bitbucket.org:wsvincent/simple-app.git
-(simple) $ git push -u origin master
+(pages) $ git remote add origin git@bitbucket.org:wsvincent/pages-app.git
+(pages) $ git push -u origin master
 ~~~~~~~~
 
 ## Local vs Production
 
-Up to this point we've been using Django's own internal web server to power our _simple_ application locally on our computer. But you can't share a localhost address with someone else. To make our site available on the Internet where everyone can see it, we need to deploy our code to an external server that anyone can use to see our site. This is called putting our code into _production_. Local code lives only on our computer; production code lives on an external server.
+Up to this point we've been using Django's own internal web server to power our *Pages* application locally on our computer. But you can't share a localhost address with someone else. To make our site available on the Internet where everyone can see it, we need to deploy our code to an external server that anyone can use to see our site. This is called putting our code into _production_. Local code lives only on our computer; production code lives on an external server.
 
-There are many server providers available but we will use [Heroku](https://www.heroku.com/) because it is free for small projects, widely-used, and has a relatively simple deployment process.
+There are many server providers available but we will use [Heroku](https://www.heroku.com/) because it is free for small projects, widely-used, and has a relatively straightforward deployment process.
 
 ## Heroku
 
@@ -388,13 +391,13 @@ $ brew install heroku
 
 On Windows, see the [Heroku CLI page](https://devcenter.heroku.com/articles/heroku-cli#download-and-install) to correctly install either the 32-bit or 64-bit version.
 
-Once installation is complete you can close our new command line tab and return to the initial tab with the `simple` virtual environment active.
+Once installation is complete you can close our new command line tab and return to the initial tab with the `pages` virtual environment active.
 
 Type the command `heroku login` and use the email and password for Heroku you just set.
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
-(simple) $ heroku login
+(pages) $ heroku login
 Enter your Heroku credentials:
 Email: will@wsvincent.com
 Password: *********************************
@@ -403,7 +406,7 @@ Logged in as will@wsvincent.com
 
 ## Additional Files
 
-We need to make the following changes to our _Simple_ project so it's ready to deploy online with Heroku:
+We need to make the following changes to our _Pages_ project so it's ready to deploy online with Heroku:
 
 * update `Pipfile.lock`
 * new `Procfile` file
@@ -423,7 +426,7 @@ Then run `pipenv lock` to generate the appropriate `Pipfile.lock`.
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
-(simple) $ pipenv lock
+(pages) $ pipenv lock
 ~~~~~~~~
 
 Heroku actually looks in our `Pipfile.lock` for information on our virtual environment, which is why we add the language setting here.
@@ -432,28 +435,28 @@ Then create a `Procfile` which is specific to Heroku.
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
-(simple) $ touch Procfile
+(pages) $ touch Procfile
 ~~~~~~~~
 
 Open `Procfile` with your text editor and add the following:
 
 {title="Code",lang="text"}
 ~~~~~~~~
-web: gunicorn simple_project.wsgi --log-file -
+web: gunicorn pages_project.wsgi --log-file -
 ~~~~~~~~
 
 Now we need to install [gunicorn](http://gunicorn.org/) which is a web server suitable for production. We'll continue to use Django's local server on our computer but will use gunicorn on Heroku.
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
-(simple) $ pipenv install gunicorn
+(pages) $ pipenv install gunicorn
 ~~~~~~~~
 
 The final step is a one-line change to `settings.py`. Scroll down to the section called `ALLOWED_HOSTS` and add a `'*'` so it looks as follows:
 
 {title="Code",lang="python"}
 ~~~~~~~~
-# simple_project/settings.py
+# pages_project/settings.py
 ALLOWED_HOSTS = ['*']
 ~~~~~~~~
 
@@ -463,16 +466,16 @@ Use `git status` to check our changes, add the new files, and then commit them:
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
-(simple) $ git status
-(simple) $ git add -A
-(simple) $ git commit -m "New updates for Heroku deployment"
+(pages) $ git status
+(pages) $ git add -A
+(pages) $ git commit -m "New updates for Heroku deployment"
 ~~~~~~~~
 
 And push to Bitbucket so we have an online backup:
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
-(simple) $ git push -u origin master
+(pages) $ git push -u origin master
 ~~~~~~~~
 
 ## Deploy
@@ -491,7 +494,7 @@ We can do the first step, creating a new Heroku app, from the command line with 
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
-(simple) $ heroku create
+(pages) $ heroku create
 Creating app... done, ⬢ cryptic-oasis-40349
 https://cryptic-oasis-40349.herokuapp.com/ | https://git.heroku.com/cryptic-oasis-40349.git
 ~~~~~~~~
@@ -500,7 +503,7 @@ Now we need to add a "hook" for Heroku within git. This means that git will stor
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
-(simple) $ heroku git:remote -a cryptic-oasis-40349
+(pages) $ heroku git:remote -a cryptic-oasis-40349
 ~~~~~~~~
 
 You should replace `cryptic-oasis-40349` with the app-name Heroku provides.
@@ -509,14 +512,14 @@ We only need to do one set of Heroku configurations at this point, which is to t
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
-(simple) $ heroku config:set DISABLE_COLLECTSTATIC=1
+(pages) $ heroku config:set DISABLE_COLLECTSTATIC=1
 ~~~~~~~~
 
 Now we can push our code to Heroku. Because we set our "hook" previously, it will go to Heroku.
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
-(simple) $ git push heroku master
+(pages) $ git push heroku master
 ~~~~~~~~
 
 If we just typed `git push origin master` then the code is pushed to Bitbucket, not Heroku. Adding `heroku` to the command sends the code to Heroku. This is a little confusing the first few times.
@@ -527,14 +530,14 @@ Type the following command.
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
-(simple) $ heroku ps:scale web=1
+(pages) $ heroku ps:scale web=1
 ~~~~~~~~
 
 We're done! The last step is to confirm our app is live and online. If you use the command `heroku open` your web browser will open a new tab with the URL of your app:
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
-(simple) $ heroku open
+(pages) $ heroku open
 ~~~~~~~~
 
 Mine is at [https://cryptic-oasis-40349.herokuapp.com/about/](https://cryptic-oasis-40349.herokuapp.com/about/). You can see both the homepage and about page are up now.
@@ -546,7 +549,4 @@ Mine is at [https://cryptic-oasis-40349.herokuapp.com/about/](https://cryptic-oa
 ## Conclusion
 
 Congratulations on building and deploying your second Django project! This time we used templates, class-based views, explored
-URLConfs more fully, added basic tests, and used Heroku!
-
-Next up we'll move on to our first database-backed project and see where Django really shines. Continue on to **Chapter
-4: Message Board app**.
+URLConfs more fully, added basic tests, and used Heroku! Next up we'll move on to our first database-backed project and see where Django really shines.

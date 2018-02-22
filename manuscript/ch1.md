@@ -10,13 +10,7 @@ The command line is a powerful, text-only view of your computer. As developers w
 
 On a Mac, the command line is found in a program called Terminal located at `/Applications/Utilities`. To find it, open a new Finder window, open the Applications folder, scroll down to open the Utilities folder, and double-click the application called Terminal.
 
-![Finder Terminal app](images/01_terminal.png)
-
-On Windows, there is a built-in command line program but it is difficult to use. I recommend instead using [Babun](https://babun.github.io/), a free and open-source command line program.
-
-![Babun homepage](images/01_babun.png)
-
-Click on the “Download now” button on its website, double-click it to install Babun, and upon completion drag the installer to the Recycle Bin. To use Babun go to the Start menu, select Programs, and click on Babun.
+On Windows, there is a built-in command line program but it is difficult to use. I recommend instead using [Babun](https://babun.github.io/), a free and open-source command line program. On the Babun homepage click on the “Download now” button, double-click on the downloaded file to install Babun, and upon completion drag the installer to the Recycle Bin. To use Babun go to the Start menu, select Programs, and click on Babun.
 
 Going forward when the book refers to the "command line" it means to open a new console on your computer using either Terminal or Babun.
 
@@ -309,4 +303,4 @@ Modern text editors combine the same powerful features with an appealing visual 
 
 ## Conclusion
 
-Phew! Nobody really likes configuring a local development environment but fortunately it's a one-time pain. We have now learned how to work with virtual environments and installed the latest version of Python and git. Everything is ready for our first Django app in **Chapter 2: Hello World app**.
+hew! Nobody really likes configuring a local development environment but fortunately it's a one-time pain. We have now learned how to work with virtual environments and installed the latest version of Python and git. Everything is ready for our first Django app.

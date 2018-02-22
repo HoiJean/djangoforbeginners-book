@@ -1,12 +1,11 @@
 # Chapter 4: Message Board app
 
-In this chapter we will use a database for the first time to build a basic _message board_ application. We'll explore Django's powerful built-in admin interface which provides a visual way to make changes to our data. And after adding tests we will push our code to Bitbucket and deploy the app on Heroku.
+In this chapter we will use a database for the first time to build a basic *message board* application. We'll explore Django's powerful built-in admin interface which provides a visual way to make changes to our data. And after adding tests we will push our code to Bitbucket and deploy the app on Heroku.
 
 Django provides built-in support for several types of databases. But the simplest--**by far**--to use is [SQLite](https://www.sqlite.org/) because it runs off a single file and requires no complex installation. Django uses SQLite by default for this reason and it's a perfect choice for small projects.
 
 
-## Setup
-
+## Initial Setup
 Since we've already set up several Django projects at this point in the book, we can quickly run through our commands to begin a new one. We need to do the following:
 
 * create a new directory for our code on the Desktop called `mb`
@@ -59,7 +58,7 @@ If you look inside our directory with the `ls` command, you'll see there's now a
 db.sqlite3 mb_project manage.py
 ~~~~~~~~
 
-**Side note**: Technically a `db.sqlite3` file is created the first time you run _either_ `migrate` or `runserver`. Using `runserver` configures a database using Django's default settings, however `migrate` will sync the database with the current state of any database models contained in the project and listed in `INSTALLED_APPS`. In other words, to make sure the database reflects the current state of your project you'll need to run `migrate` (and also `makemigrations`) each time you update a model. More on this shortly.
+**Side note**: Technically a `db.sqlite3` file is created the first time you run *either* `migrate` or `runserver`. Using `runserver` configures a database using Django's default settings, however `migrate` will sync the database with the current state of any database models contained in the project and listed in `INSTALLED_APPS`. In other words, to make sure the database reflects the current state of your project you'll need to run `migrate` (and also `makemigrations`) each time you update a model. More on this shortly.
 
 To confirm everything works correctly, spin up our local server.
 
@@ -70,13 +69,13 @@ To confirm everything works correctly, spin up our local server.
 
 And navigate to [http://127.0.0.1:8000/](http://127.0.0.1:8000/) to see the familiar Django installed correctly page.
 
-![Django welcome page](images/00_django_welcome.png)
+![Django welcome page]({{ site.url }}/images/00_django_welcome.png)
+
 
 ## Create a database model
-
 Our first task is to create a database model where we can store and display posts from our users. Django will turn this model into a database table for us. In real-world Django projects, it's often the case that there will be many complex, interconnected database models but in our simple message board app we only need one.
 
-I won't cover database design in this book but I have written a short guide which [you can find here](https://wsvincent.com/database-design-tutorial-for-beginners/) if this is all new to you.
+I won't cover database design in this book but I have written a short guide which [you can find here](https://wsvincent.com/database-design-tutorial-for-beginners/") you can find here if this is all new to you.
 
 Open the `posts/models.py` file and look at default code which Django provides:
 
@@ -100,10 +99,10 @@ class Post(models.Model):
     text = models.TextField()
 ~~~~~~~~
 
-Note that we've created a new database model called `Post` which has the database field `text`. We've also specified the _type of content_ it will hold, `TextField()`. Django provides many [model fields](https://docs.djangoproject.com/en/2.0/ref/models/fields/) supporting common types of content such as characters, dates, integers, emails, and so on.
+Note that we've created a new database model called `Post` which has the database field `text`. We've also specified the *type of content* it will hold, `TextField()`. Django provides many [model fields](https://docs.djangoproject.com/en/2.0/ref/models/fields/) supporting common types of content such as characters, dates, integers, emails, and so on.
+
 
 ## Activating models
-
 Now that our new model is created we need to activate it. Going forward, whenever we create or modify an existing model we'll need to update Django in a two-step process.
 
 1. First we create a migration file with the `makemigrations` command which generate the SQL commands for preinstalled apps in our `INSTALLED_APPS` setting. Migration files **do not execute those commands** on our database file, rather they contain all new changes to our models. This approach means that we have a record of all the changes to our models over time.
@@ -116,10 +115,9 @@ Now that our new model is created we need to activate it. Going forward, wheneve
 (mb) $ python manage.py migrate posts
 ~~~~~~~~
 
-Note that you don't _have_ to include a name after either `makemigrations` or `migrate`. If you simply run the commands then they will apply to all available changes. But it's a good habit to be specific. That way if you need to look at past migrations, there is only one change per migration rather than one that applies to multiple apps.
+Note that you don't *have* to include a name after either `makemigrations` or `migrate`. If you simply run the commands then they will apply to all available changes. But it's a good habit to be specific. That way if you need to look at past migrations, there is only one change per migration rather than one that applies to multiple apps.
 
 ## Django Admin
-
 Django provides us with a robust admin interface for interacting with our database. This is a truly killer feature that few web frameworks offer. It has its routes in [Django's origin as a project at a newspaper](https://docs.djangoproject.com/en/2.0/faq/general/). The developers wanted a CMS (Content Management System) so that writers could write their stories without needing to touch "code." Over time it has evolved into a fantastic, out-of-the-box tool for managing all aspects of a Django project.
 
 To use the Django admin, we first need to create a `superuser` who can login. In your command line console, type `python manage.py createsuperuser` and respond to the prompts for a username, email, and password:
@@ -138,11 +136,11 @@ Superuser created successfully.
 
 Restart the Django server with `python manage.py runserver` and in your browser go to [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/). You should see the admin’s login screen:
 
-![Admin login page](images/04_django_admin_login.png)
+![Admin login page]({{ site.url }}/images/04_django_admin_login.png)
 
 Login by entering the username and password you just created. You will see the Django admin homepage next:
 
-![Admin homepage](images/04_django_admin_home.png)
+![Admin homepage]({{ site.url }}/images/04_django_admin_home.png)
 
 But where's our `posts` app? It's not displayed on the main admin page!
 
@@ -160,15 +158,15 @@ admin.site.register(Post)
 
 Django now knows that it should display our `posts` app and its database model `Post` on the admin page. If you refresh your browser you'll see that it now appears:
 
-![Admin homepage updated](images/04_django_admin_app.png)
+![Admin homepage updated]({{ site.url }}/images/04_django_admin_app.png)
 
 Now let's create our first message board post for our database. Click on the `+ Add` button opposite `Posts`. Enter your own text in the `Text` form field.
 
-![Admin new entry](images/04_django_admin_first_entry.png)
+![Admin new entry]({{ site.url }}/images/04_django_admin_first_entry.png)
 
 Then click the "Save" button, which will redirect you to the main Post page. However if you look closely, there's a problem: our new entry is called "Post object", which isn't very helpful.
 
-![Admin new entry](images/04_django_admin_post_object.png)
+![Admin new entry]({{ site.url }}/images/04_django_admin_post_object.png)
 
 Let's change that. Within the `posts/models.py` file, add a new function `__str__` as follows:
 
@@ -188,15 +186,14 @@ class Post(models.Model):
 
 If you refresh your Admin page in the browser, you'll see it's changed to a much more descriptive and helpful representation of our database entry.
 
-![Admin new entry](images/04_django_admin_post_str.png)
+![Admin new entry]({{ site.url }}/images/04_django_admin_post_str.png)
 
 Much better! It's important to add `str()` methods to all of your models to improve their readability.
 
 ## Views/Templates/URLs
-
 In order to display our database content on our homepage, we have to wire up our views, templates, and URLConfs. This should start to feel familiar now.
 
-Let's start with the view. Earlier in the book we used the built-in generic [TemplateView](https://docs.djangoproject.com/en/2.0/ref/class-based-views/base/#django.views.generic.base.TemplateView) to display a template file on our homepage. Now we want to list the contents of our database model. Fortunately this is a common task and can be done with the generic class-based view [ListView](https://docs.djangoproject.com/en/2.0/ref/class-based-views/generic-display/#listview).
+Let's start with the view. Earlier in the book we used the built-in generic [TemplateView](https://docs.djangoproject.com/en/2.0/ref/class-based-views/base/#django.views.generic.base.TemplateView) to display a template file on our homepage. Now we want to list the contents of our database model. Fortunately this is a common task and can be done with the generic class-based view  [ListView](https://docs.djangoproject.com/en/2.0/ref/class-based-views/generic-display/#listview).
 
 In the `posts/views.py` file enter the Python code below:
 
@@ -243,9 +240,9 @@ In our templates file `home.html` we can use the [Django Templating Language's](
 <!-- templates/home.html -->
 <h1>Message board homepage</h1>
 <ul>
-  {% for post in object_list %}
+  {% raw %}{% for post in object_list %}
     <li>{{ post }}</li>
-  {% endfor %}
+  {% endfor %}{% endraw %}
 </ul>
 ~~~~~~~~
 
@@ -286,23 +283,22 @@ urlpatterns = [
 
 Restart the server with `python manage.py runserver` and navigate to our homepage [http://127.0.0.1:8000/](http://127.0.0.1:8000/) which now lists out our message board posts.
 
-![Homepage with posts](images/04_homepage_helloworld.png)
+![Homepage with posts]({{ site.url }}/images/04_homepage_helloworld.png)
 
 We're basically done at this point, but let's create a few more message board posts in the Django admin to confirm that they'll all display correctly on the homepage.
 
 ## Adding new posts
-
 To add new posts to our message board, go back into the Admin at [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/) and add two more posts. Here's what mine look like:
 
-![Admin entry](images/04_django_admin_second_entry.png)
+![Admin entry]({{ site.url }}/images/04_django_admin_second_entry.png)
 
-![Admin entry](images/04_django_admin_third_entry.png)
+![Admin entry]({{ site.url }}/images/04_django_admin_third_entry.png)
 
-![Updated admin entries section](images/04_django_admin_three_entries.png)
+![Updated admin entries section]({{ site.url }}/images/04_django_admin_three_entries.png)
 
 If you return to the homepage you'll see it automatically displays our formatted posts. Woohoo!
 
-![Homepage with three entries](images/04_django_homepage_three_entries.png)
+![Homepage with three entries]({{ site.url }}/images/04_django_homepage_three_entries.png)
 
 Everything works so let's first initialize our directory, add the new code, and include our first `git` commit.
 
@@ -313,11 +309,11 @@ Everything works so let's first initialize our directory, add the new code, and 
 (mb) $ git commit -m 'initial commit'
 ~~~~~~~~
 
-## Tests
 
+## Tests
 Time for our tests. The best time to write tests is either before you've written any actual code (Test Driven Development) or right after when the new features are fresh in your mind. Write some tests, check that they work, and then feel confident that if you inadvertently break something down the road--and you will--the tests will catch it for you.
 
-Previously we were only testing static pages so we used [SimpleTestCase](https://docs.djangoproject.com/en/2.0/topics/testing/tools/#django.test.SimpleTestCase). But now that our homepage works with a database, we need to use [TestCase](https://docs.djangoproject.com/en/2.0/topics/testing/tools/#django.test.TestCase) which will let us create a "test" database we can check against. In other words, we don't need to run tests on our _actual_ database but instead can make a separate test database, fill it with sample data, and then test against it.
+Previously we were only testing static pages so we used [SimpleTestCase](https://docs.djangoproject.com/en/2.0/topics/testing/tools/#django.test.SimpleTestCase). But now that our homepage works with a database, we need to use [TestCase](https://docs.djangoproject.com/en/2.0/topics/testing/tools/#django.test.TestCase) which will let us create a "test" database we can check against. In other words, we don't need to run tests on our *actual* database but instead can make a separate test database, fill it with sample data, and then test against it.
 
 Let's start by adding a sample post to the `text` database field and then check that it is stored correctly in the database. It's important that all our test methods start with `test_` so Django knows to test them! The code will look like this:
 
@@ -430,13 +426,13 @@ We're done adding code for our testing so it's time to commit the changes to git
 (mb) $ git commit -m 'added tests'
 ~~~~~~~~
 
-## Bitbucket
 
+## Bitbucket
 We also need to store our code on Bitbucket. This is a good habit to get into in case anything happens to your local computer and it also allows you to share and collaborate with other developers.
 
-You should already have a Bitbucket account from **Chapter 3: A simple app** so go ahead and [create a new repo](https://bitbucket.org/repo/create) which we'll call `mb-app`.
+You should already have a Bitbucket account from [Chapter 3: A simple app]({{ site.baseurl }}{% post_url book/2010-01-01-pages-app %}) so go ahead and [create a new repo](https://bitbucket.org/repo/create) which we'll call `mb-app`.
 
-![Bitbucket create app](images/04_bitbucket.png)
+![Bitbucket create app]({{ site.url }}/images/04_bitbucket.png)
 
 On the next page click on the bottom link for “I have an existing project”. Copy the two commands to connect and then push the repository to Bitbucket.
 
@@ -448,9 +444,9 @@ It should look like this, replacing `wsvincent` (my username) with your Bitbucke
 (mb) $ git push -u origin master
 ~~~~~~~~
 
-## Heroku configuration
 
-You should also already have a Heroku account setup and installed from **Chapter 3: A simple app**. We need to make the following changes to our \_Message Board* project to deploy it online:
+## Heroku configuration
+You should also already have a Heroku account setup and installed from [Chapter 3: A simple app]({{ site.baseurl }}{% post_url book/2010-01-01-pages-app %}). We need to make the following changes to our *Message Board* project to deploy it online:
 
 * update `Pipfile.lock`
 * new `Procfile`
@@ -473,7 +469,7 @@ Run `pipenv lock` to generate the appropriate `Pipfile.lock`.
 (mb) $ pipenv lock
 ~~~~~~~~
 
-Then create a `Procfile` which tells Heroku _how_ to run the remote server where our code will live.
+Then create a `Procfile` which tells Heroku *how* to run the remote server where our code will live.
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
@@ -482,7 +478,7 @@ Then create a `Procfile` which tells Heroku _how_ to run the remote server where
 
 For now we're telling Heroku to use `gunicorn` as our production server and look in our `mb_project.wsgi` file for further instructions.
 
-{title="Code",lang="text"}
+{title="Command Line",lang="text"}
 ~~~~~~~~
 web: gunicorn mb_project.wsgi --log-file -
 ~~~~~~~~
@@ -499,7 +495,7 @@ Finally update `ALLOWED_HOSTS` in our `settings.py` file.
 {title="Code",lang="python"}
 ~~~~~~~~
 # mb_project/settings.py
-ALLOWED_HOSTS = ['\*']
+ALLOWED_HOSTS = ['*']
 ~~~~~~~~
 
 We're all done! Add and commit our new changes to git and then push them up to Bitbucket.
@@ -513,7 +509,6 @@ We're all done! Add and commit our new changes to git and then push them up to B
 ~~~~~~~~
 
 ## Heroku deployment
-
 Make sure you're logged into your correct Heroku account.
 
 {title="Command Line",lang="text"}
@@ -537,7 +532,7 @@ Set `git` to use the name of your new app when you push code to Heroku. My Herok
 (mb) $ heroku git:remote -a agile-inlet-25811
 ~~~~~~~~
 
-Tell Heroku to ignore static files which we'll cover in-depth when deploying our _Blog_ app later in the book.
+Tell Heroku to ignore static files which we'll cover in-depth when deploying our *Blog* app later in the book.
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
@@ -554,12 +549,9 @@ Push the code to Heroku and add free scaling so it's actually running online.
 
 If you open the new project with `heroku open` it will automatically launch a new browser window with the URL of your app. Mine is live at [https://agile-inlet-25811.herokuapp.com/](https://agile-inlet-25811.herokuapp.com/).
 
-![Live site](images/04_heroku_live.png)
+![Live site]({{ site.url }}/images/04_heroku_live.png)
 
 ## Conclusion
-
 We've now built, tested, and deployed our first database-driven app. While it's deliberately quite basic, now we know how to create a database model, update it with the admin panel, and then display the contents on a webpage. But something is missing, no?
 
 In the real-world, users need forms to interact with our site. After all, not everyone should have access to the admin panel. In the next chapter we'll build a blog application that uses forms so that users can create, edit, and delete posts. We'll also add styling via CSS.
-
-Continue on to **Chapter 5: Blog app**.
