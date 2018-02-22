@@ -69,7 +69,7 @@ To confirm everything works correctly, spin up our local server.
 
 And navigate to [http://127.0.0.1:8000/](http://127.0.0.1:8000/) to see the familiar Django installed correctly page.
 
-![Django welcome page]({{ site.url }}/images/00_django_welcome.png)
+![Django welcome page](images/00_django_welcome.png)
 
 
 ## Create a database model
@@ -136,11 +136,11 @@ Superuser created successfully.
 
 Restart the Django server with `python manage.py runserver` and in your browser go to [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/). You should see the admin’s login screen:
 
-![Admin login page]({{ site.url }}/images/04_django_admin_login.png)
+![Admin login page](images/04_django_admin_login.png)
 
 Login by entering the username and password you just created. You will see the Django admin homepage next:
 
-![Admin homepage]({{ site.url }}/images/04_django_admin_home.png)
+![Admin homepage](images/04_django_admin_home.png)
 
 But where's our `posts` app? It's not displayed on the main admin page!
 
@@ -158,15 +158,15 @@ admin.site.register(Post)
 
 Django now knows that it should display our `posts` app and its database model `Post` on the admin page. If you refresh your browser you'll see that it now appears:
 
-![Admin homepage updated]({{ site.url }}/images/04_django_admin_app.png)
+![Admin homepage updated](images/04_django_admin_app.png)
 
 Now let's create our first message board post for our database. Click on the `+ Add` button opposite `Posts`. Enter your own text in the `Text` form field.
 
-![Admin new entry]({{ site.url }}/images/04_django_admin_first_entry.png)
+![Admin new entry](images/04_django_admin_first_entry.png)
 
 Then click the "Save" button, which will redirect you to the main Post page. However if you look closely, there's a problem: our new entry is called "Post object", which isn't very helpful.
 
-![Admin new entry]({{ site.url }}/images/04_django_admin_post_object.png)
+![Admin new entry](images/04_django_admin_post_object.png)
 
 Let's change that. Within the `posts/models.py` file, add a new function `__str__` as follows:
 
@@ -186,7 +186,7 @@ class Post(models.Model):
 
 If you refresh your Admin page in the browser, you'll see it's changed to a much more descriptive and helpful representation of our database entry.
 
-![Admin new entry]({{ site.url }}/images/04_django_admin_post_str.png)
+![Admin new entry](images/04_django_admin_post_str.png)
 
 Much better! It's important to add `str()` methods to all of your models to improve their readability.
 
@@ -283,22 +283,22 @@ urlpatterns = [
 
 Restart the server with `python manage.py runserver` and navigate to our homepage [http://127.0.0.1:8000/](http://127.0.0.1:8000/) which now lists out our message board posts.
 
-![Homepage with posts]({{ site.url }}/images/04_homepage_helloworld.png)
+![Homepage with posts](images/04_homepage_helloworld.png)
 
 We're basically done at this point, but let's create a few more message board posts in the Django admin to confirm that they'll all display correctly on the homepage.
 
 ## Adding new posts
 To add new posts to our message board, go back into the Admin at [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/) and add two more posts. Here's what mine look like:
 
-![Admin entry]({{ site.url }}/images/04_django_admin_second_entry.png)
+![Admin entry](images/04_django_admin_second_entry.png)
 
-![Admin entry]({{ site.url }}/images/04_django_admin_third_entry.png)
+![Admin entry](images/04_django_admin_third_entry.png)
 
-![Updated admin entries section]({{ site.url }}/images/04_django_admin_three_entries.png)
+![Updated admin entries section](images/04_django_admin_three_entries.png)
 
 If you return to the homepage you'll see it automatically displays our formatted posts. Woohoo!
 
-![Homepage with three entries]({{ site.url }}/images/04_django_homepage_three_entries.png)
+![Homepage with three entries](images/04_django_homepage_three_entries.png)
 
 Everything works so let's first initialize our directory, add the new code, and include our first `git` commit.
 
@@ -430,9 +430,9 @@ We're done adding code for our testing so it's time to commit the changes to git
 ## Bitbucket
 We also need to store our code on Bitbucket. This is a good habit to get into in case anything happens to your local computer and it also allows you to share and collaborate with other developers.
 
-You should already have a Bitbucket account from [Chapter 3: A simple app]({{ site.baseurl }}{% post_url book/2010-01-01-pages-app %}) so go ahead and [create a new repo](https://bitbucket.org/repo/create) which we'll call `mb-app`.
+You should already have a Bitbucket account from **Chapter 3: A simple app** so go ahead and [create a new repo](https://bitbucket.org/repo/create) which we'll call `mb-app`.
 
-![Bitbucket create app]({{ site.url }}/images/04_bitbucket.png)
+![Bitbucket create app](images/04_bitbucket.png)
 
 On the next page click on the bottom link for “I have an existing project”. Copy the two commands to connect and then push the repository to Bitbucket.
 
@@ -446,7 +446,7 @@ It should look like this, replacing `wsvincent` (my username) with your Bitbucke
 
 
 ## Heroku configuration
-You should also already have a Heroku account setup and installed from [Chapter 3: A simple app]({{ site.baseurl }}{% post_url book/2010-01-01-pages-app %}). We need to make the following changes to our *Message Board* project to deploy it online:
+You should also already have a Heroku account setup and installed from **Chapter 3: A simple app**. We need to make the following changes to our *Message Board* project to deploy it online:
 
 * update `Pipfile.lock`
 * new `Procfile`
@@ -549,7 +549,7 @@ Push the code to Heroku and add free scaling so it's actually running online.
 
 If you open the new project with `heroku open` it will automatically launch a new browser window with the URL of your app. Mine is live at [https://agile-inlet-25811.herokuapp.com/](https://agile-inlet-25811.herokuapp.com/).
 
-![Live site]({{ site.url }}/images/04_heroku_live.png)
+![Live site](images/04_heroku_live.png)
 
 ## Conclusion
 We've now built, tested, and deployed our first database-driven app. While it's deliberately quite basic, now we know how to create a database model, update it with the admin panel, and then display the contents on a webpage. But something is missing, no?
