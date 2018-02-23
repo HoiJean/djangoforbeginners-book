@@ -331,7 +331,7 @@ Phew! That was a bit of a pain but it's a one-time pain. Now we can add static f
 
 Start up the server again with `.manage.py runserver` and look at our updated homepage at [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
 
-![Blog homepage with red title](images/05_homepage_red_h1.png)
+![Blog homepage with red title](images/05_homepage_red_title.png)
 
 We can do a little better though. How about if we add a custom font and some more CSS? Since this is not a tutorial on CSS simply add the following between `<head></head>` tags to add [Source Sans Pro](https://fonts.google.com/specimen/Source+Sans+Pro), a free font from Google.
 
