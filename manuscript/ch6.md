@@ -133,7 +133,7 @@ Oops! What happened?
 
 ![Blog new page](images/06_new_error.png)
 
-Django's error message is quite helpful. It's complaining that we did not specify where to send the user after successfully submitting the form. Let's just send a user back to the homepage after success since that will show the list of all their blogs.
+Django's error message is quite helpful. It's complaining that we did not specify where to send the user after successfully submitting the form. Let's send a user to the detail page after success; that way they can see their completed post.
 
 We can follow Django's suggestion and add a [get_absolute_url](https://docs.djangoproject.com/en/2.0/ref/models/instances/#django.db.models.Model.get_absolute_url) to our model. This is a best practice that you should always do. It sets a canonical URL for an object so even if the structure of your URLs changes in the future, the reference to the specific object is the same.
 
