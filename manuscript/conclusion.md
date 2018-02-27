@@ -14,7 +14,7 @@ Web development is a very deep field. There's still much more to learn and Djang
 * authorization
 * and more...
 
-The follow-up to this book, **Intermediate Django**, walks through building a production-ready Twitter clone using these advanced features. It is the second in my three-part series on web development with Django: **Django for Beginners**, **Intermediate Django**, and **Advanced Django**.
+The follow-up to this book, [Intermediate Django](https://intermediatedjango.com/), walks through building a production-ready Twitter clone using these advanced features. It is the second in my three-part series on web development with Django: **Django for Beginners**, **Intermediate Django**, and **Advanced Django**.
 
 Sign up for the [Django for Beginners newsletter](http://eepurl.com/cRL-aP) for updates on new content and discounts on future books.
 
