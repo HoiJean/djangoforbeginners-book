@@ -10,7 +10,7 @@ Web development is a very deep field. There's still much more to learn and Djang
 * multiple settings files
 * custom user authentication flow
 * adding [Bootstrap](https://getbootstrap.com/) for improved styling
-* using ForeignKeys to link multiple database models
+* using foreign keys to link multiple database models
 * authorization
 * and more...
 
