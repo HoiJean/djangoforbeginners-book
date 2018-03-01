@@ -70,7 +70,11 @@ LOGIN_REDIRECT_URL = 'home'
 
 Now the user will be redirected to the `'home'` template which is our homepage.
 
-**We're actually done at this point!** If you now start up the Django server again with `python manage.py runserver` and navigate to our login page at [http://127.0.0.1:8000/accounts/login/](http://127.0.0.1:8000/accounts/login/) you'll see the following.
+**We're actually done at this point!** If you now start up the Django server again with `python manage.py runserver` and navigate to our login page:
+
+[http://127.0.0.1:8000/accounts/login/](http://127.0.0.1:8000/accounts/login/)
+
+You'll see the following:
 
 ![Login page](images/07_login_firststep.png)
 
@@ -256,7 +260,9 @@ Add then populate it with the code below.
 
 This format is very similar to what we've done before. We extend our base template at the top, place our logic between `<form></form>` tags, use the `csrf_token` for security, display the form's content in paragraph tags with `form.as_p`, and include a submit button.
 
-We're now done! To test it out, navigate to our newly created page [http://127.0.0.1:8000/accounts/signup/](http://127.0.0.1:8000/accounts/signup/).
+We're now done! To test it out, navigate to our newly created page:
+
+[http://127.0.0.1:8000/accounts/signup/](http://127.0.0.1:8000/accounts/signup/)
 
 ![Django signup page](images/07_signup.png)
 

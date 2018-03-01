@@ -268,7 +268,9 @@ Note that code between `{% block content %}` and
 
 At the top we note that this template extends `base.html` and then wrap our desired code with `content` blocks. Then we use the Django Templating Language to set up a simple _for loop_ for each blog post. Note that `object_list` comes from `ListView` and contains all the objects in our view.
 
-If you start the Django server again `python manage.py runserver` and refresh [http://127.0.0.1:8000/](http://127.0.0.1:8000/) we can see it's working.
+If you start the Django server again: `python manage.py runserver`.
+
+And refresh [http://127.0.0.1:8000/](http://127.0.0.1:8000/) we can see it's working.
 
 ![Blog homepage with two posts](images/05_homepage_no_styling.png)
 

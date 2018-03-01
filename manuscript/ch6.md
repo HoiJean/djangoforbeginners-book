@@ -121,7 +121,9 @@ To view our work, start the server with `python manage.py runserver` and go to t
 
 ![Homepage with New button](images/06_new_button.png)
 
-Click on our link for "+ New Blog Post" which will redirect you to [http://127.0.0.1:8000/post/new/](http://127.0.0.1:8000/post/new/).
+Click on our link for "+ New Blog Post" which will redirect you to:
+
+[http://127.0.0.1:8000/post/new/](http://127.0.0.1:8000/post/new/).
 
 ![Blog new page](images/06_new_page.png)
 

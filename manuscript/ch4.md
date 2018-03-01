@@ -547,7 +547,9 @@ Push the code to Heroku and add free scaling so it's actually running online.
 (mb) $ heroku ps:scale web=1
 ~~~~~~~~
 
-If you open the new project with `heroku open` it will automatically launch a new browser window with the URL of your app. Mine is live at [https://agile-inlet-25811.herokuapp.com/](https://agile-inlet-25811.herokuapp.com/).
+If you open the new project with `heroku open` it will automatically launch a new browser window with the URL of your app. Mine is live at:
+
+[https://agile-inlet-25811.herokuapp.com/](https://agile-inlet-25811.herokuapp.com/).
 
 ![Live site](images/04_heroku_live.png)
 
