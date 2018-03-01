@@ -219,7 +219,9 @@ urlpatterns = [
 ]
 ~~~~~~~~
 
-Start up the web server with `python manage.py runserver`, navigate to [http://127.0.0.1:8000/about](http://127.0.0.1:8000/about), and you can see our new "About page".
+Start up the web server with `python manage.py runserver`.
+
+Navigate to [http://127.0.0.1:8000/about](http://127.0.0.1:8000/about) and you can see our new "About page".
 
 ![About page](images/03_about.png)
 

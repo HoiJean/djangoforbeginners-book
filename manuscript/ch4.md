@@ -288,7 +288,11 @@ Restart the server with `python manage.py runserver` and navigate to our homepag
 We're basically done at this point, but let's create a few more message board posts in the Django admin to confirm that they'll all display correctly on the homepage.
 
 ## Adding new posts
-To add new posts to our message board, go back into the Admin at [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/) and add two more posts. Here's what mine look like:
+To add new posts to our message board, go back into the Admin:
+
+[http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)
+
+And add two more posts. Here's what mine look like:
 
 ![Admin entry](images/04_django_admin_second_entry.png)
 
