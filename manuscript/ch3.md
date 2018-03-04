@@ -240,7 +240,7 @@ Django has a minimal templating language for adding links and basic logic in our
 
 {title="Code",lang="html"}
 ~~~~~~~~
-<!-- pages/base.html -->
+<!-- templates/base.html -->
 <header>
   <a href="{% url 'home' %}">Home</a> | <a href="{% url 'about' %}">About</a>
 </header>
