@@ -362,6 +362,8 @@ Over on Bitbucket [create a new repo](https://bitbucket.org/repo/create) which w
 
 On the next page click on the bottom link for "I have an existing project". Copy the two commands to connect and then push the repository to Bitbucket.
 
+![Bitbucket Existing Project](images/03_existing_project.png)
+
 It should look like this, replacing `wsvincent` with your Bitbucket username:
 
 {title="Command Line",lang="text"}
