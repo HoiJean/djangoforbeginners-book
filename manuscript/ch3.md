@@ -236,7 +236,11 @@ Well we can! Let's create a `base.html` file containing a header with links to o
 (pages) $ touch templates/base.html
 ~~~~~~~~
 
-Django has a minimal templating language for adding links and basic logic in our templates. To add links we can use the [built-in url tag](https://docs.djangoproject.com/en/2.0/ref/templates/builtins/#url). Remember how we added optional URL names to our url routers? This is why. The `url` tag uses these names to automatically create links for us.
+Django has a minimal templating language for adding links and basic logic in our templates. You can see the full list of built-in template tags [here in the official docs](https://docs.djangoproject.com/en/2.0/ref/templates/builtins/#built-in-template-tags-and-filters). Template tags take the form of `{% something %}` where the "something" is the template tag itself. You can even create your own custom template tags, though we won't do that in this book.
+
+To add URL links in our project we can use the [built-in url template tag](https://docs.djangoproject.com/en/2.0/ref/templates/builtins/#url) which takes the URL pattern name as an argument. Remember how we added optional URL names to our url routers? This is why. The `url` tag uses these names to automatically create links for us.
+
+The URL route for our homepage is called `home` therefore to configure a link to it we would use the following: `{% url 'home' %}`.
 
 {title="Code",lang="html"}
 ~~~~~~~~
