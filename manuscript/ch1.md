@@ -25,7 +25,7 @@ While there are many possible commands we can use, in practice there are six use
 
 Open your command line and try them out. The `$` dollar sign is our command line prompt: all commands in this book are intended to be typed **after** the `$` prompt.
 
-For example, let's change into our Desktop directory.
+For example, assuming you're on a Mac, let's change into our Desktop directory.
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
@@ -42,7 +42,7 @@ Note that our current location `~/Desktop` is automatically added before our com
 
 On my Mac computer this shows that I'm using the user `wsv` and on the `desktop` for that account.
 
-Let's create a new directory folder with `mk_dir`, `cd` into it, and add a new file `index.html`.
+Let's create a new directory folder with `mkdir`, `cd` into it, and add a new file `index.html`.
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
@@ -70,7 +70,7 @@ As a final step return to the Desktop directory with `cd ..` and use `pwd` to co
 
 Advanced developers can use their keyboard and command line to navigate through their computer with ease; with practice this approach is much faster than using a mouse.
 
-In this book I'll give you the exact instructions to run--you don't need to be an expert on the command line--but over time it's a good skill to have for any professional software developer. Two good free resources for further study are the [Command Line Crash Course](https://learnpythonthehardway.org/book/appendixa.html) and [CodeCademy’s Course on the Command Line](https://www.codecademy.com/learn/learn-the-command-line).
+In this book I'll give you the exact instructions to run--you don't need to be an expert on the command line--but over time it's a good skill for any professional software developer to develop. Two good free resources for further study are the [Command Line Crash Course](https://learnpythonthehardway.org/book/appendixa.html) and [CodeCademy’s Course on the Command Line](https://www.codecademy.com/learn/learn-the-command-line).
 
 A> Instructions are included below for Mac, Windows, and Linux computers.
 
@@ -157,7 +157,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 ## Install Python 3 on Windows
 
-Python is not included by default on Windows, however we can check if any version exists on the system. Open a command-line console by entering `command` on the Start Menu. Or you can hold down the SHIFT key and right-click on your desktop, then select **Open Command Window Here.**
+Python is not included by default on Windows, however we can check if any version exists on the system. Open a command line console by entering `command` on the Start Menu. Or you can hold down the SHIFT key and right-click on your desktop, then select **Open Command Window Here.**
 
 Type the following command and hit RETURN:
 
@@ -169,9 +169,9 @@ Python 3.6.4
 
 If you see output like this, Python is already installed. \_Most likely it will not be!
 
-To download Python 3, go to the [downloads section](https://www.python.org/downloads/) of the official Python website. Download the installer and make sure to click the _Add Python to PATH_ option, which will let use use `python` directly from the command-line. Otherwise we'd have to enter our system's full path and modify our environment variables manually.
+To download Python 3, go to the [downloads section](https://www.python.org/downloads/) of the official Python website. Download the installer and make sure to click the _Add Python to PATH_ option, which will let use use `python` directly from the command line. Otherwise we'd have to enter our system's full path and modify our environment variables manually.
 
-After Python has installed, run the following command in a new command-line console:
+After Python has installed, run the following command in a new command line console:
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
@@ -230,19 +230,44 @@ If you look within our directory there are now two new files: `Pipfile` and `Pip
 $ pipenv shell
 ~~~~~~~~
 
-If successful you'll see parentheses on your command line with the environment activated. It will take the format of the directory name and random characters. On my computer, I see the below but you will see something slightly different.
+If successful you'll see parentheses on your command line with the environment activated. It will take the format of the directory name and random characters. On my computer, I see the below but you will see something slightly different: it will start with `django-` but end with a random series of characters.
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
 (django-JmZ1NTQw) $
 ~~~~~~~~
 
-This means it's working! Create a new Django project called `test` with the following command. Don't forget that period `.` at the end which will create the project in the **current directory**. If you don't explicitly specify the location Django will create a directory **before** your Django directory.
+This means it's working! Create a new Django project called `test` with the following command. Don't forget that period `.` at the end.
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
 (django-JmZ1NTQw) $ django-admin startproject test_project .
 ~~~~~~~~
+
+It's worth pausing here to explain why you should add a period `.` to the command. If you just run `django-admin startproject test_project` then by default Django will create this directory structure:
+
+```
+└── test_project
+    ├── manage.py
+    └── test_project
+        ├── __init__.py
+        ├── settings.py
+        ├── urls.py
+        └── wsgi.py
+```
+
+See how it creates a new directory `test_project` and then within it a `manage.py` file and a `test_project` directory? That feels redundant to me since we already created and navigated into a `django` folder on our Desktop. By running `django-admin startproject test_project .` with the period at the end--which says, install in the current directory--the result is instead this:
+
+```
+├── manage.py
+└── test_project
+    ├── __init__.py
+    ├── settings.py
+    ├── urls.py
+    └── wsgi.py
+```
+
+The takeaway is that it **doesn't really matter** if you include the period or not at the end of the command, but I prefer not to and so that's how we'll do it in this book.
 
 Now let's confirm everything is working by running Django's local web server.
 
@@ -270,7 +295,7 @@ It's worth noting that only one virtual environment can be active in a command l
 
 ## Install Git
 
-[Git](https://Git-scm.com/) is an indispensable part of modern software development. It is a [version control system](https://en.wikipedia.org/wiki/Version_control) which can be thought of as an extremely powerful version of _track changes_ in Microsoft Word or Google Docs. With git, you can collaborate with other developers, track all your work via commits, and even revert to any previous version of your code even if you accidentally delete something important!
+[Git](https://Git-scm.com/) is an indispensable part of modern software development. It is a [version control system](https://en.wikipedia.org/wiki/Version_control) which can be thought of as an extremely powerful version of _track changes_ in Microsoft Word or Google Docs. With git, you can collaborate with other developers, track all your work via commits, and revert to any previous version of your code even if you accidentally delete something important!
 
 On a Mac, because Homebrew is already installed we can simply type `brew install git` on the command line:
 
@@ -303,4 +328,4 @@ Modern text editors combine the same powerful features with an appealing visual 
 
 ## Conclusion
 
-hew! Nobody really likes configuring a local development environment but fortunately it's a one-time pain. We have now learned how to work with virtual environments and installed the latest version of Python and git. Everything is ready for our first Django app.
+Phew! Nobody really likes configuring a local development environment but fortunately it's a one-time pain. We have now learned how to work with virtual environments and installed the latest version of Python and git. Everything is ready for our first Django app.
