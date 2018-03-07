@@ -1,6 +1,6 @@
 # Conclusion
 
-Congratulations on finishing *Django for Beginners*! After starting from absolute zero we've now built four different web applications from scratch. And we've covered the major features of Django: templates, views, urls, users, models, security, testing, and deployment. You now have the knowledge to go off and build your own modern websites with Django.
+Congratulations on finishing *Django for Beginners*! After starting from absolute zero we've now built four different web applications from scratch. And we've covered all the major features of Django: templates, views, urls, users, models, security, testing, and deployment. You now have the knowledge to go off and build your own modern websites with Django.
 
 As with any new skill, it's important to practice and apply what you've just learned. The CRUD functionality in our *Blog* app is common in many, many other web applications. For example, can you make a Todo List web application? You already have all the tools you need.
 
@@ -14,11 +14,12 @@ Web development is a very deep field. There's still much more to learn and Djang
 * authorization
 * and more...
 
+## Intermediate Django
 The follow-up to this book, [Intermediate Django](https://intermediatedjango.com/), walks through building a production-ready Twitter clone using these advanced features. It is the second in my three-part series on web development with Django: **Django for Beginners**, **Intermediate Django**, and **Advanced Django**.
 
-Sign up for the [Django for Beginners newsletter](http://eepurl.com/cRL-aP) for updates on new content and discounts on future books.
+You can sign up for the [Django for Beginners newsletter](http://eepurl.com/cRL-aP) for updates on new content and discounts on future books.
 
-My personal website [wsvincent.com](https://wsvincent.com/) is also regularly updated and features articles on some of these advanced techniques already:
+My personal website [wsvincent.com](https://wsvincent.com/) is regularly updated and features articles on some of these advanced techniques already:
 
 * [Django Social Authentication](https://wsvincent.com/django-allauth-tutorial/)
 * [Django Login Mega-Tutorial](https://wsvincent.com/django-allauth-tutorial-custom-user-model/)

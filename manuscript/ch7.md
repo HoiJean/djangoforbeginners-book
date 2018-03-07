@@ -111,7 +111,7 @@ It worked! My superuser name is `wsv` so that's what I see on the page.
 
 We added template page logic for logged out users but...how do we log out now? We could go into the Admin panel and do it manually, but there's a better way. Let's add a logout link instead that redirects to the homepage. Thanks to the Django auth system, this is dead-simple to achieve.
 
-In our `base.html` file add a one-line link for logging out.
+In our `base.html` file add a one-line `{% url 'logout' %}` link for logging out.
 
 {title="Command Line",lang="html"}
 ~~~~~~~~
@@ -189,7 +189,7 @@ urlpatterns = [
 ]
 ~~~~~~~~
 
-The order of our `urls` matters here because Django reads this file top-to-bottom. Therefore when we request a `/accounts/signup` url, Django will first look in `auth`, not find it, and **then** proceed to the `accounts` app.
+The order of our `urls` matters here because Django reads this file top-to-bottom. Therefore when we request them `/accounts/signup` url, Django will first look in `auth`, not find it, and **then** proceed to the `accounts` app.
 
 Let's go ahead and create our `accounts/urls.py` file.
 
@@ -230,9 +230,9 @@ class SignUpView(generic.CreateView):
     template_name = 'signup.html'
 ~~~~~~~~
 
-We’re subclassing the generic class-based view `CreateView` in our `SignUpView` class. We specify the use of the built-in `UserCreationForm` and the not-yet-created template at `signup.html`. And we use `reverse_lazy` to redirect the user to the login page upon successful registration.
+We're subclassing the generic class-based view `CreateView` in our `SignUpView` class. We specify the use of the built-in `UserCreationForm` and the not-yet-created template at `signup.html`. And we use `reverse_lazy` to redirect the user to the login page upon successful registration.
 
-Why use `reverse_lazy` here instead of `reverse`? The reason is that for all generic class-based views the urls are not loaded when the file is imported, so we have to use the lazy form of `reverse` to load them later when they’re available.
+Why use `reverse_lazy` here instead of `reverse`? The reason is that for all generic class-based views the urls are not loaded when the file is imported, so we have to use the lazy form of `reverse` to load them later when they're available.
 
 Now let's add `signup.html` to our project-level `templates` folder:
 
@@ -306,7 +306,7 @@ All done! Now we can deploy our new app on Heroku.
 
 ## Heroku config
 
-This is our third time deploying an app. As with our _message board_ app, there are four changes we need to make so it can be deployed on Heroku.
+This is our third time deploying an app. As with our _Message Board_ app, there are four changes we need to make so it can be deployed on Heroku.
 
 * update `Pipfile.lock`
 * new `Procfile`
@@ -402,7 +402,7 @@ There's one more step we need to take now that we have static files, which in ou
 (blog) $ pipenv install whitenoise
 ~~~~~~~~
 
-Then we need to update our static settings so it will be used in production. In your text editor open `settings.py`. Add whitenoise to the `INSTALLED_APPS` **above** the built-in staticfiles app and also to `MIDDLEWARE` on the third line. Order matters for both `INSTALLED_APPS` and `MIDDLEWARE`.
+Then we need to update our static settings so it will be used in production. In your text editor open `settings.py`. Add whitenoise to the `INSTALLED_APPS` **above** the built-in `staticfiles` app and also to `MIDDLEWARE` on the third line. Order matters for both `INSTALLED_APPS` and `MIDDLEWARE`.
 
 At the bottom of the file add new lines for both `STATIC_ROOT` and `STATICFILES_STORAGE`. It should look like the following.
 
