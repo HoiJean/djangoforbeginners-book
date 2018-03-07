@@ -256,7 +256,7 @@ To get started on Bitbucket, [sign up for a free account](https://bitbucket.org/
 
 Then on the "Create Repo" page enter in the name of your repository: "hello-world". Then click the blue "Create repository button":
 
-![Bitbucket create repo](images/02_bitbucket_create.png)
+![Bitbucket create repo](images/02_bitbucket_create_repo_new.png)
 
 On the next page, click on the link on the bottom for "I have an existing project" which will open a dropdown:
 
