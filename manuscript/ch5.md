@@ -441,7 +441,7 @@ Now exit the local server `Control-c` and create our new template for a post det
 (blog) $ touch templates/post_detail.html
 ~~~~~~~~
 
-And then type in the following code:
+Then type in the following code:
 
 {title="Code",lang="html"}
 ~~~~~~~~
@@ -475,7 +475,7 @@ Personally I found the naming of context objects in generic views extremely conf
 {% endblock content %}
 ~~~~~~~~
 
-And if you find using `post` or `object` confusing, we can also explicitly set the name of the context object in our view. So if we wanted to call it `anything_you_want` and then use that in the template, the code would look as follows and it would work the same.
+If you find using `post` or `object` confusing, we can also explicitly set the name of the context object in our view. So if we wanted to call it `anything_you_want` and then use that in the template, the code would look as follows and it would work the same.
 
 {title="Code",lang="python"}
 ~~~~~~~~
@@ -553,7 +553,7 @@ To confirm everything works, refresh the main page at [http://127.0.0.1:8000/](h
 
 ## Tests
 
-We need to test our model and views now. We want to ensure that the `Post` model works as expected, including its `str` representation. And we want to test both `ListView` and also `DetailView`.
+We need to test our model and views now. We want to ensure that the `Post` model works as expected, including its `str` representation. And we want to test both `ListView` and `DetailView`.
 
 Here's what sample tests look like in the `blog/tests.py` file.
 
@@ -606,9 +606,9 @@ class BlogTests(TestCase):
         self.assertTemplateUsed(response, 'post_detail.html')
 ~~~~~~~~
 
-There's a lot that's new in these tests so we'll walk through them slowly. At the top we import [get_user_model](https://docs.djangoproject.com/en/2.0/topics/auth/customizing/#django.contrib.auth.get_user_model) to reference our active `User`. We import `TestCase` which we've seen before and also [Client()](https://docs.djangoproject.com/en/2.0/topics/testing/tools/#django.test.Client) which is new and used as a dummy Web browser for simulating GET and POSt requests on a URL. In other words, when you're testing views you should use `Client()`.
+There's a lot that's new in these tests so we'll walk through them slowly. At the top we import [get_user_model](https://docs.djangoproject.com/en/2.0/topics/auth/customizing/#django.contrib.auth.get_user_model) to reference our active `User`. We import `TestCase` which we've seen before and also [Client()](https://docs.djangoproject.com/en/2.0/topics/testing/tools/#django.test.Client) which is new and used as a dummy Web browser for simulating GET and POST requests on a URL. In other words, whenever you're testing views you should use `Client()`.
 
-In our `setUp` method we add a sample blog post to test and then confirm that both its string representation and content are correct. Then we use `test_post_list_view` to confirm that our homepage returns a 200 HTTP status code, contains our body text, and uses the correct `home.html` template. Finally `test_post_detail_view` tests that our detail page works as expected and that an incorrect page returns a 404. It's always good to both test that something exists and that something incorrect doesn't exist in your tests.
+In our `setUp` method we add a sample blog post to test and then confirm that both its string representation and content are correct. Then we use `test_post_list_view` to confirm that our homepage returns a 200 HTTP status code, contains our body text, and uses the correct `home.html` template. Finally `test_post_detail_view` tests that our detail page works as expected and that an incorrect page returns a 404. It's always good to both test that something **does** exist and that something incorrect **doesn't** exist in your tests.
 
 Go ahead and run these tests now. They should all pass.
 
@@ -637,6 +637,6 @@ Then review all the content we've added by checking the `status`. Add all new fi
 
 ## Conclusion
 
-We've now built a basic blog application from scratch! Using the Django admin we can create, edit, or delete the content.
+We've now built a basic blog application from scratch! Using the Django admin we can create, edit, or delete the content. And we used DetailView for the first time to create a detailed individual view of each blog post entry.
 
 In the next section **Chapter 6: Blog app with forms**, we'll add forms so we don't have to use the Django admin at all for these changes.

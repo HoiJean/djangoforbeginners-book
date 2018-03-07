@@ -5,13 +5,13 @@ In this chapter we'll continue working on our blog application from **Chapter 5*
 
 ## Forms
 
-Forms are very complicated. Any time you are accepting user input there are security concerns ([XSS Attacks](https://en.wikipedia.org/wiki/Cross-site_scripting)), proper error handling is required, and there are UI considerations around how to alert the user to problems with the form as well as redirects on success.
+Forms are very common and very complicated to implement correctly. Any time you are accepting user input there are security concerns ([XSS Attacks](https://en.wikipedia.org/wiki/Cross-site_scripting)), proper error handling is required, and there are UI considerations around how to alert the user to problems with the form. Not to mention the need for redirects on success.
 
-Fortunately for us [Django Forms](https://docs.djangoproject.com/en/2.0/topics/forms/) abstract away much of the difficulty and provide a rich set of tools to handle common use cases working with forms.
+Fortunately for us [Django's built-in Forms](https://docs.djangoproject.com/en/2.0/topics/forms/) abstract away much of the difficulty and provide a rich set of tools to handle common use cases working with forms.
 
 To start, update our base template to display a link to a page for entering new blog posts. It will take the form `<a href="{% url 'post_new' %}"></a>` where `post_new` is the name for our URL.
 
-Your updated file will look as follows:
+Your updated file should look as follows:
 
 {title="Code",lang="html"}
 ~~~~~~~~
@@ -112,10 +112,10 @@ And then add the following code:
 Let's breakdown what we've done:
 
 * On the top line we inherit from our base template.
-* Use HTML `<form>` tags with the method POST since we're _sending_ data. If we were receiving data from a form, for example in a search box, we would use GET.
+* Use HTML `<form>` tags with the POST method since we're _sending_ data. If we were receiving data from a form, for example in a search box, we would use GET.
 * Add a [{% csrf_token %}](https://docs.djangoproject.com/en/2.0/ref/csrf/) which Django provides to protect our form from cross-site scripting attacks. **You should use it for all your Django forms.**
 * Then to output our form data we use `{{ form.as_p }}` which renders it within paragraph `<p>` tags.
-* Finally specify an input type of submit and assign it the value "Save"
+* Finally specify an input type of submit and assign it the value "Save".
 
 To view our work, start the server with `python manage.py runserver` and go to the homepage at [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
 
@@ -137,9 +137,9 @@ Oops! What happened?
 
 Django's error message is quite helpful. It's complaining that we did not specify where to send the user after successfully submitting the form. Let's send a user to the detail page after success; that way they can see their completed post.
 
-We can follow Django's suggestion and add a [get_absolute_url](https://docs.djangoproject.com/en/2.0/ref/models/instances/#django.db.models.Model.get_absolute_url) to our model. This is a best practice that you should always do. It sets a canonical URL for an object so even if the structure of your URLs changes in the future, the reference to the specific object is the same.
+We can follow Django's suggestion and add a [get_absolute_url](https://docs.djangoproject.com/en/2.0/ref/models/instances/#django.db.models.Model.get_absolute_url) to our model. This is a best practice that you should always do. It sets a canonical URL for an object so even if the structure of your URLs changes in the future, the reference to the specific object is the same. In short, you should add a `get_absolute_url()` and `__str__()` method to each model you write.
 
-Open the `models.py` file. Add a new import on the second line for [reverse](https://docs.djangoproject.com/en/2.0/ref/urlresolvers/#reverse) and a new method `get_absolute_url`.
+Open the `models.py` file. Add an import on the second line for [reverse](https://docs.djangoproject.com/en/2.0/ref/urlresolvers/#reverse) and a new `get_absolute_url` method.
 
 {title="Command Line",lang="python"}
 ~~~~~~~~
@@ -170,9 +170,9 @@ class Post(models.Model):
 path('post/<int:pk>/', views.BlogDetailView.as_view(), name='post_detail'),
 ~~~~~~~~
 
-That means in order for this route to work we must _also_ pass in an argument with the `pk` or primary key of the object. Confusingly `pk` and `id` are interchangeable in Django though the Django docs recommend using `self.id` with `get_absolute_url`. In other words, we're telling Django that the ultimate location of a Post entry is its `post_detail` view which is `posts/<int:pk>/` so the route for the first entry we've made will be at `posts/1`.
+That means in order for this route to work we must _also_ pass in an argument with the `pk` or primary key of the object. Confusingly `pk` and `id` are interchangeable in Django though the Django docs recommend using `self.id` with `get_absolute_url`. So we're telling Django that the ultimate location of a Post entry is its `post_detail` view which is `posts/<int:pk>/` so the route for the first entry we've made will be at `posts/1`.
 
-Try to create a new blog post again at [http://127.0.0.1:8000/post/new/](http://127.0.0.1:8000/post/new/) and you'll find you are redirected to the homepage where the post appears.
+Try to create a new blog post again at [http://127.0.0.1:8000/post/new/](http://127.0.0.1:8000/post/new/) and you'll find upon success you are redirected to the detailed view page where the post appears.
 
 ![Blog new page with input](images/06_working_post.png)
 
@@ -296,13 +296,13 @@ Note that the form is pre-filled with our database's existing data for the post.
 
 ![Blog edit page](images/06_edited.png)
 
-And after clicking the "Update" button we are redirected to the detailview of the post where you can see the change. This is because of our `get_absolute_url` setting. Navigate to the homepage and you can see the change next to all the other entries.
+And after clicking the "Update" button we are redirected to the detail view of the post where you can see the change. This is because of our `get_absolute_url` setting. Navigate to the homepage and you can see the change next to all the other entries.
 
 ![Blog homepage with edited post](images/06_homepage_edited_post.png)
 
 ## Delete View
 
-The process for creating a form to delete blog posts is very similar to that for updating a post. We'll use a generic class-based view, [DeleteView](https://docs.djangoproject.com/en/2.0/ref/class-based-views/generic-editing/#deleteview), to help and need to create a view, url, and template for the functionality.
+The process for creating a form to delete blog posts is very similar to that for updating a post. We'll use yet another generic class-based view, [DeleteView](https://docs.djangoproject.com/en/2.0/ref/class-based-views/generic-editing/#deleteview), to help and need to create a view, url, and template for the functionality.
 
 Let's start by adding a link to delete blog posts on our individual blog page, `post_detail.html`.
 
@@ -345,7 +345,7 @@ And fill it with this code:
 {% endblock %}
 ~~~~~~~~
 
-Note we are using `post.title` here to display the title of our blog post. We could also just use `object` as it too is provided by `DetailView`.
+Note we are using `post.title` here to display the title of our blog post. We could also just use `object.title` as it too is provided by `DetailView`.
 
 Now update our `views.py` file, by importing `DeleteView` and `reverse_lazy` at the top, then create a new view that subclasses `DeleteView`.
 
@@ -432,7 +432,7 @@ Time for tests to make sure everything works now--and in the future--as expected
 * `def test_post_update_view`
 * `def test_post_delete_view`
 
-Update your existing `tests.py` as follows.
+Update your existing `tests.py` file as follows.
 
 {title="Code",lang="python"}
 ~~~~~~~~
@@ -514,8 +514,6 @@ There's always more tests that can be added but this at least has coverage on al
 
 ## Conclusion
 
-In a small amount of code we've built a blog application that allows for creating, reading, updating, and deleting blog posts. This core functionality is know by the acronym [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete). While there are multiple ways to achieve this same functionality--we could have used function-based views or written our own class-based views--we've demonstrated how little code it takes in Django to make this happen.
+In a small amount of code we've built a blog application that allows for creating, reading, updating, and deleting blog posts. This core functionality is known by the acronym [CRUD: Create-Read-Update-Delete](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete). While there are multiple ways to achieve this same functionality--we could have used function-based views or written our own class-based views--we've demonstrated how little code it takes in Django to make this happen.
 
 In the next chapter we'll add user accounts and login, logout, and signup functionality.
-
-Continue on to **Chapter 7: Blog app with user accounts**.
