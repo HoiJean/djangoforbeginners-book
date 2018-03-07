@@ -1,8 +1,8 @@
 # Chapter 4: Message Board app
 
-In this chapter we will use a database for the first time to build a basic *message board* application. We'll explore Django's powerful built-in admin interface which provides a visual way to make changes to our data. And after adding tests we will push our code to Bitbucket and deploy the app on Heroku.
+In this chapter we will use a database for the first time to build a basic *Message Board* application where users can post and read short messages. We'll explore Django's powerful built-in admin interface which provides a visual way to make changes to our data. And after adding tests we will push our code to Bitbucket and deploy the app on Heroku.
 
-Django provides built-in support for several types of databases. But the simplest--**by far**--to use is [SQLite](https://www.sqlite.org/) because it runs off a single file and requires no complex installation. Django uses SQLite by default for this reason and it's a perfect choice for small projects.
+Django provides built-in support for several types of database backends. With just a few lines in our `settings.py` file it can support PostgreSQL, MySQL, Oracle, or SQLite. But the simplest--**by far**--to use is [SQLite](https://www.sqlite.org/) because it runs off a single file and requires no complex installation. By contrast, the other options require a process to be running in the background and can be quite complex to properly configure. Django uses SQLite by default for this reason and it's a perfect choice for small projects.
 
 
 ## Initial Setup
@@ -39,18 +39,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'posts',
+    'posts', # new
 ]
 ~~~~~~~~
 
-Then execute `migrate` to create an initial database based on Django's default settings.
+Then execute the `migrate` command to create an initial database based on Django's default settings.
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
 (mb) $ python manage.py migrate
 ~~~~~~~~
 
-If you look inside our directory with the `ls` command, you'll see there's now a file `db.sqlite3` representing our [SQLite](https://www.sqlite.org/) database.
+If you look inside our directory with the `ls` command, you'll see there's now a `db.sqlite3` file representing our [SQLite](https://www.sqlite.org/) database.
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
@@ -58,7 +58,7 @@ If you look inside our directory with the `ls` command, you'll see there's now a
 db.sqlite3 mb_project manage.py
 ~~~~~~~~
 
-**Side note**: Technically a `db.sqlite3` file is created the first time you run *either* `migrate` or `runserver`. Using `runserver` configures a database using Django's default settings, however `migrate` will sync the database with the current state of any database models contained in the project and listed in `INSTALLED_APPS`. In other words, to make sure the database reflects the current state of your project you'll need to run `migrate` (and also `makemigrations`) each time you update a model. More on this shortly.
+**Aside**: Technically a `db.sqlite3` file is created the first time you run *either* `migrate` or `runserver`. Using `runserver` configures a database using Django's default settings, however `migrate` will sync the database with the current state of any database models contained in the project and listed in `INSTALLED_APPS`. In other words, to make sure the database reflects the current state of your project you'll need to run `migrate` (and also `makemigrations`) each time you update a model. More on this shortly.
 
 To confirm everything works correctly, spin up our local server.
 
@@ -75,9 +75,9 @@ And navigate to [http://127.0.0.1:8000/](http://127.0.0.1:8000/) to see the fami
 ## Create a database model
 Our first task is to create a database model where we can store and display posts from our users. Django will turn this model into a database table for us. In real-world Django projects, it's often the case that there will be many complex, interconnected database models but in our simple message board app we only need one.
 
-I won't cover database design in this book but I have written a short guide which [you can find here](https://wsvincent.com/database-design-tutorial-for-beginners/") you can find here if this is all new to you.
+I won't cover database design in this book but I have written a short guide which [you can find here](https://wsvincent.com/database-design-tutorial-for-beginners/") if this is all new to you.
 
-Open the `posts/models.py` file and look at default code which Django provides:
+Open the `posts/models.py` file and look at the default code which Django provides:
 
 {title="Code",lang="python"}
 ~~~~~~~~
@@ -105,7 +105,7 @@ Note that we've created a new database model called `Post` which has the databas
 ## Activating models
 Now that our new model is created we need to activate it. Going forward, whenever we create or modify an existing model we'll need to update Django in a two-step process.
 
-1. First we create a migration file with the `makemigrations` command which generate the SQL commands for preinstalled apps in our `INSTALLED_APPS` setting. Migration files **do not execute those commands** on our database file, rather they contain all new changes to our models. This approach means that we have a record of all the changes to our models over time.
+1. First we create a migration file with the `makemigrations` command which generate the SQL commands for preinstalled apps in our `INSTALLED_APPS` setting. Migration files **do not execute those commands** on our database file, rather they are a reference of all new changes to our models. This approach means that we have a record of the changes to our models over time.
 
 2. Second we build the actual database with `migrate` which **does execute** the instructions in our migrations file.
 
@@ -115,10 +115,10 @@ Now that our new model is created we need to activate it. Going forward, wheneve
 (mb) $ python manage.py migrate posts
 ~~~~~~~~
 
-Note that you don't *have* to include a name after either `makemigrations` or `migrate`. If you simply run the commands then they will apply to all available changes. But it's a good habit to be specific. That way if you need to look at past migrations, there is only one change per migration rather than one that applies to multiple apps.
+Note that you don't *have* to include a name after either `makemigrations` or `migrate`. If you simply run the commands then they will apply to all available changes. But it's a good habit to be specific. If we had two separate apps in our project, and updated the models in both, and then ran `makemigrations` it would generate a migrations file containing data on both changes. This makes debugging harder in the future. You want each migration file to be as small and isolated as possible. That way if you need to look at past migrations, there is only one change per migration rather than one that applies to multiple apps.
 
 ## Django Admin
-Django provides us with a robust admin interface for interacting with our database. This is a truly killer feature that few web frameworks offer. It has its routes in [Django's origin as a project at a newspaper](https://docs.djangoproject.com/en/2.0/faq/general/). The developers wanted a CMS (Content Management System) so that writers could write their stories without needing to touch "code." Over time it has evolved into a fantastic, out-of-the-box tool for managing all aspects of a Django project.
+Django provides us with a robust admin interface for interacting with our database. This is a truly killer feature that few web frameworks offer. It has its routes in [Django's origin as a project at a newspaper](https://docs.djangoproject.com/en/2.0/faq/general/). The developers wanted a CMS (Content Management System) so that journalists could write and edit their stories without needing to touch "code." Over time the built-in admin app has evolved into a fantastic, out-of-the-box tool for managing all aspects of a Django project.
 
 To use the Django admin, we first need to create a `superuser` who can login. In your command line console, type `python manage.py createsuperuser` and respond to the prompts for a username, email, and password:
 
@@ -188,12 +188,12 @@ If you refresh your Admin page in the browser, you'll see it's changed to a much
 
 ![Admin new entry](images/04_django_admin_post_str.png)
 
-Much better! It's important to add `str()` methods to all of your models to improve their readability.
+Much better! It's a best practice to add `str()` methods to all of your models to improve their readability.
 
 ## Views/Templates/URLs
-In order to display our database content on our homepage, we have to wire up our views, templates, and URLConfs. This should start to feel familiar now.
+In order to display our database content on our homepage, we have to wire up our views, templates, and URLConfs. This pattern should start to feel familiar now.
 
-Let's start with the view. Earlier in the book we used the built-in generic [TemplateView](https://docs.djangoproject.com/en/2.0/ref/class-based-views/base/#django.views.generic.base.TemplateView) to display a template file on our homepage. Now we want to list the contents of our database model. Fortunately this is a common task and can be done with the generic class-based view  [ListView](https://docs.djangoproject.com/en/2.0/ref/class-based-views/generic-display/#listview).
+Let's begin with the view. Earlier in the book we used the built-in generic [TemplateView](https://docs.djangoproject.com/en/2.0/ref/class-based-views/base/#django.views.generic.base.TemplateView) to display a template file on our homepage. Now we want to list the contents of our database model. Fortunately this is also a common task in web development and Django comes equipped with the generic class-based  [ListView](https://docs.djangoproject.com/en/2.0/ref/class-based-views/generic-display/#listview).
 
 In the `posts/views.py` file enter the Python code below:
 
@@ -285,14 +285,14 @@ Restart the server with `python manage.py runserver` and navigate to our homepag
 
 ![Homepage with posts](images/04_homepage_helloworld.png)
 
-We're basically done at this point, but let's create a few more message board posts in the Django admin to confirm that they'll all display correctly on the homepage.
+We're basically done at this point, but let's create a few more message board posts in the Django admin to confirm that they will display correctly on the homepage.
 
 ## Adding new posts
 To add new posts to our message board, go back into the Admin:
 
 [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)
 
-And add two more posts. Here's what mine look like:
+And create two more posts. Here's what mine look like:
 
 ![Admin entry](images/04_django_admin_second_entry.png)
 
@@ -304,7 +304,7 @@ If you return to the homepage you'll see it automatically displays our formatted
 
 ![Homepage with three entries](images/04_django_homepage_three_entries.png)
 
-Everything works so let's first initialize our directory, add the new code, and include our first `git` commit.
+Everything works so it's a good time to initialize our directory, add the new code, and include our first `git` commit.
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
@@ -315,7 +315,7 @@ Everything works so let's first initialize our directory, add the new code, and 
 
 
 ## Tests
-Time for our tests. The best time to write tests is either before you've written any actual code (Test Driven Development) or right after when the new features are fresh in your mind. Write some tests, check that they work, and then feel confident that if you inadvertently break something down the road--and you will--the tests will catch it for you.
+
 
 Previously we were only testing static pages so we used [SimpleTestCase](https://docs.djangoproject.com/en/2.0/topics/testing/tools/#django.test.SimpleTestCase). But now that our homepage works with a database, we need to use [TestCase](https://docs.djangoproject.com/en/2.0/topics/testing/tools/#django.test.TestCase) which will let us create a "test" database we can check against. In other words, we don't need to run tests on our *actual* database but instead can make a separate test database, fill it with sample data, and then test against it.
 
@@ -341,7 +341,7 @@ class PostModelTest(TestCase):
 
 At the top we import the `TestCase` module which lets us create a sample database, then import our `Post` model. We create a new class `PostModelTest` and add a method `setUp` to create a new database that has just one entry: a post with a text field containing the string 'just a test'.
 
-Then we run our first test `test_text_content` to check that the database field actually contains `just a test`! We create a variable called `post` that represents the first `id` on our Post model. Remember that Django automatically sets this id for us. If we created another entry it would have an id of 2, the next one would be 3, and so on.
+Then we run our first test, `test_text_content`, to check that the database field actually contains `just a test`. We create a variable called `post` that represents the first `id` on our Post model. Remember that Django automatically sets this id for us. If we created another entry it would have an id of 2, the next one would be 3, and so on.
 
 The following line uses [f strings](https://www.python.org/dev/peps/pep-0498/) which are a very cool addition to Python 3.6. They let us put variables directly in our strings as long as the variables are surrounded by brackets `{}`. Here we're setting `expected_object_name` to be the string of the value in `post.text`, which should be `just a test`.
 
@@ -366,7 +366,7 @@ Don't worry if the previous explanation felt like information overload. That's n
 
 Time for our second test. The first test was on the model but now we want test our one and only page: the homepage. Specifically, we want to test that it exists (throws an HTTP 200 response), uses the `home` view, and uses the `home.html` template.
 
-We'll need to add one more import at the top `reverse` and a brand new class `HomePageViewTest` to do this.
+We'll need to add one more import at the top for `reverse` and a brand new class `HomePageViewTest` for our test.
 
 {title="Code",lang="python"}
 ~~~~~~~~
@@ -434,7 +434,7 @@ We're done adding code for our testing so it's time to commit the changes to git
 ## Bitbucket
 We also need to store our code on Bitbucket. This is a good habit to get into in case anything happens to your local computer and it also allows you to share and collaborate with other developers.
 
-You should already have a Bitbucket account from **Chapter 3: A simple app** so go ahead and [create a new repo](https://bitbucket.org/repo/create) which we'll call `mb-app`.
+You should already have a Bitbucket account from **Chapter 3** so go ahead and [create a new repo](https://bitbucket.org/repo/create) which we'll call `mb-app`.
 
 ![Bitbucket create app](images/04_bitbucket.png)
 
@@ -450,7 +450,7 @@ It should look like this, replacing `wsvincent` (my username) with your Bitbucke
 
 
 ## Heroku configuration
-You should also already have a Heroku account setup and installed from **Chapter 3: A simple app**. We need to make the following changes to our *Message Board* project to deploy it online:
+You should also already have a Heroku account setup and installed from **Chapter 3**. We need to make the following changes to our *Message Board* project to deploy it online:
 
 * update `Pipfile.lock`
 * new `Procfile`
@@ -543,7 +543,7 @@ Tell Heroku to ignore static files which we'll cover in-depth when deploying our
 (mb) $ heroku config:set DISABLE_COLLECTSTATIC=1
 ~~~~~~~~
 
-Push the code to Heroku and add free scaling so it's actually running online.
+Push the code to Heroku and add free scaling so it's actually running online, otherwise the code is just sitting there.
 
 {title="Command Line",lang="text"}
 ~~~~~~~~
