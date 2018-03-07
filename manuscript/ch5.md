@@ -1,6 +1,6 @@
 # Chapter 5: Blog app
 
-In this chapter we'll build a basic _blog_ application that allows users to create, edit, and delete posts. The homepage will list all blog posts and there will be a dedicated detail page for each individual post. We'll also introduce CSS for styling and learn how Django works with static files.
+In this chapter we'll build a _Blog_ application that allows users to create, edit, and delete posts. The homepage will list all blog posts and there will be a dedicated detail page for each individual post. We'll also introduce CSS for styling and learn how Django works with static files.
 
 
 ## Initial Setup
@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blog',
+    'blog', # new
 ]
 ~~~~~~~~
 
@@ -79,7 +79,7 @@ At the top we're importing the class `models` and then creating a subclass of `m
 
 For `title` we're limiting the length to 200 characters and for `body` we're using a TextField which will automatically expand as needed to fit the user's text. There are many field types available in Django; you can see the [full list here](https://docs.djangoproject.com/en/2.0/topics/db/models/#fields).
 
-For the `author` field we're using a [ForeignKey](https://docs.djangoproject.com/en/2.0/ref/models/fields/#django.db.models.ForeignKey) which allows for a _many-to-one_ relationship. This means that a given user can be the author of many different blog posts but not the other way around. The reference is to the built-in `User` model that Django provides for authentication. For all many-to-one relationships such as a ForeignKey we must also specify an [on_delete](https://docs.djangoproject.com/en/2.0/ref/models/fields/#django.db.models.ForeignKey.on_delete) option. Don't worry if this is confusing right now. Database design is a very deep field and we'll do much more with ForeignKey's in future chapters. I have a separate post on my personal site, [database design tutorial for beginners](https://wsvincent.com/database-design-tutorial-for-beginners/), that covers the topic in more depth.
+For the `author` field we're using a [ForeignKey](https://docs.djangoproject.com/en/2.0/ref/models/fields/#django.db.models.ForeignKey) which allows for a _many-to-one_ relationship. This means that a given user can be the author of many different blog posts but not the other way around. The reference is to the built-in `User` model that Django provides for authentication. For all many-to-one relationships such as a ForeignKey we must also specify an [on_delete](https://docs.djangoproject.com/en/2.0/ref/models/fields/#django.db.models.ForeignKey.on_delete) option. Don't worry if this is confusing right now. Database design is a very deep field and we'll do much more with ForeignKey's in the next book, [Intermediate Django](https://intermediatedjango.com).
 
 Now that our new database model is created we need to create a new migration record for it and migrate the change into our database. This two-step process can be completed with the commands below:
 
@@ -163,7 +163,7 @@ urlpatterns = [
 
 We're importing our soon-to-be-created views at the top. The empty string `''` tells Python to match all values and we make it a named URL, `home`, which we can refer to in our views later on. While it's optional to add a [named URL](https://docs.djangoproject.com/en/2.0/topics/http/urls/#url-namespaces) it's a best practice you should adopt as it helps keep things organized as your number of URLs grows.
 
-We also should update our project-level `urls.py` file so that it knows to forward all requests directly to the blog app.
+We also should update our project-level `urls.py` file so that it knows to forward all requests directly to the `blog` app.
 
 {title="Code",lang="python"}
 ~~~~~~~~
@@ -181,7 +181,7 @@ We've added `include` on the second line and a urlpattern using an empty string 
 
 ## Views
 
-We're going to use class-based views but if want to see a function-based way to build a blog application, I highly recommend the [Django Girls Tutorial](https://tutorial.djangogirls.org/en/).
+We're going to use class-based views but if want to see a function-based way to build a blog application, I highly recommend the [Django Girls Tutorial](https://tutorial.djangogirls.org/en/). It is excellent.
 
 In our views file, add the code below to display the contents of our `Post` model using `ListView`.
 
@@ -202,7 +202,7 @@ On the top two lines we import [ListView](https://docs.djangoproject.com/en/2.0/
 
 ## Templates
 
-With our URLConfs and Views now complete, we're only missing the third piece of the puzzle: templates! As we already saw in **Chapter 4: Message board app**, we can inherit from other templates to keep our code clean. Thus we'll start off with a `base.html` file and a `home.html` file that inherits from it. Then later when we add templates for creating and editing blog posts, they too can inherit from `base.html`.
+With our URLConfs and views now complete, we're only missing the third piece of the puzzle: templates. As we already saw in **Chapter 4**, we can inherit from other templates to keep our code clean. Thus we'll start off with a `base.html` file and a `home.html` file that inherits from it. Then later when we add templates for creating and editing blog posts, they too can inherit from `base.html`.
 
 Start by creating our project-level `templates` directory with the two template files.
 
@@ -227,7 +227,7 @@ TEMPLATES = [
 ]
 ~~~~~~~~
 
-Update the `base.html` template as follows.
+Then update the `base.html` template as follows.
 
 {title="Code",lang="html"}
 ~~~~~~~~
@@ -266,7 +266,7 @@ Note that code between `{% block content %}` and
 {% endblock content %}
 ~~~~~~~~
 
-At the top we note that this template extends `base.html` and then wrap our desired code with `content` blocks. Then we use the Django Templating Language to set up a simple _for loop_ for each blog post. Note that `object_list` comes from `ListView` and contains all the objects in our view.
+At the top we note that this template extends `base.html` and then wraps our desired code with `content` blocks. We use the Django Templating Language to set up a simple _for loop_ for each blog post. Note that `object_list` comes from `ListView` and contains all the objects in our view.
 
 If you start the Django server again: `python manage.py runserver`.
 
@@ -315,7 +315,7 @@ header h1 a {
 }
 ~~~~~~~~
 
-Last step now. We need to add the static files to our templates by adding `{% load staticfiles %}` to the top of `base.html`. Because our other templates inherit from `base.html` we only have to add this once. And include a new line at the bottom of the `<head></head>` code that explicitly references our new `base.css` file.
+Last step now. We need to add the static files to our templates by adding `{% load staticfiles %}` to the top of `base.html`. Because our other templates inherit from `base.html` we only have to add this once. Include a new line at the bottom of the `<head></head>` code that explicitly references our new `base.css` file.
 
 {title="Code",lang="html"}
 ~~~~~~~~
@@ -329,13 +329,13 @@ Last step now. We need to add the static files to our templates by adding `{% lo
   ...
 ~~~~~~~~
 
-Phew! That was a bit of a pain but it's a one-time pain. Now we can add static files to our `static` folder and they'll automatically appear in all our templates!
+Phew! That was a bit of a pain but it's a one-time pain. Now we can add static files to our `static` folder and they'll automatically appear in all our templates.
 
-Start up the server again with `.manage.py runserver` and look at our updated homepage at [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
+Start up the server again with `python manage.py runserver` and look at our updated homepage at [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
 
 ![Blog homepage with red title](images/05_homepage_red_title.png)
 
-We can do a little better though. How about if we add a custom font and some more CSS? Since this is not a tutorial on CSS simply add the following between `<head></head>` tags to add [Source Sans Pro](https://fonts.google.com/specimen/Source+Sans+Pro), a free font from Google.
+We can do a little better though. How about if we add a custom font and some more CSS? Since this book is not a tutorial on CSS simply insert the following between `<head></head>` tags to add [Source Sans Pro](https://fonts.google.com/specimen/Source+Sans+Pro), a free font from Google.
 
 {title="Code",lang="html"}
 ~~~~~~~~
@@ -412,7 +412,7 @@ Refresh the homepage at [http://127.0.0.1:8000/](http://127.0.0.1:8000/) and you
 
 Now we can add the functionality for individual blog pages. How do we do that? We need to create a new view, url, and template. I hope you're noticing a pattern in development with Django now!
 
-Start with the view. We can use the generic view [DetailView](https://docs.djangoproject.com/en/2.0/ref/class-based-views/generic-display/#django.views.generic.detail.DetailView) to simplify things. At the top of the file add `DetailView` to the list of imports and then create our new view called `BlogDetailView`.
+Start with the view. We can use the generic class-based [DetailView](https://docs.djangoproject.com/en/2.0/ref/class-based-views/generic-display/#django.views.generic.detail.DetailView) to simplify things. At the top of the file add `DetailView` to the list of imports and then create our new view called `BlogDetailView`.
 
 {title="Code",lang="python"}
 ~~~~~~~~
@@ -432,7 +432,7 @@ class BlogDetailView(DetailView):
     template_name = 'post_detail.html'
 ~~~~~~~~
 
-In this new view we define the model we're using, `Post`, and the template we want it associated with, `post_detail.html`. By default `DetailView` will provide a context object we can use in our template called either `object` or the name of our model, so `post`. Also, `DetailView` expects either a primary key or a slug passed to it as the identifier. More on this shortly.
+In this new view we define the model we're using, `Post`, and the template we want it associated with, `post_detail.html`. By default `DetailView` will provide a context object we can use in our template called either `object` or the lowercased name of our model, `post`. Also, `DetailView` expects either a primary key or a slug passed to it as the identifier. More on this shortly.
 
 Now exit the local server `Control-c` and create our new template for a post detail as follows:
 
@@ -457,9 +457,9 @@ And then type in the following code:
 {% endblock content %}
 ~~~~~~~~
 
-At the top we specify that this template inherits from `base.html`. And then display the `title` and `body` from our context object, which `DetailView` makes accessible as `post`.
+At the top we specify that this template inherits from `base.html`. Then display the `title` and `body` from our context object, which `DetailView` makes accessible as `post`.
 
-Personally I found the naming of context objects in generic views extremely confusing at first. Because our context object from DetailView is either our model name `post` or `object` we could also update our template as follows and it would work exactly the same.
+Personally I found the naming of context objects in generic views extremely confusing when first learning Django. Because our context object from DetailView is either our model name `post` or `object` we could also update our template as follows and it would work exactly the same.
 
 {title="Code",lang="html"}
 ~~~~~~~~
