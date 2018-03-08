@@ -21,7 +21,7 @@ Django inherited Python's "batteries-included" approach and includes out-of-the 
 
 This approach makes our job as web developers much, much easier. We can focus on what makes our web application unique rather than reinventing the wheel when it comes to standard web application functionality.
 
-In contrast, several popular frameworks--most notably Flask in Python and Express in JavaScript--adopt a "microframework" approach. They provide only the bare minimum required for a simple webpage and leave it up to the developer to install and configure third-party packages to replicate basic website functionality. This approach provides more flexibility to the developer but also yields more opportunities for mistakes.
+In contrast, several popular frameworks--most notably Flask in Python and Express in JavaScript--adopt a "microframework" approach. They provide only the bare minimum required for a simple web page and leave it up to the developer to install and configure third-party packages to replicate basic website functionality. This approach provides more flexibility to the developer but also yields more opportunities for mistakes.
 
 As of 2018 Django has been under active development for over 13 years which makes it a grizzled veteran in software years. Millions of programmers have already used Django to build their websites. And this is undeniably a good thing. Web development is hard. It doesn't make sense to repeat the same code--and mistakes--when a large community of brilliant developers has already solved these problems for us.
 

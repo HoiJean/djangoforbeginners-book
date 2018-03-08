@@ -558,6 +558,6 @@ If you open the new project with `heroku open` it will automatically launch a ne
 ![Live site](images/04_heroku_live.png)
 
 ## Conclusion
-We've now built, tested, and deployed our first database-driven app. While it's deliberately quite basic, now we know how to create a database model, update it with the admin panel, and then display the contents on a webpage. But something is missing, no?
+We've now built, tested, and deployed our first database-driven app. While it's deliberately quite basic, now we know how to create a database model, update it with the admin panel, and then display the contents on a web page. But something is missing, no?
 
 In the real-world, users need forms to interact with our site. After all, not everyone should have access to the admin panel. In the next chapter we'll build a blog application that uses forms so that users can create, edit, and delete posts. We'll also add styling via CSS.

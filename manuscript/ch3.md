@@ -62,11 +62,11 @@ And then navigate to [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
 
 ## Templates
 
-Every web framework needs a convenient way to generate HTML files. In Django, the approach is to use templates so that individual HTML files can be served by a view to a webpage specified by the URL.
+Every web framework needs a convenient way to generate HTML files. In Django, the approach is to use templates so that individual HTML files can be served by a view to a web page specified by the URL.
 
-It's worth repeating this pattern since you'll see it over and over again in Django development: Templates, Views, and URLs. The order in which you create them doesn't much matter since all three are required and work closely together. The URLs control the initial route, the entry point into a page, such as `/about`, the views contain the logic or the "what", and the template has the HTML. For webpages that rely on a database model, it is the view that does much of the work to decide what data is available to the template.
+It's worth repeating this pattern since you'll see it over and over again in Django development: Templates, Views, and URLs. The order in which you create them doesn't much matter since all three are required and work closely together. The URLs control the initial route, the entry point into a page, such as `/about`, the views contain the logic or the "what", and the template has the HTML. For web pages that rely on a database model, it is the view that does much of the work to decide what data is available to the template.
 
-So: Templates, Views, URLs. This pattern will hold true for **every Django webpage you make**. However it will take some repetition before you internalize it.
+So: Templates, Views, URLs. This pattern will hold true for **every Django web page you make**. However it will take some repetition before you internalize it.
 
 Ok, moving on. The question of where to place the templates directory can be confusing for beginners. By default, Django looks within each app for templates. In our `pages` app it will expect a `home.html` template to be located in the following location:
 
